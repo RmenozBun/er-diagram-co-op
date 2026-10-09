@@ -44,7 +44,7 @@ export function convertDocument({ code, extras = null }, from, to) {
     const view = toMongooseView({ ...schema, tables: sqlToMongoTables(schema.tables) })
     return { code: view.text, extras: view.extras }
   }
-  return { code: serialize(mongoSchemaToSql(schema)), extras: null }
+  return { code: serialize(mongoSchemaToSql(schema), { dbml: true }), extras: null } // DBML-valid, so it can be pasted into other tools
 }
 
 /** Same as `convertDocument` for callers that only need the text. */

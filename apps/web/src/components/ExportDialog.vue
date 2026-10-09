@@ -173,6 +173,10 @@ function save() {
           This MongoDB diagram is written as SQL tables: ObjectId becomes <code>varchar(24)</code>, string / number / date get SQL types, and
           sub-documents become <code>jsonb</code> columns.
         </v-alert>
+        <v-alert v-if="target === 'dsl' && mode === 'sql'" type="warning" variant="tonal" density="compact" class="mt-3">
+          This is the editor text exactly as you wrote it. It may use this app's extras (like <code>enum: [...]</code>) that other tools reject.
+          <a href="#" @click.prevent="target = 'dbml'">Use DBML for dbdiagram.io</a>
+        </v-alert>
         <v-alert v-if="target === 'dbml'" type="info" variant="tonal" density="compact" class="mt-3">
           DBML for <strong>dbdiagram.io</strong>: paste it into the editor there. <code>enum</code> fields are written as <code>Enum</code> blocks.
         </v-alert>

@@ -26,6 +26,7 @@ const UNIQUE_PATH = 'M14,17H12V9H10V7H14M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A
         <svg v-else-if="f.unique" width="14" height="14" viewBox="0 0 24 24" fill="#42a5f5"><path :d="UNIQUE_PATH" /></svg>
       </span>
       <span class="fname" :class="{ nn: f.notNull && !f.pk }">{{ f.name }}</span>
+      <span v-if="data.fk?.includes(f.name)" class="fk" title="foreign key: holds the key of another table">FK</span>
       <span class="ftype">{{ f.type }}</span>
     </div>
     <div v-if="!data.table.fields.length" class="row empty" :style="{ height: ROW_H + 'px' }">no fields</div>
@@ -93,6 +94,15 @@ const UNIQUE_PATH = 'M14,17H12V9H10V7H14M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.fk {
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: rgb(var(--v-theme-secondary));
+  border: 1px solid rgb(var(--v-theme-secondary));
 }
 .fname.nn {
   font-weight: 600;

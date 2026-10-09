@@ -239,3 +239,44 @@ describe('MongoDB -> SQL: defaults that are JavaScript are not written as SQL', 
     expect(toSQL(sql, 'mysql')).toMatch(/`at` timestamp/i)
   })
 })
+
+describe('DBML flavour (what dbdiagram.io accepts)', () => {
+  const src = `Table users {
+  id int [pk]
+  role varchar(20) [default: 'member', enum: ['member', 'super user']]
+  tags varchar(255)[]
+}
+Table ผู้ใช้ {
+  รหัส int [pk]
+}
+Ref: ผู้ใช้.รหัส - users.id
+`
+
+  it('enum becomes an Enum block, arrays with a length and non-ASCII names are quoted', () => {
+    const dbml = serialize(parse(src), { dbml: true })
+    expect(dbml).toContain('Enum users_role {\n  member\n  "super user"\n}')
+    expect(dbml).toContain("role users_role [default: 'member']")
+    expect(dbml).toContain('tags "varchar(255)[]"')
+    expect(dbml).toContain('Table "ผู้ใช้" {')
+    expect(dbml).not.toMatch(/enum:/)
+  })
+
+  it('this parser reads that text back to the same diagram', () => {
+    const first = parse(src)
+    const back = parse(serialize(first, { dbml: true }))
+    expect(back.errors).toEqual([])
+    expect(back.tables.map((t) => t.name)).toEqual(['users', 'ผู้ใช้'])
+    const role = back.tables[0].fields.find((f) => f.name === 'role')
+    expect(role).toMatchObject({ type: 'varchar(255)', enum: ['member', 'super user'], default: 'member' })
+    expect(back.tables[0].fields.find((f) => f.name === 'tags').type).toBe('varchar(255)[]')
+    expect(back.refs).toHaveLength(1)
+  })
+
+  it('the text after switching a MongoDB diagram to SQL is already in that flavour', () => {
+    const text = convertSource(SAMPLE_MONGO, 'mongodb', 'sql')
+    expect(text).toContain('Enum users_role')
+    expect(text).toContain('tags "varchar(255)[]"')
+    expect(text).not.toMatch(/enum:|embedded/)
+    expect(parse(text).errors).toEqual([])
+  })
+})

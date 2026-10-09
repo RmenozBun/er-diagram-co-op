@@ -4,6 +4,7 @@
 แก้พร้อมกันได้หลายคน (ทดสอบแล้วสำหรับ 5-6 คน) ไม่มีฐานข้อมูล ไม่มีระบบ login
 
 - **ซ้าย** เขียนโครงสร้าง → **ขวา** เห็น diagram ทันที ลากย้ายตารางได้ โหมด **SQL** เขียนด้วย DSL (แนว dbdiagram.io) โหมด **MongoDB** เขียนเป็น `Model User { ... }` เนื้อในแบบ Mongoose (`mongoose.Schema`) มี **autocomplete** ตามโหมด (Ctrl+Space, Tab/Enter เพื่อยอมรับ)
+- **Data flow (PK → FK):** ลูกศรที่เส้นชี้ไปที่ฝั่งที่ "ใช้" key (FK หรือ sub-document) ฟิลด์ FK มีป้าย `FK` และมีจุดเคลื่อนที่จาก key ไปยังตารางที่ใช้ (เปิด/ปิดได้ที่สวิตช์ **Data flow**) คลิกตารางเพื่อไฮไลต์ว่า key ของมัน **ไหลไปที่ตาราง/model ไหนบ้าง** (ต่อเป็นทอดๆ เช่น users → orders → order_items) และมันใช้ key ของตารางไหน พร้อมรายการในแผงซ้ายบน (คลิกชื่อเพื่อกระโดดไปตารางนั้น) ใช้ได้ทั้ง SQL และ MongoDB (`ref` กับ sub-document) รูป PNG/SVG ที่ export จะไม่มีไฮไลต์หรือจุดเคลื่อนที่ แต่มีลูกศรและป้าย FK
 - **Share** → ได้ลิงก์ห้อง ใครมีลิงก์เข้ามาแก้ด้วยกันได้ เห็น cursor/ชื่อของแต่ละคน
 - **Save project file** (`.dbd.json`) / **Open project file** เพื่อทำงานต่อภายหลัง
 - **Import** แยกเมนูชัดเจน: **SQL** (dump `.sql`, SQLite `.sqlite/.db`) · **MongoDB** (ไฟล์ model Mongoose `.js`, validator `$jsonSchema` `.json`, ข้อมูล `mongoexport` `.json/.jsonl`) · **CSV / Excel** (เลือกได้ว่าจะนำเข้าเป็นตาราง SQL หรือ collection MongoDB; ถ้าเนื้อหาดูเป็นสไตล์ Mongo จะแนะนำให้อัตโนมัติ)
@@ -33,7 +34,7 @@ tests-e2e/    สคริปต์และรายงานการทดส
 npm install
 npm run relay:dev   # relay ที่ http://localhost:8787
 npm run dev         # เว็บที่ http://localhost:5173
-npm test            # 105 unit tests (parser/generator/importer, Mongoose + รูปแบบย่อ Model { })
+npm test            # 108 unit tests (parser/generator/importer, Mongoose + รูปแบบย่อ Model { })
 npm test -w apps/relay   # 11 tests การบันทึก/หมดอายุของห้อง และการล็อก Origin
 ```
 

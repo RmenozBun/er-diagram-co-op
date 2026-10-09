@@ -184,6 +184,8 @@ export function parse(text) {
   let table = null
   let inIndexes = false
   let pendingIndexes = []
+  let enumBlock = null // DBML `Enum name { value ... }`
+  const enums = new Map() // lower-case name -> values
 
   const err = (i, message) => schema.errors.push({ line: i + 1, message })
   const addRef = (ref, i) => {
@@ -208,7 +210,24 @@ export function parse(text) {
     const line = raw.trim()
     if (!line) continue
 
+    if (enumBlock) {
+      if (line === '}') {
+        enums.set(enumBlock.name.toLowerCase(), enumBlock.values)
+        enumBlock = null
+      } else {
+        const em = line.match(/^(?:"([^"]*)"|'([^']*)'|`([^`]*)`|([^\s[]+))\s*(\[.*\])?$/u)
+        if (em) enumBlock.values.push(em[1] ?? em[2] ?? em[3] ?? em[4])
+        else err(i, 'Invalid enum value')
+      }
+      continue
+    }
+
     if (!table) {
+      const em = line.match(new RegExp(`^Enum\\s+(${IDENT})\\s*\\{$`, 'iu'))
+      if (em) {
+        enumBlock = { name: unq(em[1]), values: [] }
+        continue
+      }
       let m = line.match(new RegExp(`^Table\\s+(${IDENT})\\s*(\\[.*\\])?\\s*\\{$`, 'iu'))
       if (m) {
         table = { name: unq(m[1]), note: null, embedded: false, fields: [], indexes: [] }
@@ -281,7 +300,7 @@ export function parse(text) {
       err(i, 'Expected: <field name> <type> [settings]')
       continue
     }
-    const f = newField(unq(hm[1]), hm[2].trim())
+    const f = newField(unq(hm[1]), hm[2].trim().replace(/^"([^"]*)"$/, '$1')) // DBML quotes types such as "varchar(255)[]"
     if (table.fields.some((x) => x.name === f.name)) err(i, `Duplicate field "${f.name}"`)
     for (const s of settings) {
       const low = s.toLowerCase().replace(/\s+/g, ' ')
@@ -319,6 +338,19 @@ export function parse(text) {
   if (table) {
     err(lines.length - 1, `Table "${table.name}" is missing a closing "}"`)
     closeTable()
+  }
+  if (enumBlock) err(lines.length - 1, `Enum "${enumBlock.name}" is missing a closing "}"`)
+  // a field whose type is an Enum block takes its values (and is a text column)
+  if (enums.size) {
+    for (const t of schema.tables) {
+      for (const f of t.fields) {
+        const values = enums.get(f.type.toLowerCase())
+        if (values) {
+          f.enum = [...values]
+          f.type = 'varchar(255)'
+        }
+      }
+    }
   }
 
   schema.refs.forEach((r, n) => {
