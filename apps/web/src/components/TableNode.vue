@@ -3,6 +3,10 @@ import { Handle, Position } from '@vue-flow/core'
 import { NODE_WIDTH, HEADER_H, ROW_H } from '../lib/layout.js'
 
 defineProps({ id: String, data: Object })
+
+// Inline SVG (mdi-key / mdi-numeric-1-box-outline) rather than the icon font, which does not survive image export
+const KEY_PATH = 'M7 14C5.9 14 5 13.1 5 12S5.9 10 7 10 9 10.9 9 12 8.1 14 7 14M12.6 10C11.8 7.7 9.6 6 7 6C3.7 6 1 8.7 1 12S3.7 18 7 18C9.6 18 11.8 16.3 12.6 14H16V18H20V14H23V10H12.6Z'
+const UNIQUE_PATH = 'M14,17H12V9H10V7H14M5,3A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3H5M5,5H19V19H5V5Z'
 </script>
 
 <template>
@@ -18,8 +22,8 @@ defineProps({ id: String, data: Object })
       <Handle :id="f.name + '-l'" type="source" :position="Position.Left" class="hd" />
       <Handle :id="f.name + '-r'" type="source" :position="Position.Right" class="hd" />
       <span class="key">
-        <v-icon v-if="f.pk" size="14" color="amber-darken-2">mdi-key</v-icon>
-        <v-icon v-else-if="f.unique" size="14" color="blue-lighten-1">mdi-numeric-1-box-outline</v-icon>
+        <svg v-if="f.pk" width="14" height="14" viewBox="0 0 24 24" fill="#ffa000"><path :d="KEY_PATH" /></svg>
+        <svg v-else-if="f.unique" width="14" height="14" viewBox="0 0 24 24" fill="#42a5f5"><path :d="UNIQUE_PATH" /></svg>
       </span>
       <span class="fname" :class="{ nn: f.notNull && !f.pk }">{{ f.name }}</span>
       <span class="ftype">{{ f.type }}</span>
