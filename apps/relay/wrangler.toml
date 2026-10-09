@@ -5,7 +5,7 @@ compatibility_date = "2025-01-01"
 [vars]
 # Comma separated list of web origins allowed to open WebSockets, e.g. "https://my-er.vercel.app".
 # Empty = any origin (fine while testing; set it after you know your Vercel URL).
-ALLOWED_ORIGINS = ""
+ALLOWED_ORIGINS = "https://er-diagram-co-op-web.vercel.app"
 # Rooms are saved in the Durable Object's storage. A room nobody opened for this many days is deleted.
 ROOM_TTL_DAYS = "15"
 # How often (hours) a room checks whether it has expired.

@@ -1,5 +1,6 @@
 import { routePartykitRequest } from 'partyserver'
 import { YServer } from 'y-partyserver'
+import { originAllowed } from './origin.js'
 import { expireIfStale, hasStoredRoom, isEmptyRoom, loadDocument, saveDocument, touch } from './persist.js'
 
 const HOUR = 3600 * 1000
@@ -107,24 +108,11 @@ export class Document extends YServer {
 const ROOM_ID = /^[\w-]{4,64}$/
 const text = (status, body) => new Response(body, { status, headers: { 'content-type': 'text/plain' } })
 
-/** ALLOWED_ORIGINS: comma separated list, e.g. "https://my-er.vercel.app". Empty = allow any origin. */
-function originAllowed(request, env) {
-  const list = String(env.ALLOWED_ORIGINS ?? '')
-    .split(',')
-    .map((s) => s.trim().replace(/\/$/, ''))
-    .filter(Boolean)
-  if (!list.length) return true
-  const origin = request.headers.get('Origin')
-  if (!origin) return false
-  if (list.includes(origin)) return true
-  return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin) && list.some((o) => /localhost|127\.0\.0\.1/.test(o))
-}
-
 export default {
   async fetch(request, env) {
     const guard = (req, lobby) => {
       if (!ROOM_ID.test(lobby.name)) return text(400, 'Invalid room id (4-64 letters, digits, - or _)')
-      if (!originAllowed(req, env)) return text(403, 'Origin not allowed')
+      if (!originAllowed(req.headers.get('Origin'), env.ALLOWED_ORIGINS)) return text(403, 'Origin not allowed')
     }
     const res = await routePartykitRequest(request, env, {
       cors: { 'Access-Control-Allow-Origin': '*' },
