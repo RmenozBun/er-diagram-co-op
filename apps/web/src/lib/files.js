@@ -1,7 +1,16 @@
-import { ddlToSchema, mongoToSchema, parseMongoExport, parseCsv, rowsToSchema, isSpecRows, specToSchema, serialize, emptySchema, tablesToMongo } from '@er/schema'
+import {
+  ddlToSchema, mongoToSchema, parseMongoExport, parseCsv, rowsToSchema, isSpecRows, specToSchema, serialize, emptySchema, tablesToMongo,
+  parseMongoose, validatorToSchema, collectionNameFromFile, toMongoose, mergeMongooseSources, looksLikeDsl, convertSource,
+} from '@er/schema'
 import { readXlsx } from './xlsx.js'
 
 export const PROJECT_FORMAT = 'er-designer'
+
+/**
+ * Text that goes into the shared editor must use \n only. The editor (CodeMirror) turns \r\n into \n, so a \r\n in the
+ * shared Y.Text makes the two disagree about positions and later edits / replacements corrupt the document.
+ */
+export const normalizeEol = (text) => String(text).replace(/\r\n?/g, '\n')
 
 export function download(content, filename, type = 'text/plain;charset=utf-8') {
   const blob = content instanceof Blob ? content : new Blob([content], { type })
@@ -34,9 +43,10 @@ export function readProjectFile(text) {
   if (data?.format !== PROJECT_FORMAT || typeof data.code !== 'string') {
     throw new Error('Not an ER Designer project file.')
   }
+  const mode = data.mode === 'mongodb' ? 'mongodb' : 'sql'
   return {
-    mode: data.mode === 'mongodb' ? 'mongodb' : 'sql',
-    code: data.code,
+    mode,
+    code: normalizeEol(mode === 'mongodb' && looksLikeDsl(data.code) ? convertSource(data.code, 'sql', 'mongodb') : data.code),
     positions: data.positions && typeof data.positions === 'object' ? data.positions : {},
   }
 }
@@ -44,9 +54,9 @@ export function readProjectFile(text) {
 const extOf = (name) => (name.match(/\.([^.]+)$/)?.[1] ?? '').toLowerCase()
 
 /**
- * Turn dropped/selected files into DSL text.
- * Supported: .csv/.tsv (one table each), .xlsx (one table per sheet), .sql (DDL dump),
- * .sqlite/.db/.sqlite3 (SQLite file), .json/.jsonl/.ndjson (mongoexport output).
+ * Turn dropped/selected files into editor text: DSL for SQL, real Mongoose code for MongoDB.
+ * Supported: .csv/.tsv (one table each), .xlsx (one table per sheet), .sql (DDL dump), .sqlite/.db/.sqlite3 (SQLite file),
+ * .js/.mjs/.cjs (Mongoose model files, kept as they are), .json with a $jsonSchema validator, .json/.jsonl/.ndjson (mongoexport data).
  * A CSV/sheet headed `Field, Type` is read as a schema description (one collection/table),
  * anything else as table data.
  * `options.target` ('sql' | 'mongodb'): the kind of database the result is meant for. CSV / Excel data tables get that kind's
@@ -58,6 +68,7 @@ export async function importFiles(files, options = {}) {
   const schema = emptySchema()
   const dataTables = emptySchema() // plain data sheets go last, after the schema descriptions
   const specs = []
+  const mongooseSources = [] // Mongoose model files are kept verbatim (hooks, methods and comments survive)
   let mode = null
   const addSheet = (label, name, rows) => {
     if (isSpecRows(rows)) {
@@ -89,13 +100,34 @@ export async function importFiles(files, options = {}) {
         schema.refs.push(...s.refs)
         notes.push(`${file.name}: ${s.tables.length} table(s), ${s.refs.length} relation(s)`)
         mode ??= 'sql'
+      } else if (['js', 'mjs', 'cjs'].includes(ext)) {
+        const text = await readText(file)
+        const parsed = parseMongoose(text)
+        if (parsed.errors.length) throw new Error(`line ${parsed.errors[0].line}: ${parsed.errors[0].message}`)
+        mongooseSources.push(text)
+        const roots = parsed.tables.filter((t) => !t.embedded).length
+        notes.push(`${file.name}: Mongoose model file, ${roots} collection(s), ${parsed.tables.length - roots} embedded document type(s)`)
+        mode = 'mongodb'
       } else if (['json', 'jsonl', 'ndjson', 'bson'].includes(ext)) {
         if (ext === 'bson') throw new Error('Binary .bson is not supported - export with mongoexport (JSON) instead.')
-        const base = file.name.replace(/\.[^.]+$/, '')
-        const s = mongoToSchema(parseMongoExport(await readText(file), base))
-        schema.tables.push(...s.tables)
-        schema.refs.push(...s.refs)
-        notes.push(`${file.name}: ${s.tables.length} collection(s)/sub-document type(s) inferred`)
+        const text = await readText(file)
+        let validator = null
+        if (ext === 'json') {
+          try {
+            validator = validatorToSchema(JSON.parse(text), collectionNameFromFile(file.name))
+          } catch {}
+        }
+        if (validator) {
+          schema.tables.push(...validator.tables)
+          schema.refs.push(...validator.refs)
+          notes.push(`${file.name}: read as a $jsonSchema validator (${validator.tables.filter((t) => !t.embedded).length} collection(s))`)
+        } else {
+          const base = file.name.replace(/\.[^.]+$/, '')
+          const s = mongoToSchema(parseMongoExport(text, base))
+          schema.tables.push(...s.tables)
+          schema.refs.push(...s.refs)
+          notes.push(`${file.name}: ${s.tables.length} collection(s)/sub-document type(s) inferred from the documents`)
+        }
         mode = 'mongodb'
       } else {
         notes.push(`${file.name}: unsupported file type, skipped`)
@@ -113,7 +145,12 @@ export async function importFiles(files, options = {}) {
   }
   schema.tables.push(...(options.target === 'mongodb' ? tablesToMongo(dataTables.tables) : dataTables.tables))
   if (options.target) mode = options.target
-  return { code: serialize(schema), notes, mode }
+  if (mode === 'mongodb') {
+    const parts = [...mongooseSources]
+    if (schema.tables.length) parts.push(toMongoose(schema))
+    return { code: normalizeEol(parts.reduce((all, part) => mergeMongooseSources(all, part), '')), notes, mode }
+  }
+  return { code: normalizeEol(serialize(schema)), notes, mode }
 }
 
 async function sqliteToSchema(buffer) {

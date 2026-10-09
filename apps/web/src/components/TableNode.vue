@@ -12,6 +12,7 @@ defineProps({ id: String, data: Object })
       <Handle id="__table-r" type="source" :position="Position.Right" class="hd" />
       <span class="name">{{ data.table.name }}</span>
       <span v-if="data.table.embedded" class="badge">embedded</span>
+      <span v-else-if="data.mode === 'mongodb'" class="badge">collection</span>
     </div>
     <div v-for="f in data.table.fields" :key="f.name" class="row" :style="{ height: ROW_H + 'px' }" :title="f.note || ''">
       <Handle :id="f.name + '-l'" type="source" :position="Position.Left" class="hd" />

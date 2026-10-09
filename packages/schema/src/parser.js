@@ -45,6 +45,7 @@ function splitTop(text) {
   const out = []
   let cur = ''
   let quote = null
+  let depth = 0
   for (let i = 0; i < text.length; i++) {
     const ch = text[i]
     if (quote) {
@@ -54,7 +55,13 @@ function splitTop(text) {
     } else if (QUOTES.has(ch)) {
       quote = ch
       cur += ch
-    } else if (ch === ',') {
+    } else if (ch === '[' || ch === '(') {
+      depth++
+      cur += ch
+    } else if ((ch === ']' || ch === ')') && depth > 0) {
+      depth--
+      cur += ch
+    } else if (ch === ',' && depth === 0) {
       out.push(cur.trim())
       cur = ''
     } else cur += ch
@@ -83,6 +90,7 @@ function findComment(s) {
 function splitSettingsBlock(line) {
   let quote = null
   let open = -1
+  let depth = 0
   let found = null
   for (let i = 0; i < line.length; i++) {
     const ch = line[i]
@@ -90,8 +98,13 @@ function splitSettingsBlock(line) {
       if (ch === '\\') i++
       else if (ch === quote) quote = null
     } else if (QUOTES.has(ch)) quote = ch
-    else if (ch === '[' && i > 0 && /\s/.test(line[i - 1])) open = i
-    else if (ch === ']' && open !== -1) {
+    else if (ch === '[') {
+      if (depth > 0) depth++
+      else if (i > 0 && /\s/.test(line[i - 1])) {
+        open = i
+        depth = 1
+      }
+    } else if (ch === ']' && depth > 0 && --depth === 0) {
       found = { open, close: i }
       open = -1
     }
@@ -116,7 +129,20 @@ function parseRef(body) {
   return { from, to, type: m[2] }
 }
 
-const KEY_SETTINGS = new Set(['default', 'note', 'ref'])
+const KEY_SETTINGS = new Set(['default', 'note', 'ref', 'enum'])
+
+/** `['a', 'b', 3]` -> ['a', 'b', 3] (null when it is not a list of strings / numbers) */
+function parseEnumList(text) {
+  const t = text.trim()
+  if (!t.startsWith('[') || !t.endsWith(']')) return null
+  const out = []
+  for (const raw of splitTop(t.slice(1, -1))) {
+    if (QUOTES.has(raw[0])) out.push(unquoteValue(raw))
+    else if (/^-?\d+(\.\d+)?$/.test(raw)) out.push(Number(raw))
+    else return null
+  }
+  return out
+}
 
 /** Blank out /* ... *\/ comments (keeping newlines so line numbers stay right); quotes and // comments are respected. */
 function stripBlockComments(text) {
@@ -276,7 +302,11 @@ export function parse(text) {
           f.default = unquoteValue(val)
           f.defaultKind = valueKind(val)
         } else if (key === 'note') f.note = unquoteValue(val)
-        else {
+        else if (key === 'enum') {
+          const list = parseEnumList(val)
+          if (list) f.enum = list
+          else err(i, "Invalid enum, expected: enum: ['a', 'b']")
+        } else {
           const r = parseRef(`${quoteIdent(table.name)}.${quoteIdent(f.name)} ${val}`)
           if (r && !r.mismatch) addRef(r, i)
           else err(i, 'Invalid inline ref, expected [ref: > table.field]')

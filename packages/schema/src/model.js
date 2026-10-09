@@ -9,6 +9,9 @@
  * @property {string|null} default
  * @property {'expr'|'string'|'literal'|null} defaultKind  expression (now()), quoted text, or bare literal (5, true)
  * @property {string|null} note
+ * @property {Array<string|number>|null} enum  allowed values (MongoDB enum / SQL check constraint)
+ * @property {string|null} refModel  MongoDB: name of the referenced Mongoose model when it is not part of this diagram
+ * @property {Object|null} opts  MongoDB: extra schema options with literal values (trim, min, maxlength ...)
  *
  * @typedef {Object} Index
  * @property {string[]} fields
@@ -40,7 +43,7 @@ export function emptySchema() {
 
 /** @returns {Field} */
 export function newField(name, type = 'varchar') {
-  return { name, type, pk: false, unique: false, notNull: false, increment: false, default: null, defaultKind: null, note: null }
+  return { name, type, pk: false, unique: false, notNull: false, increment: false, default: null, defaultKind: null, note: null, enum: null, refModel: null, opts: null }
 }
 
 export function findTable(schema, name) {

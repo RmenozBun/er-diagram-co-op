@@ -18,6 +18,7 @@ const props = defineProps({
   schema: { type: Object, required: true },
   positions: { type: Object, required: true },
   dark: Boolean,
+  mode: { type: String, default: 'sql' },
 })
 const emit = defineEmits(['move'])
 
@@ -33,7 +34,7 @@ const nodes = computed(() =>
     id: t.name,
     type: 'table',
     position: positionOf(t.name, i),
-    data: { table: t },
+    data: { table: t, mode: props.mode },
   })),
 )
 

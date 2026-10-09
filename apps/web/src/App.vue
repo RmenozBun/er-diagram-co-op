@@ -1,14 +1,14 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, watch } from 'vue'
 import { useTheme, useDisplay } from 'vuetify'
-import { parse, schemaToCsv, tablesToCsvFiles, SAMPLE_SQL, SAMPLE_MONGO } from '@er/schema'
+import { parseSource, convertSource, mergeMongooseSources, looksLikeDsl, schemaToCsv, tablesToCsvFiles, SAMPLE_SQL, SAMPLE_MONGO } from '@er/schema'
 import CodeEditor from './components/CodeEditor.vue'
 import DiagramView from './components/DiagramView.vue'
 import ExportDialog from './components/ExportDialog.vue'
 import ImportDialog from './components/ImportDialog.vue'
 import { createSession, getUser, saveUser, randomRoomId, setUserOnAwareness } from './lib/collab.js'
 import { autoLayout } from './lib/layout.js'
-import { download, makeProjectFile, readProjectFile, readText } from './lib/files.js'
+import { download, makeProjectFile, normalizeEol, readProjectFile, readText } from './lib/files.js'
 
 const theme = useTheme()
 const { mdAndUp, xs } = useDisplay()
@@ -30,7 +30,7 @@ const session = shallowRef(null)
 const code = ref('')
 const mode = ref('sql')
 const positions = ref({})
-const schema = ref(parse(''))
+const schema = ref(parseSource('', 'sql'))
 const peers = ref([])
 const connection = ref('local')
 const ready = ref(false)
@@ -134,14 +134,33 @@ function init() {
     syncPos()
     syncPeers()
     if (!provider) seedIfNeeded()
-    schema.value = parse(code.value)
+    if (!provider && mode.value === 'mongodb' && looksLikeDsl(code.value)) {
+      const converted = convertSource(code.value, 'sql', 'mongodb')
+      s.doc.transact(() => {
+        ytext.delete(0, ytext.length)
+        ytext.insert(0, converted)
+      })
+    }
+    if (!provider && ytext.toString().includes('\r')) {
+      const clean = normalizeEol(ytext.toString())
+      s.doc.transact(() => {
+        ytext.delete(0, ytext.length)
+        ytext.insert(0, clean)
+      })
+    }
+    schema.value = parseSource(code.value, mode.value)
     ready.value = true
   })
 }
 
-watch(code, (c) => {
+// the editor text is DSL in SQL mode and Mongoose code in MongoDB mode
+watch([code, mode], ([c, m]) => {
   clearTimeout(parseTimer)
-  parseTimer = setTimeout(() => (schema.value = parse(c)), 120)
+  parseTimer = setTimeout(() => {
+    const fresh = parseSource(c, m)
+    // a code error that hides everything (typing in the middle of a Mongoose model) keeps the last good diagram on screen
+    schema.value = fresh.errors.length && !fresh.tables.length && schema.value.tables.length ? { ...schema.value, errors: fresh.errors } : fresh
+  }, 120)
 })
 
 function onHashChange() {
@@ -193,10 +212,23 @@ function setMode(m) {
   if (m === mode.value) return
   if (isUntouchedSample()) {
     replaceAll({ newCode: m === 'mongodb' ? SAMPLE_MONGO : SAMPLE_SQL, newMode: m })
-    setTimeout(() => runAutoLayout(parse(code.value)), 50)
+    setTimeout(() => runAutoLayout(parseSource(code.value, m)), 50)
     toast(`Showing the ${MODE_NAME[m]} example. Once you edit the diagram, switching mode never replaces your work.`)
-  } else {
+  } else if (!code.value.trim()) {
     session.value.ymeta.set('mode', m)
+  } else {
+    // the editor holds DSL in SQL mode and Mongoose code in MongoDB mode, so the text has to be converted
+    if (schema.value.errors.length) {
+      toast('Fix the errors in the editor first: the text has to be converted to the other mode.')
+      return
+    }
+    const to = m === 'mongodb' ? 'Mongoose code' : 'SQL DSL'
+    if (!confirm(`Convert this ${MODE_NAME[mode.value]} diagram to ${to}?\n\nTables, fields, keys and relations are kept. Comments, hooks and methods in the code are not carried over. (This changes the diagram for everyone in the room.)`)) return
+    const converted = convertSource(code.value, mode.value, m)
+    replaceAll({ newCode: converted, newMode: m, newPositions: positions.value })
+    const fresh = parseSource(converted, m)
+    if (fresh.tables.some((t) => !positions.value[t.name])) setTimeout(() => runAutoLayout(fresh), 50)
+    toast(`Converted to ${to}.`)
   }
 }
 
@@ -221,7 +253,7 @@ function replaceAll({ newCode, newMode, newPositions = {} }) {
   const { doc, ytext, ymeta, ypos } = session.value
   doc.transact(() => {
     ytext.delete(0, ytext.length)
-    ytext.insert(0, newCode)
+    ytext.insert(0, normalizeEol(newCode))
     ymeta.set('seeded', true)
     if (newMode) ymeta.set('mode', newMode)
     for (const k of Array.from(ypos.keys())) ypos.delete(k)
@@ -241,21 +273,28 @@ function newDiagram() {
 function loadSample() {
   if (!confirmReplace()) return
   replaceAll({ newCode: mode.value === 'mongodb' ? SAMPLE_MONGO : SAMPLE_SQL, newMode: mode.value })
-  setTimeout(() => runAutoLayout(parse(code.value)), 50)
+  setTimeout(() => runAutoLayout(parseSource(code.value, mode.value)), 50)
 }
 
 async function onApplyImport({ code: imported, mode: importedMode, replace }) {
   const { ytext, doc, ymeta } = session.value
-  if (replace) {
+  const current = code.value
+  if (replace || !current.trim()) {
     replaceAll({ newCode: imported, newMode: importedMode })
+  } else if (importedMode === 'mongodb') {
+    // Mongoose code: keep the existing models and add the imported ones to the same module
+    const base = mode.value === 'mongodb' ? current : convertSource(current, mode.value, 'mongodb')
+    replaceAll({ newCode: mergeMongooseSources(base, imported), newMode: 'mongodb', newPositions: positions.value })
+  } else if (mode.value !== 'sql') {
+    replaceAll({ newCode: convertSource(current, mode.value, 'sql') + '\n' + imported, newMode: 'sql', newPositions: positions.value })
   } else {
     doc.transact(() => {
       const sep = ytext.length && !ytext.toString().endsWith('\n\n') ? (ytext.toString().endsWith('\n') ? '\n' : '\n\n') : ''
-      ytext.insert(ytext.length, sep + imported)
-      if (importedMode) ymeta.set('mode', importedMode)
+      ytext.insert(ytext.length, normalizeEol(sep + imported))
+      ymeta.set('mode', 'sql')
     })
   }
-  await runAutoLayout(parse(code.value))
+  await runAutoLayout(parseSource(code.value, importedMode))
   toast(`Import complete (${MODE_NAME[importedMode] ?? 'diagram'})`)
 }
 
@@ -450,7 +489,9 @@ const statusChip = computed(() => {
           <v-list-item prepend-icon="mdi-database-outline" title="SQLite database (.sqlite, .db)" @click="openImport('sql')" />
           <v-divider />
           <v-list-subheader class="head head-mongo"><v-icon size="14">mdi-leaf</v-icon> MongoDB</v-list-subheader>
-          <v-list-item prepend-icon="mdi-code-json" title="mongoexport (.json, .jsonl)" subtitle="schema is inferred from the documents" @click="openImport('mongodb')" />
+          <v-list-item prepend-icon="mdi-language-javascript" title="Mongoose model (.js)" subtitle="used as it is: hooks and methods are kept" @click="openImport('mongodb')" />
+          <v-list-item prepend-icon="mdi-code-json" title="Validator JSON ($jsonSchema)" subtitle="e.g. users_collection_validator.json" @click="openImport('mongodb')" />
+          <v-list-item prepend-icon="mdi-database-export-outline" title="mongoexport data (.json, .jsonl)" subtitle="schema is inferred from the documents" @click="openImport('mongodb')" />
           <v-divider />
           <v-list-subheader class="head head-table"><v-icon size="14">mdi-table</v-icon> CSV / Excel</v-list-subheader>
           <v-list-item prepend-icon="mdi-file-delimited-outline" title="CSV / TSV" subtitle="you choose: as SQL or as MongoDB" @click="openImport('table')" />
@@ -472,8 +513,9 @@ const statusChip = computed(() => {
           <v-list-item prepend-icon="mdi-database-outline" title="SQLite" @click="openExport('sqlite')" />
           <v-divider />
           <v-list-subheader class="head head-mongo"><v-icon size="14">mdi-leaf</v-icon> MongoDB</v-list-subheader>
-          <v-list-item prepend-icon="mdi-language-javascript" title="Mongoose models" @click="openExport('mongoose')" />
-          <v-list-item prepend-icon="mdi-console" title="mongosh (validators + indexes)" @click="openExport('mongosh')" />
+          <v-list-item prepend-icon="mdi-language-javascript" title="Mongoose models (.js)" subtitle="schema + mongoose.model(...)" @click="openExport('mongoose')" />
+          <v-list-item prepend-icon="mdi-code-json" title="Validator JSON ($jsonSchema)" @click="openExport('validator')" />
+          <v-list-item prepend-icon="mdi-console" title="mongosh script (validators + indexes)" @click="openExport('mongosh')" />
           <v-divider />
           <v-list-subheader class="head head-table"><v-icon size="14">mdi-file-multiple-outline</v-icon> Any mode</v-list-subheader>
           <v-list-item prepend-icon="mdi-code-braces" title="Diagram source (DSL text)" @click="openExport('dsl')" />
@@ -507,10 +549,11 @@ const statusChip = computed(() => {
           <div v-if="!schema.tables.length" class="empty-hint">
             <div class="text-center">
               <v-icon size="48">mdi-table-plus</v-icon>
-              <div class="mt-2">Write a <code>Table</code> on the left, or import a file</div>
+              <div v-if="mode === 'mongodb'" class="mt-2">Write a <code>mongoose.Schema</code> on the left, or import a model file</div>
+              <div v-else class="mt-2">Write a <code>Table</code> on the left, or import a file</div>
             </div>
           </div>
-          <DiagramView ref="diagram" :schema="schema" :positions="positions" :dark="dark" @move="onMove" />
+          <DiagramView ref="diagram" :schema="schema" :positions="positions" :dark="dark" :mode="mode" @move="onMove" />
         </div>
       </div>
       <div v-else class="d-flex align-center justify-center" style="height: 100%">

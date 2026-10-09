@@ -62,3 +62,29 @@ export function tablesToMongo(tables) {
     })),
   }))
 }
+
+const SQL_OF = {
+  string: 'varchar(255)', number: 'double', int: 'int', long: 'bigint', double: 'double', decimal: 'decimal(18,4)', bool: 'boolean',
+  date: 'timestamp', objectid: 'varchar(24)', buffer: 'blob', json: 'jsonb', object: 'jsonb', mixed: 'jsonb',
+}
+
+/** "string" -> "varchar(255)", "number[]" -> "double[]"; names of embedded tables and unknown types are kept. */
+export function mongoTypeToSql(type) {
+  const isArray = /\[\]$/.test(String(type))
+  const base = String(type).replace(/\[\]$/, '').trim()
+  const mapped = SQL_OF[base.toLowerCase()]
+  return mapped ? mapped + (isArray ? '[]' : '') : String(type)
+}
+
+/** Returns copies of the tables with SQL type names (the `_id` primary key keeps its name). */
+export function tablesToSql(tables) {
+  const embedded = new Set(tables.map((t) => t.name.toLowerCase()))
+  return tables.map((t) => ({
+    ...t,
+    note: t.note && /^Mongoose model /.test(t.note) ? null : t.note,
+    fields: t.fields.map((f) => {
+      const base = String(f.type).replace(/\[\]$/, '').toLowerCase()
+      return embedded.has(base) ? f : { ...f, type: mongoTypeToSql(f.type) }
+    }),
+  }))
+}

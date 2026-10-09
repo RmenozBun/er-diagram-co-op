@@ -3,7 +3,16 @@
   "version": "0.1.0",
   "type": "module",
   "main": "src/index.js",
-  "exports": { ".": "./src/index.js" },
-  "scripts": { "test": "vitest run" },
-  "devDependencies": { "vitest": "^2.1.8" }
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "acorn": "^8.14.0"
+  }
 }

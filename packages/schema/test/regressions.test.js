@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import initSqlJs from 'sql.js'
 import {
   parse, serialize, toSQL, toMongoose, toMongoShell, csvToSchema, parseCsv, inferType, ddlToSchema, mongoToSchema, parseMongoExport,
-  specToSchema, isSpecRows, parseSpecType, schemaToCsv, tablesToCsvFiles, SAMPLE_SQL, SAMPLE_MONGO,
+  specToSchema, isSpecRows, parseSpecType, schemaToCsv, tablesToCsvFiles, SAMPLE_SQL, SAMPLE_MONGO_DSL,
 } from '../src/index.js'
 
 const roundTrip = (s) => parse(serialize(s))
@@ -304,10 +304,11 @@ describe('mongoexport inference', () => {
 describe('Mongo generators: valid files and tolerant validators', () => {
   it('toMongoose output has unique, valid identifiers for hostile table names', () => {
     const s = parse('Table user {\n  a int\n}\nTable User {\n  a int\n}\nTable "a-b" {\n  a int\n}\nTable "a b" {\n  a int\n}\nTable schema {\n  a int\n}\nTable number {\n  a int\n}\nTable "2024data" {\n  a int\n}\nTable "it\'s" {\n  a int\n}')
-    const js = toMongoose(s)
+    const js = toMongoose(s, { style: 'cjs' })
     const ids = [...js.matchAll(/^const (\w+) = mongoose\.model/gm)].map((m) => m[1])
     expect(new Set(ids).size).toBe(8)
-    expect(() => new Function('require', 'module', js)(() => ({ Schema: class { index() {} }, model: () => ({}) }), { exports: {} })).not.toThrow()
+    const fakeMongoose = { Schema: Object.assign(class { index() {} }, { Types: { ObjectId: {}, Mixed: {}, Decimal128: {} } }), model: () => ({}) }
+    expect(() => new Function('require', 'module', js)(() => fakeMongoose, { exports: {} })).not.toThrow()
   })
 
   it('validators accept ints in double fields, nulls in optional fields; unique optional fields are sparse', () => {
@@ -339,7 +340,7 @@ describe('Mongo generators: valid files and tolerant validators', () => {
   })
 
   it('SAMPLE_MONGO still produces embedded sub-documents', () => {
-    expect(toMongoose(parse(SAMPLE_MONGO))).toContain('city: { type: String }')
+    expect(toMongoose(parse(SAMPLE_MONGO_DSL))).toContain('city: { type: String }')
   })
 })
 
@@ -366,7 +367,7 @@ describe('fuzz: serialize -> parse is the identity', () => {
           let fname = pick(WORDS)
           while (fields.some((f) => f.name === fname)) fname += '_' + j
           const kind = pick([null, 'literal', 'string', 'expr'])
-          const f = { name: fname, type: pick(TYPES), pk: rnd() < 0.2, unique: rnd() < 0.2, notNull: false, increment: false, default: null, defaultKind: null, note: rnd() < 0.4 ? pick(TEXT) || null : null }
+          const f = { name: fname, type: pick(TYPES), pk: rnd() < 0.2, unique: rnd() < 0.2, notNull: false, increment: false, default: null, defaultKind: null, note: rnd() < 0.4 ? pick(TEXT) || null : null, enum: null, refModel: null, opts: null }
           f.notNull = f.pk || rnd() < 0.3
           if (kind) {
             f.defaultKind = kind

@@ -1,6 +1,6 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { EditorState } from '@codemirror/state'
+import { Compartment, EditorState } from '@codemirror/state'
 import { EditorView, keymap, lineNumbers, highlightActiveLine, drawSelection, placeholder } from '@codemirror/view'
 import { defaultKeymap, indentWithTab } from '@codemirror/commands'
 import { acceptCompletion, autocompletion, completionKeymap, completionStatus } from '@codemirror/autocomplete'
@@ -8,7 +8,9 @@ import { StreamLanguage, HighlightStyle, syntaxHighlighting, indentOnInput, brac
 import { tags as t } from '@lezer/highlight'
 import * as Y from 'yjs'
 import { yCollab, yUndoManagerKeymap } from 'y-codemirror.next'
+import { javascript } from '@codemirror/lang-javascript'
 import { dslCompletions } from '../lib/completions.js'
+import { mongooseCompletions } from '../lib/mongoose-completions.js'
 
 const props = defineProps({
   ytext: { type: Object, required: true },
@@ -20,6 +22,14 @@ const props = defineProps({
 const host = ref(null)
 let view = null
 let undoManager = null
+// the editor holds DSL in SQL mode and real Mongoose (JavaScript) code in MongoDB mode
+const language = new Compartment()
+const hint = new Compartment()
+const hintFor = (mode) =>
+  placeholder(mode === 'mongodb' ? 'const usersSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n});\nmongoose.model("UserModel", usersSchema, "users");' : 'Table users {\n  id int [pk]\n}')
+const dslSource = dslCompletions(() => props.mode, () => props.schema)
+const mongooseSource = mongooseCompletions(() => props.schema)
+const completionSource = (context) => (props.mode === 'mongodb' ? mongooseSource(context) : dslSource(context))
 
 const dsl = StreamLanguage.define({
   token(stream) {
@@ -46,7 +56,16 @@ const highlight = HighlightStyle.define([
   { tag: t.atom, color: 'var(--cm-atom)' },
   { tag: t.number, color: 'var(--cm-number)' },
   { tag: t.operator, color: 'var(--cm-operator)', fontWeight: '700' },
+  // JavaScript (MongoDB mode)
+  { tag: t.definitionKeyword, color: 'var(--cm-keyword)', fontWeight: '600' },
+  { tag: t.controlKeyword, color: 'var(--cm-keyword)', fontWeight: '600' },
+  { tag: t.moduleKeyword, color: 'var(--cm-keyword)', fontWeight: '600' },
+  { tag: [t.bool, t.null, t.className], color: 'var(--cm-atom)' },
+  { tag: t.propertyName, color: 'var(--cm-property)' },
+  { tag: t.regexp, color: 'var(--cm-string)' },
 ])
+
+const languageFor = (mode) => (mode === 'mongodb' ? javascript() : dsl)
 
 const theme = EditorView.theme({
   '&': { height: '100%', backgroundColor: 'rgb(var(--v-theme-surface))', color: 'rgb(var(--v-theme-on-surface))', fontSize: '13.5px' },
@@ -71,10 +90,10 @@ function mount() {
         drawSelection(),
         indentOnInput(),
         bracketMatching(),
-        dsl,
+        language.of(languageFor(props.mode)),
         syntaxHighlighting(highlight),
-        placeholder('Table users {\n  id int [pk]\n}'),
-        autocompletion({ override: [dslCompletions(() => props.mode, () => props.schema)], icons: false }),
+        hint.of(hintFor(props.mode)),
+        autocompletion({ override: [completionSource], icons: false }),
         keymap.of([...completionKeymap, { key: 'Tab', run: (view) => (completionStatus(view.state) === 'active' ? acceptCompletion(view) : false) }, ...yUndoManagerKeymap, indentWithTab, ...defaultKeymap]),
         yCollab(props.ytext, props.awareness, { undoManager }),
         theme,
@@ -88,6 +107,11 @@ onBeforeUnmount(() => {
   view?.destroy()
   undoManager?.destroy()
 })
+
+watch(
+  () => props.mode,
+  (mode) => view?.dispatch({ effects: [language.reconfigure(languageFor(mode)), hint.reconfigure(hintFor(mode))] }),
+)
 
 watch(
   () => props.ytext,

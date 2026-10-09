@@ -29,12 +29,13 @@ const KINDS = {
     title: 'Import from MongoDB',
     color: 'success',
     icon: 'mdi-leaf',
-    exts: ['json', 'jsonl', 'ndjson'],
+    exts: ['js', 'mjs', 'cjs', 'json', 'jsonl', 'ndjson'],
     formats: [
-      ['.json', 'mongoexport array, or { "collection": [documents] }'],
-      ['.jsonl · .ndjson', 'one document per line (mongoexport default)'],
+      ['.js · .mjs', 'Mongoose model file: mongoose.Schema + mongoose.model (used as it is)'],
+      ['.json', '$jsonSchema validator (e.g. users_collection_validator.json) or mongoexport data'],
+      ['.jsonl · .ndjson', 'mongoexport data, one document per line'],
     ],
-    hint: 'The schema is inferred from the documents: nested objects and arrays of objects become embedded tables, ObjectId / dates / numbers are detected.',
+    hint: 'The editor shows real Mongoose code. A model file is loaded exactly as it is (hooks, methods and comments are kept); a validator JSON or exported documents are turned into a Mongoose schema.',
   },
   table: {
     badge: 'CSV · Excel',
@@ -188,8 +189,8 @@ async function run() {
         </v-radio-group>
 
         <v-alert v-if="hasContent && resultMode !== currentMode && strategy === 'append'" type="info" variant="tonal" density="compact" class="mt-3">
-          The diagram is in {{ currentMode === 'mongodb' ? 'MongoDB' : 'SQL' }} mode. Importing {{ resultCfg.badge }} content will switch the editor to
-          {{ resultCfg.badge }} mode.
+          The diagram is in {{ currentMode === 'mongodb' ? 'MongoDB' : 'SQL' }} mode. Adding {{ resultCfg.badge }} content switches the editor to
+          {{ resultCfg.badge }} mode and converts what is in it now ({{ resultCfg.badge === 'MongoDB' ? 'to Mongoose code' : 'to SQL DSL' }}; comments, hooks and methods are not carried over).
         </v-alert>
 
         <v-alert v-if="notes.length" type="info" variant="tonal" density="compact" class="mt-3">

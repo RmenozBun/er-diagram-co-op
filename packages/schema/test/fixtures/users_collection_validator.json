@@ -1,0 +1,92 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "title": "users validation",
+    "required": [
+      "username",
+      "password",
+      "CustomerID",
+      "fullname",
+      "role"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "username": {
+        "bsonType": "string",
+        "description": "ต้องเป็น string และห้ามซ้ำ (ตั้ง unique index แยกต่างหาก)"
+      },
+      "password": {
+        "bsonType": "string",
+        "description": "ต้องเป็น string"
+      },
+      "hint": {
+        "bsonType": "string",
+        "description": "ค่าเริ่มต้นคือ string ว่าง"
+      },
+      "CustomerID": {
+        "bsonType": "string",
+        "description": "ต้องเป็น string และห้ามซ้ำ (ตั้ง unique index แยกต่างหาก)"
+      },
+      "fullname": {
+        "bsonType": "string",
+        "description": "ต้องเป็น string"
+      },
+      "profileImage": {
+        "bsonType": "string",
+        "description": "ค่าเริ่มต้นคือ string ว่าง"
+      },
+      "role": {
+        "bsonType": "number",
+        "description": "ต้องเป็นตัวเลข"
+      },
+      "isActive": {
+        "bsonType": "number",
+        "description": "ค่าเริ่มต้นคือ 1"
+      },
+      "membershipStatus": {
+        "bsonType": "string",
+        "enum": ["none", "pending", "approved", "rejected"],
+        "description": "ค่าเริ่มต้นคือ 'none'"
+      },
+      "memberId": {
+        "bsonType": ["objectId", "null"],
+        "description": "อ้างอิงถึง MemberModel, ค่าเริ่มต้นคือ null"
+      },
+      "memberNumber": {
+        "bsonType": "string",
+        "description": "ค่าเริ่มต้นคือ string ว่าง"
+      },
+      "licenseNumbers": {
+        "bsonType": "array",
+        "description": "ค่าเริ่มต้นคือ array ว่าง",
+        "items": {
+          "bsonType": "object",
+          "required": ["professionType", "licenseNumber"],
+          "additionalProperties": false,
+          "properties": {
+            "_id": {
+              "bsonType": "objectId"
+            },
+            "professionType": {
+              "bsonType": "string"
+            },
+            "licenseNumber": {
+              "bsonType": "string"
+            }
+          }
+        }
+      },
+      "createAt": {
+        "bsonType": "string",
+        "description": "วันที่สร้าง (string, timezone Bangkok)"
+      },
+      "updateAt": {
+        "bsonType": "string",
+        "description": "วันที่แก้ไขล่าสุด (string, timezone Bangkok)"
+      }
+    }
+  }
+}

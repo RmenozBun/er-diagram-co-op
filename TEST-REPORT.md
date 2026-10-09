@@ -108,6 +108,23 @@
 - เมนู Import แยกหัวข้อ SQL (น้ำเงิน) / MongoDB (เขียว) / CSV·Excel และแต่ละหัวข้อเปิดหน้าต่างที่รับเฉพาะไฟล์ชนิดนั้น ไฟล์ผิดชนิดถูกปฏิเสธพร้อมข้อความ ทดสอบนำเข้า .sql, .jsonl, .xlsx จริงของโรงเรียน (แนะนำ MongoDB ให้เอง, 6 collection, 10 ความสัมพันธ์) และ CSV แบบ "เป็น MongoDB" (ได้ `_id`, string/int/date/bool)
 - เมนู Export แยก SQL / MongoDB / ใช้ได้ทั้งสองโหมด หน้าต่าง Export มีแถว SQL (น้ำเงิน) และ MongoDB (เขียว, ป้าย "current mode") และแจ้งเตือนเมื่อ export ข้ามโหมด
 
+## โหมด MongoDB แบบโค้ด Mongoose
+
+ทดสอบด้วยไฟล์จริงของผู้ใช้ (`users.model.js` และ `users_collection_validator.json` ใน `packages/schema/test/fixtures/`):
+
+| ทดสอบ | ผล |
+|---|---|
+| อ่าน `users.model.js` (ฟิลด์ `required`/`unique`, `enum`, `default` ที่เป็นฟังก์ชัน, `index`, `ref: "MemberModel"`, array ของ sub-document, hooks) | อ่านถูกต้องหมด ไม่มี error |
+| generate กลับเป็นโค้ด Mongoose | เหมือนไฟล์เดิมเกือบทุกบรรทัด (ต่างเฉพาะ import ของ helper และ hooks) และอ่านกลับได้โครงเดียวกัน |
+| import validator JSON | อ่านเป็น validator (ไม่ใช่ข้อมูลตัวอย่างเหมือนเดิมที่ได้ตารางขยะ 22 ตาราง) ได้ `unique`, `default`, `ref` จากคำอธิบาย |
+| validator ที่ export จากโค้ด เทียบกับ validator ที่ผู้ใช้ทำเอง | `required`, ชื่อและชนิดของ property ตรงกัน |
+| **Mongoose จริง + MongoDB 8 จริง** (`tests-e2e/mongo/tG_mongoose_mode.mjs`) | **19/19 ผ่าน:** model ที่ generate โหลดใน Mongoose ได้ บังคับ required/enum/sub-document ได้ validator ที่ generate รับ/ปฏิเสธเอกสารเหมือน validator ที่ทำเอง 5 กรณี และเอกสารที่ Mongoose สร้างผ่าน validator |
+| เบราว์เซอร์: import ไฟล์ .js / .json, autocomplete (`type:`, ตัวเลือก, `ref: ""`), error ระบุบรรทัด, สลับโหมดพร้อมแปลงข้อความ, export | ผ่าน |
+
+บั๊กที่เจอระหว่างทาง (แก้แล้ว): **ไฟล์ Windows (`\r\n`)** ทำให้ข้อความใน Yjs กับตัวแก้ไขเหลื่อมกัน import ซ้ำแล้วมีท่อนเก่าตกค้างต่อท้าย ตอนนี้ข้อความที่เข้าช่องแก้ไขถูกทำเป็น `\n` เสมอ (ทดสอบ: import ซ้ำหลายรอบ ข้อความตรงกับหลังโหลดหน้าใหม่) และตอนพิมพ์โค้ดค้างกลางคัน (syntax error) diagram เดิมยังอยู่บนจอแทนที่จะหายไป
+
+ข้อจำกัด: สลับ SQL ↔ MongoDB แล้วคอมเมนต์ hooks และ methods ไม่ถูกส่งต่อ (มีหน้าต่างยืนยัน) ห้อง/โปรเจกต์โหมด MongoDB ที่สร้างไว้ก่อนเวอร์ชันนี้ (เป็นข้อความ DSL) จะถูกแปลงเป็นโค้ด Mongoose ให้เองเฉพาะเอกสารส่วนตัวและไฟล์โปรเจกต์ ส่วนห้องที่แชร์ไว้แล้วต้องแปลงเอง (สลับโหมดแล้วสลับกลับ) สคริปต์ `tests-e2e/mongo/t*.mjs` ชุดแรกเขียนสำหรับตัว generate รุ่นก่อน ใช้ผลของ `tG` และ unit test แทน
+
 ## รันการทดสอบซ้ำ
 
 ```bash

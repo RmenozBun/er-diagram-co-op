@@ -126,6 +126,7 @@ export function toSQL(schema, dialect = 'postgres') {
       if (f.pk && pks.length === 1) line += ' primary key'
       if (f.notNull && !f.pk) line += ' not null'
       if (f.unique && !f.pk) line += ' unique'
+      if (f.enum?.length) line += ` check (${Q(f.name)} in (${f.enum.map((v) => (typeof v === 'number' ? v : `'${String(v).replace(/'/g, "''")}'`)).join(', ')}))`
       const d = f.increment && dialect !== 'sqlite' ? null : defaultSql(f, dialect)
       if (d !== null && !(dialect === 'mysql' && /^(text|blob|json)/i.test(type) && !d.startsWith('('))) line += ` default ${d}`
       return line

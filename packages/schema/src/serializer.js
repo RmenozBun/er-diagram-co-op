@@ -41,6 +41,7 @@ export function serialize(schema) {
       if (f.unique) s.push('unique')
       if (f.notNull && !f.pk) s.push('not null')
       if (f.default !== null && f.default !== undefined) s.push(`default: ${defaultText(f)}`)
+      if (f.enum?.length) s.push(`enum: [${f.enum.map((v) => (typeof v === 'number' ? v : str(v))).join(', ')}]`)
       if (f.note) s.push(`note: ${str(f.note)}`)
       lines.push(`  ${q(f.name)} ${f.type}${s.length ? ` [${s.join(', ')}]` : ''}`)
     }

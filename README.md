@@ -3,11 +3,11 @@
 เว็บออกแบบฐานข้อมูล / ER diagram แบบ real-time (แนว dbdiagram.io) รองรับ SQL และ MongoDB
 แก้พร้อมกันได้หลายคน (ทดสอบแล้วสำหรับ 5-6 คน) ไม่มีฐานข้อมูล ไม่มีระบบ login
 
-- **ซ้าย** เขียนโครงสร้างด้วย DSL → **ขวา** เห็น diagram ทันที ลากย้ายตารางได้ มี **autocomplete** ชนิดข้อมูลตามโหมด SQL/MongoDB (Ctrl+Space, Tab/Enter เพื่อยอมรับ)
+- **ซ้าย** เขียนโครงสร้าง → **ขวา** เห็น diagram ทันที ลากย้ายตารางได้ โหมด **SQL** เขียนด้วย DSL (แนว dbdiagram.io) โหมด **MongoDB** เขียน **โค้ด Mongoose จริง** (`mongoose.Schema` / `mongoose.model`) มี **autocomplete** ตามโหมด (Ctrl+Space, Tab/Enter เพื่อยอมรับ)
 - **Share** → ได้ลิงก์ห้อง ใครมีลิงก์เข้ามาแก้ด้วยกันได้ เห็น cursor/ชื่อของแต่ละคน
 - **Save project file** (`.dbd.json`) / **Open project file** เพื่อทำงานต่อภายหลัง
-- **Import** แยกเมนูชัดเจน: **SQL** (dump `.sql`, SQLite `.sqlite/.db`) · **MongoDB** (`mongoexport` `.json/.jsonl`) · **CSV / Excel** (เลือกได้ว่าจะนำเข้าเป็นตาราง SQL หรือ collection MongoDB; ถ้าเนื้อหาดูเป็นสไตล์ Mongo จะแนะนำให้อัตโนมัติ)
-- **Export** แยกเมนูชัดเจน: **SQL** (PostgreSQL / MySQL / SQLite) · **MongoDB** (Mongoose models, mongosh validators) · ใช้ได้ทั้งสองโหมด (DSL, CSV, ZIP ต่อตาราง, รูป PNG / SVG) หัวข้อ SQL เป็นสีน้ำเงิน MongoDB เป็นสีเขียวทั้งในเมนูและหน้าต่าง
+- **Import** แยกเมนูชัดเจน: **SQL** (dump `.sql`, SQLite `.sqlite/.db`) · **MongoDB** (ไฟล์ model Mongoose `.js`, validator `$jsonSchema` `.json`, ข้อมูล `mongoexport` `.json/.jsonl`) · **CSV / Excel** (เลือกได้ว่าจะนำเข้าเป็นตาราง SQL หรือ collection MongoDB; ถ้าเนื้อหาดูเป็นสไตล์ Mongo จะแนะนำให้อัตโนมัติ)
+- **Export** แยกเมนูชัดเจน: **SQL** (PostgreSQL / MySQL / SQLite) · **MongoDB** (Mongoose models, Validator JSON, สคริปต์ mongosh) · ใช้ได้ทั้งสองโหมด (DSL, CSV, ZIP ต่อตาราง, รูป PNG / SVG) หัวข้อ SQL เป็นสีน้ำเงิน MongoDB เป็นสีเขียวทั้งในเมนูและหน้าต่าง
 - สลับโหมด **SQL ↔ MongoDB** ตอนที่ในช่องแก้ไขยังเป็นตัวอย่างสำเร็จรูป ตัวอย่างจะเปลี่ยนตามโหมดให้เอง (ถ้าแก้อะไรไปแล้ว ระบบไม่แทนที่งานของคุณ)
 - รองรับชื่อภาษาไทย/Unicode ทั้งใน DSL, CSV และชื่อ sheet
 - งานถูก autosave ในเบราว์เซอร์ (IndexedDB) กันปิดแท็บพลาด
@@ -33,8 +33,8 @@ tests-e2e/    สคริปต์และรายงานการทดส
 npm install
 npm run relay:dev   # relay ที่ http://localhost:8787
 npm run dev         # เว็บที่ http://localhost:5173
-npm test            # 62 unit tests (parser/generator/importer)
-npm test -w apps/relay   # 8 tests การบันทึก/หมดอายุของห้อง
+npm test            # 82 unit tests (parser/generator/importer, Mongoose)
+npm test -w apps/relay   # 11 tests การบันทึก/หมดอายุของห้อง และการล็อก Origin
 ```
 
 เปิดเว็บ → กด **Share** → เปิดลิงก์เดียวกันในอีกแท็บ/เครื่องเพื่อลองแก้พร้อมกัน
@@ -73,20 +73,31 @@ Ref: lines.(o_region, o_number) > orders.(region, number)   // composite (multi-
 
 ชื่อที่มีช่องว่างหรืออักขระพิเศษใส่เครื่องหมายคำพูดได้ (`"my table"`) ชื่อไทยพิมพ์ได้ตรงๆ รองรับคอมเมนต์ `// ...` และ `/* ... */`
 
-**MongoDB**: ฟิลด์ที่มีชนิดเป็น "ชื่อตารางอื่น" = sub-document ฝังใน document (ใช้ `Name[]` สำหรับ array)
-ตารางที่ใส่ `[embedded]` จะไม่ถูกสร้างเป็น collection แยก
-pk ObjectId ที่ชื่อ `id` จะถูก export เป็น `_id` ให้อัตโนมัติ
+**โหมด MongoDB ใช้โค้ด Mongoose จริง ไม่ใช่ DSL** ช่องซ้ายคือไฟล์ model แบบที่เขียนด้วยมือ:
 
-```
-Table orders {
-  _id objectid [pk]
-  user_id objectid                    // reference (ObjectId) ใช้ Ref: orders.user_id > users._id
-  items OrderItem[]                   // embedded array
-}
-Table OrderItem [embedded] {
-  sku string
-  qty int
-}
+```js
+import mongoose from "mongoose";
+
+const usersSchema = new mongoose.Schema(
+  {
+    username: { type: String, required: true, unique: true },
+    role: { type: String, enum: ["member", "admin"], default: "member" },
+    memberId: { type: mongoose.Schema.Types.ObjectId, ref: "MemberModel", default: null },
+    address: { street: { type: String }, city: { type: String } },          // sub-document
+    licenseNumbers: { type: [{ professionType: { type: String, required: true } }], default: [] },
+  },
+  { timestamps: false, versionKey: false },
+);
+
+const User = mongoose.model("UserModel", usersSchema, "users");
+export default User;
 ```
 
-ชนิดข้อมูลที่รู้จักใน MongoDB: `string, int, long, double, decimal, bool, date, objectid, json/object, buffer` และ array ด้วย `[]`
+- **Import ไฟล์ model (.js)** → โหลดเข้ามาตามที่เป็นทุกตัวอักษร (hooks, methods, คอมเมนต์ครบ) diagram สร้างจากโค้ดด้วยตัวอ่าน JavaScript จริง (acorn) รองรับ ESM/CommonJS, `new Schema` / `mongoose.Schema`, sub-schema, object ซ้อน, array ของ sub-document, `ref`, `enum`, `index`, `timestamps`, `_id: false`
+- **Import validator JSON (`$jsonSchema`)** เช่น `users_collection_validator.json` และ **ข้อมูล mongoexport** → แปลงเป็นโค้ด Mongoose
+- **Export** → Mongoose (โค้ดจากช่องแก้ไขตรงๆ เลือก ES modules / CommonJS ได้), Validator JSON (`users_collection_validator.json`), สคริปต์ mongosh
+- สลับ SQL ↔ MongoDB ตอนที่มีงานของคุณ: ข้อความจะถูกแปลง (มีหน้าต่างยืนยัน) ตาราง/ฟิลด์/คีย์/ความสัมพันธ์คงอยู่ แต่คอมเมนต์ hooks และ methods ไม่ถูกส่งต่อ
+- เขียนใน editor ได้เลยพร้อม autocomplete: ชนิด (`type:`), ตัวเลือก (`required`, `unique`, ...), ชื่อ model ใน `ref: ""`
+- ชื่อที่ generate ให้: collection `users` → `usersSchema`, `User`, `"UserModel"`; pk ObjectId ที่ชื่อ `id` จะเป็น `_id` อัตโนมัติ
+
+ใน SQL mode ยังใช้ DSL ตามเดิม (ด้านบน) และฟิลด์รองรับ `enum: ['a', 'b']` (export เป็น `check` constraint)

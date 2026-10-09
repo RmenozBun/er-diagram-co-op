@@ -6,6 +6,7 @@
   --cm-atom: #7c3aed;
   --cm-number: #0369a1;
   --cm-operator: #be185d;
+  --cm-property: #0f766e;
 }
 :root.er-dark {
   --er-bg: #1b1d21;
@@ -15,6 +16,7 @@
   --cm-atom: #c4b5fd;
   --cm-number: #7dd3fc;
   --cm-operator: #f9a8d4;
+  --cm-property: #5eead4;
 }
 html,
 body,

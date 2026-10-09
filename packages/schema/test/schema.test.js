@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   parse, serialize, toSQL, toMongoose, toMongoShell, csvToSchema, parseCsv, ddlToSchema,
-  mongoToSchema, parseMongoExport, deriveRelations, rootTables, schemaToCsv, SAMPLE_SQL, SAMPLE_MONGO, isSpecRows, specToSchema,
+  mongoToSchema, parseMongoExport, deriveRelations, rootTables, schemaToCsv, SAMPLE_SQL, SAMPLE_MONGO_DSL, isSpecRows, specToSchema,
 } from '../src/index.js'
 
 describe('parser', () => {
@@ -71,7 +71,7 @@ describe('sql generator', () => {
 })
 
 describe('mongo generator', () => {
-  const s = parse(SAMPLE_MONGO)
+  const s = parse(SAMPLE_MONGO_DSL)
   it('has no parse errors and 2 root tables', () => {
     expect(s.errors).toEqual([])
     expect(rootTables(s).map((t) => t.name)).toEqual(['users', 'orders'])
@@ -79,9 +79,9 @@ describe('mongo generator', () => {
   })
   it('mongoose with sub-documents and refs', () => {
     const js = toMongoose(s)
-    expect(js).toContain('mongoose.model("Users"')
-    expect(js).toContain('ref: "Users"')
-    expect(js).toContain('items: [{')
+    expect(js).toContain('mongoose.model("UserModel", usersSchema, "users")')
+    expect(js).toContain('ref: "UserModel"')
+    expect(js).toContain('type: [{')
     expect(js).toContain('city: { type: String }')
   })
   it('mongosh validator', () => {
@@ -197,7 +197,7 @@ Table b {
 Ref: b.a_id > a.id`)
     const js = toMongoose(s)
     expect(js).not.toMatch(/\bid:/)
-    expect(js).toContain('ref: "A"')
+    expect(js).toContain('ref: "AModel"')
     expect(toMongoShell(s)).toContain('"_id"')
     expect(toMongoShell(s)).not.toContain('"id"')
   })
