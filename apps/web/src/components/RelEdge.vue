@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { useTheme } from 'vuetify'
 import { BaseEdge, EdgeLabelRenderer, getBezierPath, Position } from '@vue-flow/core'
 
 const props = defineProps({
@@ -14,6 +15,8 @@ const props = defineProps({
   selected: Boolean,
 })
 
+const theme = useTheme()
+
 const path = computed(() =>
   getBezierPath({
     sourceX: props.sourceX,
@@ -26,8 +29,11 @@ const path = computed(() =>
   }),
 )
 
+// Fill and stroke are concrete values, not var() / stylesheet rules: the exported image has neither the page's CSS
+// variables nor vue-flow's stylesheet, so otherwise the path turns into a filled black blob (or vanishes).
 const style = computed(() => ({
-  stroke: props.selected ? 'rgb(var(--v-theme-primary))' : 'rgba(var(--v-theme-on-surface), 0.55)',
+  fill: 'none',
+  stroke: props.selected ? theme.current.value.colors.primary : (theme.current.value.dark ? 'rgba(255, 255, 255, 0.55)' : 'rgba(0, 0, 0, 0.55)'),
   strokeWidth: props.selected ? 2.5 : 1.6,
   strokeDasharray: props.data?.kind === 'embed' ? '6 4' : undefined,
 }))
