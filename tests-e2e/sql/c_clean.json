@@ -1,0 +1,854 @@
+[
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "tables found = 5 (users, orders, order_items, products, group)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "no phantom table from COPY/INSERT data text (\"evil\")",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "users.id PK (via ALTER TABLE ONLY ADD CONSTRAINT PRIMARY KEY)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "users.id increment (DEFAULT nextval via ALTER COLUMN SET DEFAULT / sequence OWNED BY)",
+  "pass": false,
+  "note": "serial-ness lost: {\"name\":\"id\",\"type\":\"integer\",\"pk\":true,\"unique\":false,\"notNull\":true,\"increment\":false,\"default\":null,\"note\":null}"
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "users.email UNIQUE (ALTER TABLE ADD CONSTRAINT UNIQUE)",
+  "pass": false,
+  "note": "ALTER TABLE ... ADD CONSTRAINT ... UNIQUE (col) not handled"
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "type \"character varying(255)\" normalised to varchar(255) (cosmetic)",
+  "pass": false,
+  "note": "character varying(255)"
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "numeric(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "balance default 0.00 + not null",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "timestamp without time zone type",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "timestamp type kept exactly as \"timestamp without time zone\" (round-trips to PG?)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "created_at default now()",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "timestamp with time zone",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "boolean default true",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "text default with '' and ; and \" and ::text cast",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "text[] array type",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "jsonb default '{}'::jsonb -> {}",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "varchar default 'new'::character varying -> new",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "CHECK constraint inside CREATE TABLE ignored (no phantom field)",
+  "pass": false,
+  "note": "12"
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "orders.id bigint PK",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "double precision type",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "character(10)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "composite PK order_items (order_id,line_no)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "quoted \"Name\" column preserved case",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "table \"group\" (reserved, quoted) schema-qualified",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "uuid default gen_random_uuid()",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "FK orders.user_id -> users.id (ALTER TABLE ONLY ... ADD CONSTRAINT FK ... ON DELETE CASCADE)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "FK order_items.order_id -> orders.id (ON UPDATE .. ON DELETE ..)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "FK order_items.sku -> products.sku",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "3 refs total",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "index idx_orders_user (USING btree)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "index with DESC: idx_orders_placed fields = placed_at,user_id (no \" DESC\" in names)",
+  "pass": false,
+  "note": "[{\"fields\":[\"user_id\"],\"unique\":false,\"name\":\"idx_orders_user\"},{\"fields\":[\"placed_at DESC\",\"user_id\"],\"unique\":false,\"name\":\"idx_orders_placed\"}]"
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "expression index lower((email)::text) skipped or sane (no garbage column names)",
+  "pass": false,
+  "note": "[{\"fields\":[\"lower((email\"],\"unique\":true,\"name\":\"idx_users_lower_email\"}]"
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "serialize(import) re-parses with 0 errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import pg_dump [data lines removed]",
+  "name": "regenerated PG DDL executes cleanly in PGlite",
+  "pass": false,
+  "note": "syntax error at or near \"default\" <= create table \"users\" ( \"id\" integer primary key, \"email\" character varying(255) not null,  || relation \"users\" does not exist <= create unique index \"idx_users_lower_email\" on \"users\" (\"lower((email\"); || type \"orders_total_check\" does not exist <= create table \"orders\" ( \"id\" bigint primary key, \"user_id\" integer not null, \"total\" doubl || relation \"orders\" do"
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "tables = 5 (customers, orders, order_lines, tags, customer_tags)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "no phantom tables from INSERT strings (`bad`)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "customers.id PK + auto_increment + int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "email varchar(191) not null (COLLATE clause ignored)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "email unique (UNIQUE KEY uk_email)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "name varchar(100) with CHARACTER SET",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "decimal(10,2) unsigned type keeps unsigned or drops cleanly",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "credit default '0.00' -> 0.00",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "enum('active','blocked','pending') type preserved",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "enum default 'pending'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "datetime default CURRENT_TIMESTAMP",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "timestamp ... ON UPDATE CURRENT_TIMESTAMP: type = timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "tinyint(1)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "flags default 0",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "column COMMENT with ; and parens doesn't break (bio longtext)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "COMMENT imported as note (nice-to-have)",
+  "pass": false,
+  "note": "comment dropped"
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "bigint unsigned",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "index idx_name_status (name,status)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "FULLTEXT KEY skipped without crash",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "orders.id bigint pk inc",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "orders.ref_code unique (UNIQUE KEY uk_ref)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "orders json type",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "FK orders.customer_id -> customers.id (ON DELETE CASCADE ON UPDATE RESTRICT)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "self FK orders.parent_id -> orders.id",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "FK order_lines.order_id -> orders.id",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "FK customer_tags both",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "composite PK order_lines",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "composite unique key (order_id,sku) -> unique index",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "prefix-length key `sku`(10) -> field sku",
+  "pass": false,
+  "note": "[{\"fields\":[\"order_id\",\"sku\"],\"unique\":true,\"name\":null},{\"fields\":[\"sku`(10\"],\"unique\":false,\"name\":\"idx_sku\"}]"
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "qty default 1",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "refs total = 5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "re-parse 0 errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "regenerated MySQL DDL parses",
+  "pass": false,
+  "note": "Expected \"!=\", \"#\", \"#-\", \"#>\", \"#>>\", \"%\", \"&\", \"&&\", \")\", \"*\", \"+\", \",\", \"-\", \"--\", \"->\", \"->>\", \".\", \"/\", \"/*\", \"<\", \"<<\", \"<=\", \"<>\", \"<@\", \"=\", \""
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "MySQL dump -> DSL -> Postgres DDL executes in PGlite",
+  "pass": false,
+  "note": "syntax error at or near \"unsigned\" <= create table \"customers\" ( \"id\" serial primary key, \"email\" varchar(191) not null unique,  || relation \"customers\" does not exist <= create index \"idx_name_status\" on \"customers\" (\"name\", \"status\"); || column \"sku`(10\" does not exist <= create index \"idx_sku\" on \"order_lines\" (\"sku`(10\"); || relation \"customers\" does not exist <= alter table \"orders\" add const"
+ },
+ {
+  "area": "C import mysqldump [data lines removed]",
+  "name": "MySQL dump -> DSL -> SQLite DDL executes in sql.js",
+  "pass": false,
+  "note": "near \"'active'\": syntax error <= create table \"customers\" ( \"id\" integer primary key autoincrement, \"email\" text not null u || no such table: main.customers <= create index \"idx_name_status\" on \"customers\" (\"name\", \"status\");"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "tables = 4 (authors, books, \"book tags\", no_pk) - view/trigger not tables",
+  "pass": false,
+  "note": "authors,books,no_pk"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "authors.id integer pk + AUTOINCREMENT",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "authors.name not null unique",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "default 'N/A; unknown'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "books.id INTEGER PRIMARY KEY (rowid) -> pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "inline REFERENCES authors(id) ON DELETE CASCADE",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "table-level FOREIGN KEY (editor_id) ... ON DELETE SET NULL ON UPDATE CASCADE",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "VARCHAR(200) lowercased",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "isbn char(13) unique",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "price default 9.99 real",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "CHECK (price >= 0) ignored, no phantom field",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "added DATETIME default CURRENT_TIMESTAMP",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "table \"book tags\" w/ space",
+  "pass": false,
+  "note": "authors,books,no_pk"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "[tag name] bracket-quoted column",
+  "pass": false,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "composite pk (\"book id\", [tag name]) w/ WITHOUT ROWID",
+  "pass": false,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "FK from \"book tags\".\"book id\" -> books.id",
+  "pass": false,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "no_pk columns with no type: `a, b` (typeless columns) kept",
+  "pass": false,
+  "note": "[\"c:int\"]"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "index idx_books_title (title COLLATE NOCASE) -> field title",
+  "pass": false,
+  "note": "[{\"fields\":[\"title COLLATE NOCASE\"],\"unique\":false,\"name\":\"idx_books_title\"},{\"fields\":[\"author_id\",\"title\"],\"unique\":true,\"name\":\"idx_books_author_title\"},{\"fields\":[\"price\"],\"unique\":false,\"name\":\"idx_partial\"}]"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "unique index author_id,title",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "partial index with WHERE: handled w/o garbage",
+  "pass": false,
+  "note": "[{\"fields\":[\"title COLLATE NOCASE\"],\"unique\":false,\"name\":\"idx_books_title\"},{\"fields\":[\"author_id\",\"title\"],\"unique\":true,\"name\":\"idx_books_author_title\"},{\"fields\":[\"price\"],\"unique\":false,\"name\":\"idx_partial\"}]"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "trigger body with ; does not create junk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "sqlite hand: re-parse errors == 0 (refs for \"book tags\" must be quoted by serializer)",
+  "pass": false,
+  "note": "[{\"line\":20,\"message\":\"Invalid index\"}]\nRef: books.author_id > authors.id\nRef: books.editor_id > authors.id"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "sqlite hand: refs survive serialize->parse (quoted/space names)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: 5 tables (authors, books, book tags, no_pk, extra)",
+  "pass": false,
+  "note": "authors,books,no_pk,extra"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: view/trigger in sqlite_master dont create tables",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: FKs (3) found",
+  "pass": false,
+  "note": "2"
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: extra.note default \"it's\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: numeric(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: default (datetime('now')) expression",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: column with inline CHECK(c1 in ('a','b')) keeps type text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: generated column parsed as column g",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: indexes imported (3 on books)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import sqlite",
+  "name": "binary sqlite: sqlite autoindex-based UNIQUE shows as unique",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "';' inside string literal in DEFAULT",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "; inside -- and /* */ comments",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "'--x' / '/* */' inside string literals not stripped as comments",
+  "pass": false,
+  "note": "[\"id=null\",\"s=null\"]"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "# comment (mysql) stripped",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "multi-line statement with newlines inside type",
+  "pass": false,
+  "note": "[]"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "CREATE TABLE a(...) no spaces",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "case preserved for identifiers, types lowercased",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "serial/bigserial/smallserial -> int/bigint + increment",
+  "pass": false,
+  "note": "[\"int+inc\",\"bigbigint+inc\",\"smallint+inc\"]"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "GENERATED ... AS IDENTITY -> increment, type",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "inline named constraints",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "odd types (array 2D, time(3) w/o tz, character varying w/o length, interval)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "backtick composite pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "composite FK (x,y)->(a,b): both pairs captured (known limitation: only first)",
+  "pass": false,
+  "note": "[{\"from\":{\"table\":\"c\",\"field\":\"x\"},\"to\":{\"table\":\"p\",\"field\":\"a\"},\"type\":\">\"}]"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "inline REFERENCES p (without column list) -> ref to p.id",
+  "pass": false,
+  "note": "[]"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "ALTER FK before CREATE order-independent",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "ALTER TABLE ADD COLUMN applied (pg dumps/migrations)",
+  "pass": false,
+  "note": "id"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "ALTER ONLY schema-qualified PK",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "ALTER TABLE ADD UNIQUE (single/composite)",
+  "pass": false,
+  "note": "{\"name\":\"a\",\"note\":null,\"embedded\":false,\"fields\":[{\"name\":\"id\",\"type\":\"int\",\"pk\":false,\"unique\":false,\"notNull\":false,\"increment\":false,\"default\":null,\"note\":null},{\"name\":\"e\",\"type\":\"text\",\"pk\":false,\"unique\":false,\"notNull\":false,\"increment\":false,\"default\":null,\"note\":null}],\"indexes\":[]}"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "CREATE TABLE AS / LIKE / PARTITION OF produce no crash/junk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "CREATE UNLOGGED/TEMP TABLE recognised (UNLOGGED missing?)",
+  "pass": false,
+  "note": "b,c"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "AUTO_INCREMENT after PRIMARY KEY, unsigned zerofill type",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "\"int unsigned\" kept, double precision",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "default 'http://x.com/a--b' ('--' inside string eaten by comment stripper?)",
+  "pass": false,
+  "note": "{\"name\":\"u\",\"type\":\"varchar(100\",\"pk\":false,\"unique\":false,\"notNull\":false,\"increment\":false,\"default\":null,\"note\":null}"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "DEFAULT expressions with parens/commas",
+  "pass": false,
+  "note": "[\"id=null\",\"d=(concat('a'\",\"e=(1+2)\",\"f=CURRENT_TIMESTAMP(6)\",\"g=a, b\"]"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "PL/pgSQL $$ body with ; does not swallow following tables",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "thai identifiers + default",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "CRLF",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "empty input",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "garbage no crash",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "unbalanced paren no crash",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "quoted identifiers containing , ( )",
+  "pass": false,
+  "note": "[{\"name\":\"we,ird\",\"note\":null,\"embedded\":false,\"fields\":[{\"name\":\"name)\",\"type\":\"(\\\"a,b\\\"\",\"pk\":false,\"unique\":false,\"notNull\":false,\"increment\":false,\"default\":null,\"note\":null}],\"indexes\":[]}]"
+ },
+ {
+  "area": "C import edge cases",
+  "name": "MySQL backslash-escaped quote inside INSERT string followed by ; keeps statements aligned",
+  "pass": false,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "PG E'..\\'..' strings keep statements aligned",
+  "pass": false,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "apostrophe inside comments does not unbalance quotes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "COMMENT 'user''s id'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "800 tables parse",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "3000 tables + 200k INSERTs (14.1 MB) imports in <10s (took 744ms)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "5MB single non-terminated statement fast (took 329ms)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "C import edge cases",
+  "name": "create-table regex w/ 20k columns fast (took 22ms)",
+  "pass": true,
+  "note": ""
+ }
+]

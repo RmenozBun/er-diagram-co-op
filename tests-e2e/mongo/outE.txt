@@ -1,0 +1,148 @@
+mongoose 9.11.1
+E1[0] 7/7 []
+E1[1] 15/16 [ 'prod.amount: dsl decimal -> mongoose Number (wanted Decimal128)' ]
+FAIL E round trip E1[1] mongoose path types match DSL (15/16) prod.amount: dsl decimal -> mongoose Number (wanted Decimal128)
+E1[2] 52/52 []
+fuzz serialize/parse: 50/300 ok
+[
+ {
+  "errors": [],
+  "code": "Table \"my table\" {\n  pk date [default: 'ผม', note: 'true']\n  b_c int[] [unique]\n  \"not null\" int[] [not null, default: 'a,b']\n}\n\nTable \"tbl 2\" [note: 'n'] {\n  \"ผู้ใช้\" string [default: '']\n  a date [pk, default: 5]\n  \"a-"
+ },
+ {
+  "errors": [],
+  "code": "Table \"my table\" [embedded] {\n  Table string[] [pk, default: 'x']\n  pk int[] [default: 'a,b']\n  \"with space\" double [pk, default: '// c']\n  ref objectid [not null, default: 'a,b']\n}\n\nTable \"ตาราง\" [embedded, note: 'x y']"
+ },
+ {
+  "errors": [
+   {
+    "line": 4,
+    "message": "Expected: <field name> <type> [settings]"
+   },
+   {
+    "line": 9,
+    "message": "Expected: <field name> <type> [settings]"
+   }
+  ],
+  "code": "Table order {\n  \"x.y\" date [pk, unique, default: '', note: 'a b']\n  \"with space\" double [default: 'a b']\n  \"q\"q\" date [not null, default: '']\n}\n\nTable \"tbl 2\" [note: 'n'] {\n  unique string[] [unique, default: '[x]', note"
+ },
+ {
+  "errors": [],
+  "code": "Table \"my table\" [embedded, note: 'n'] {\n  \"not null\" int [unique, default: 'x']\n  \"1x\" bool [pk, unique, default: 'x']\n  indexes date [pk, default: 'now()', note: 'ผม']\n}\n\nTable \"ตาราง\" [note: 'x y'] {\n  \"x.y\" varchar(2"
+ }
+]
+FAIL E round trip E2 fuzz: serialize->parse identity on random schemas (50/300) 250 schemas changed/failed; e.g. {"errors":[],"code":"Table \"my table\" {\n  pk date [default: 'ผม', note: 'true']\n  b_c int[] [unique]\n  \"not null\" int[] [not null, default: 'a,b']\n}\n\nTable \"tbl 2\" [note: 'n'] {\n  \"ผู้ใช้\" string [default: '']\n  a date [pk, default: 5]\n  \"a-"}
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+FAIL E round trip E3[users] mongod validator accepts original docs, relaxed EJSON (0/3) doc0: ["properties:[object Object],[object Object]"] | doc1: ["properties:[object Object],[object Object],[object Object]"] | doc2: ["properties:[object Object],[object Object]"]
+--- users DSL
+Table users {
+  _id objectid [pk]
+  name string
+  email string
+  age int
+  score double
+  created date
+  tags string[]
+  address UsersAddress
+  orders UsersOrder[]
+  active boolean
+  extra string
+  ref objectid
+}
+
+Table UsersAddress [embedded] {
+  street string
+  city string
+  geo UsersAddressGeo
+}
+
+Table UsersAddressGeo [embedded] {
+  lat double
+  lng double
+}
+
+Table UsersOrder [embedded] {
+  sku string
+  qty int
+  price double
+}
+
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+FAIL E round trip E3[big] mongod validator accepts original docs, relaxed EJSON (0/1) doc0: ["properties:[object Object],[object Object],[object Object],[object Object]"]
+FAIL E round trip E3[big] exact typed BSON docs (Long/Decimal128/Int32) accepted by validator ["n:type did not match","d:type did not match","big:type did not match","bin:type did not match"]
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+FAIL E round trip E3[mixed] mongod validator accepts original docs, relaxed EJSON (3/7) doc0: ["properties:[object Object]"] | doc1: ["properties:[object Object]"] | doc3: ["properties:[object Object]"] | doc4: ["properties:[object Object]"]
+--- mixed DSL
+Table mixed {
+  _id objectid [pk]
+  v json[]
+  w json[]
+}
+
+Table MixedV [embedded] {
+  z int
+}
+
+Table MixedW [embedded] {
+  q int
+}
+
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+FAIL E round trip E3[dates] mongod validator accepts original docs, relaxed EJSON (0/2) doc0: ["properties:[object Object],[object Object],[object Object]"] | doc1: ["properties:[object Object],[object Object],[object Object]"]
+--- dates DSL
+Table dates {
+  _id objectid [pk]
+  s date
+  t date
+  u json
+  hex objectid
+  hex2 json
+}
+
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+FAIL E round trip E3[arrays] mongod validator accepts original docs, relaxed EJSON (0/1) doc0: ["properties:[object Object],[object Object],[object Object],[object Object]"]
+FAIL E round trip E3[reserved] mongoose model accepts original docs (0/1) doc0: !throw:Cannot read properties of undefined (reading 'discriminatorKey')
+(node:21680) [MONGOOSE] Warning: `errors` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:21680) [MONGOOSE] Warning: `collection` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:21680) [MONGOOSE] Warning: `save` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+--- reserved DSL
+Table reserved {
+  _id objectid [pk]
+  type string
+  errors int
+  collection string
+  save int
+  id int
+  constructor string
+  __v int
+  schema string
+}
+
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+--- keys DSL
+Table keys {
+  _id objectid [pk]
+  "a.b" int
+  "with space" int
+  "$d" int
+  "ชื่อ" string
+}
+
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:21680) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+{ 'E round trip': [ 41, 50 ] }

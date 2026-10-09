@@ -1,0 +1,264 @@
+const mongoose = require('mongoose')
+const { Schema } = mongoose
+
+const UserSchema = new Schema(
+  {
+    email: { type: String, required: true, unique: true },
+    name: { type: String, required: true, default: "anon" },
+    age: { type: Number, default: 18 },
+    score: { type: Number, default: 1.5 },
+    active: { type: Boolean, default: true },
+    created_at: { type: Date, default: Date.now },
+    address: {
+      street: { type: String, required: true },
+      geo: {
+        lat: { type: Number, required: true },
+        lng: { type: Number },
+        deep: {
+          a: {
+            b: {
+              c: { type: String, required: true },
+            },
+          },
+        },
+      },
+      lines: [{
+        sku: { type: String },
+        qty: { type: Number, required: true },
+      }],
+    },
+    tags: [{ type: String }],
+    parent_id: { type: Schema.Types.ObjectId, ref: 'User' },
+    manager_id: { type: Schema.Types.ObjectId, ref: 'User' },
+    bio: { type: String },
+    avatar: { type: Buffer },
+    meta: { type: Schema.Types.Mixed },
+    raw: { type: Schema.Types.Mixed },
+    amount: { type: Number },
+    big: { type: Number },
+    tags_ids: [{ type: Schema.Types.ObjectId, ref: 'Tags' }],
+  },
+  { timestamps: false },
+)
+UserSchema.index({ name: 1, age: 1 }, { unique: true })
+UserSchema.index({ email: 1 })
+const User = mongoose.model('User', UserSchema, 'user')
+
+const OrderSchema = new Schema(
+  {
+    user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    items: [{
+      sku: { type: String, required: true },
+      price: { type: Number },
+    }],
+    order_item: {
+      sku: { type: String, required: true },
+      price: { type: Number },
+    },
+    status: { type: String, default: "new" },
+  },
+  { timestamps: false },
+)
+const Order = mongoose.model('Order', OrderSchema, 'order')
+
+const OrderItemSchema = new Schema(
+  {
+    order_id: { type: Schema.Types.ObjectId, ref: 'Order' },
+  },
+  { timestamps: false },
+)
+const OrderItem = mongoose.model('OrderItem', OrderItemSchema, 'order_item')
+
+const TagsSchema = new Schema(
+  {
+    label: { type: String },
+  },
+  { timestamps: false },
+)
+const Tags = mongoose.model('Tags', TagsSchema, 'tags')
+
+const CategorySchema = new Schema(
+  {
+    parent_id: { type: Schema.Types.ObjectId, ref: 'Category' },
+    children: [Schema.Types.Mixed],
+  },
+  { timestamps: false },
+)
+const Category = mongoose.model('Category', CategorySchema, 'category')
+
+module.exports = { User, Order, OrderItem, Tags, Category }
+
+FAIL C mongoose default string 'anon' 
+user indexes [
+  '{"email":1}{"u":true}',
+  '{"name":1,"age":1}{"u":true}',
+  '{"email":1}{"u":false}'
+]
+FAIL C mongoose decimal -> Number (Decimal128 lost) instance=Number
+category.children -> Array undefined
+FAIL table `user` + `User` (case twins)
+      -> Identifier 'UserSchema' has already been declared
+FAIL C mongoose hazard compiles: table `user` + `User` (case twins) Identifier 'UserSchema' has already been declared
+FAIL table `order_item` + `orderItem`
+      -> Identifier 'OrderItemSchema' has already been declared
+FAIL C mongoose hazard compiles: table `order_item` + `orderItem` Identifier 'OrderItemSchema' has already been declared
+FAIL name starts with digit "2024data"
+      -> Invalid or unexpected token
+FAIL C mongoose hazard compiles: name starts with digit "2024data" Invalid or unexpected token
+OK   Thai table name  [dsl errors: Unexpected "Table ผู้ใช้ {"; Unexpected "ชื่อ string [not null]"; Unexpected "อายุ int"; Unexpected "}"]
+FAIL Thai quoted table with space  [dsl errors: Expected: <field name> <type> [settings]]
+      -> Missing initializer in const declaration
+FAIL C mongoose hazard (invalid DSL, informational): Thai quoted table with space Missing initializer in const declaration
+OK   table `__proto__`
+OK   table `constructor`
+FAIL table `schema`
+      -> Identifier 'Schema' has already been declared
+FAIL C mongoose hazard compiles: table `schema` Identifier 'Schema' has already been declared
+FAIL table `Schema`
+      -> Identifier 'Schema' has already been declared
+FAIL C mongoose hazard compiles: table `Schema` Identifier 'Schema' has already been declared
+OK   table `mongoose`
+OK   table `date`
+OK   table `string`
+FAIL table `number`
+      -> Cannot access 'Number' before initialization
+FAIL C mongoose hazard compiles: table `number` Cannot access 'Number' before initialization
+FAIL table `boolean`
+      -> Cannot access 'Boolean' before initialization
+FAIL C mongoose hazard compiles: table `boolean` Cannot access 'Boolean' before initialization
+OK   table `buffer`
+OK   table `object`
+OK   table `array`
+OK   table `module`
+OK   table `exports`
+OK   table `require`
+OK   table `class`/`function` (JS keywords)
+FAIL table `a-b` / `a b`
+      -> Identifier 'ABSchema' has already been declared
+FAIL C mongoose hazard compiles: table `a-b` / `a b` Identifier 'ABSchema' has already been declared
+FAIL table `a_b` vs `a-b` vs `a b`
+      -> Identifier 'ABSchema' has already been declared
+FAIL C mongoose hazard compiles: table `a_b` vs `a-b` vs `a b` Identifier 'ABSchema' has already been declared
+OK   table with $ in name  [dsl errors: Unexpected "Table $x {"; Unexpected "a int"; Unexpected "}"]
+FAIL table with quote chars `it's`
+      -> Missing initializer in const declaration
+FAIL C mongoose hazard compiles: table with quote chars `it's` Missing initializer in const declaration
+FAIL table name with backslash
+      -> Invalid or unexpected token
+FAIL C mongoose hazard compiles: table name with backslash Invalid or unexpected token
+FAIL table name with double-quote (backtick quoted)
+      -> Missing initializer in const declaration
+FAIL C mongoose hazard compiles: table name with double-quote (backtick quoted) Missing initializer in const declaration
+FAIL table with emoji
+      -> Invalid or unexpected token
+FAIL C mongoose hazard compiles: table with emoji Invalid or unexpected token
+FAIL table name only digits "123"
+      -> Invalid or unexpected token
+FAIL C mongoose hazard compiles: table name only digits "123" Invalid or unexpected token
+FAIL table "order" and "Order" and "ORDER"
+      -> Identifier 'OrderSchema' has already been declared
+FAIL C mongoose hazard compiles: table "order" and "Order" and "ORDER" Identifier 'OrderSchema' has already been declared
+OK   zero tables
+OK   table with no fields
+OK   only embedded tables
+OK   field named _id non-objectid (string)
+OK   field named _id int pk
+OK   pk `id` int (SQL style)
+OK   pk `id` objectid -> _id
+OK   pk `id` objectid + also `_id` field
+OK   field named `type`
+OK   embedded with field `type`
+OK   field named `__proto__`
+OK   field named `constructor`/`toString`
+OK   field names with dots "a.b"
+OK   field names with $
+OK   field names reserved by mongoose (errors, schema, isNew, collection, db, save, validate, set, get, init)
+OK   field names reserved single: `errors`
+OK   field names reserved single: `schema`
+OK   field names reserved single: `collection`
+OK   field names reserved single: `db`
+OK   field names reserved single: `save`
+OK   field names reserved single: `isNew`
+OK   field names reserved single: `get`
+OK   field named `id` (virtual conflict)
+OK   field Thai / spaces / digits  [dsl errors: Expected: <field name> <type> [settings]]
+OK   default with quotes/newline
+OK   default `now()` on string and date
+OK   default numeric on string field
+OK   default string looking like a number "007"
+OK   default expression `uuid()`
+OK   default on array / embedded
+OK   ref to embedded-only table
+OK   N:M with both root tables
+OK   N:M where from-table has field named b_ids
+OK   N:M twice to same table
+OK   one-to-one ref
+OK   one-to-many `<` ref
+OK   ref to non-objectid field (string key)
+OK   ref inside embedded table
+OK   array of refs via inline ref
+OK   unique + not null + default combos
+OK   index on missing field
+OK   index names (name: "foo")
+OK   index with Thai/quoted fields  [dsl errors: Expected: <field name> <type> [settings]]
+OK   embedded self-recursion
+OK   embedded mutual recursion A<->B
+OK   embedded type case-insensitive match ("address" vs Address)
+OK   type names unknown
+OK   embedded table that has pk (becomes root too?)
+OK   table referencing itself embedded not-array
+OK   duplicate field names  [dsl errors: Duplicate field "a"]
+FAIL duplicate table names  [dsl errors: Duplicate table "t"]
+      -> Identifier 'TSchema' has already been declared
+FAIL C mongoose hazard (invalid DSL, informational): duplicate table names Identifier 'TSchema' has already been declared
+OK   huge table (500 fields)
+OK   timestamps-ish: created_at/updated_at
+OK   notes with quotes
+embedded `type` paths: [ 'addr.type', 'addr.city', '_id', '__v' ]
+__proto__ field paths [ 'a', '_id', '__v' ]
+FAIL C mongoose field `__proto__` is a real schema path paths=a,_id,__v
+dot paths [ 'a.b', 'a', '_id', '__v' ] a.b is nested path -> conflicts with field a
+twin tables models ERR Identifier 'UserSchema' has already been declared
+defaults {"b":"say \\\"hi\\\"","_id":"6ac75f5ee0eebcba162b7763"}
+FAIL C mongoose default 'it\'s' roundtrips as it's 
+backslash default "C:\\\\temp" dsl default parsed "C:\\\\temp"
+N:M to table with space: parse errs [{"line":7,"message":"Invalid Ref, expected: Ref: table.field > table.field"}] compiled
+ref->embedded-only: model names [ 'T' ] ref= E
+embedded-with-pk exports: [ 'T', 'E' ]
+id+_id paths [ 'id', '_id', '__v' ]
+pk id int paths [ 'id', 'a', '_id', '__v' ] (pk not unique, no required) {}
+_id string path String
+named index -> [[{"a":1,"b":1},{"unique":true}]] (name ignored in mongoose output)
+{ 'C mongoose': [ 102, 123 ] }
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: `errors` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `isNew` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `collection` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `save` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `validate` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `get` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `init` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `errors` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `collection` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `save` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `isNew` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: `get` is a reserved schema pathname and may break some functionality. You are allowed to use it, but use at your own risk. To disable this warning pass `suppressReservedKeysWarning` as a schema option.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.
+(node:22788) [MONGOOSE] Warning: Mongoose: `Document.prototype.validateSync()` is deprecated and will be removed in Mongoose 10. Use `Document.prototype.validate()` instead.

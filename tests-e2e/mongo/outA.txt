@@ -1,0 +1,340 @@
+Table ext {
+  _id objectid [pk]
+  d date
+  n int
+  dec double
+  bin string
+  i int
+  dbl double
+  ts string
+  rx string
+  d2 date
+  u string
+  mk string
+}
+
+FAIL A import ext: $numberLong -> long got int
+FAIL A import ext: $numberDecimal -> decimal got double
+FAIL A import ext: $binary -> buffer got string
+FAIL A import ext: $timestamp -> date got string
+Table lines {
+  _id objectid [pk]
+  a double
+  b string
+  c boolean
+}
+
+Table users {
+  _id objectid [pk]
+  name string
+}
+
+Table order_items {
+  _id objectid [pk]
+  q int
+}
+
+Table _ {
+  _id objectid [pk]
+  "ชื่อ" string
+}
+
+Table a {
+  _id objectid [pk]
+}
+
+Table b {
+  _id objectid [pk]
+  x int
+}
+
+single doc {items:[{a:1}]} -> [ 'items' ]
+single doc {tags:[strings]} -> [["tags",["_id objectid"]]]
+FAIL A import single doc {tags:["a","b"]} is a doc with field tags string[] (not collection "tags") [["tags",["_id objectid"]]]
+single doc {name,tags:[]} -> [ 'doc' ]
+single doc {tags:[]} -> [ 'tags' ]
+Table c {
+  _id objectid [pk]
+  a int
+  b int
+  c int
+}
+
+FAIL A import required-ness: field in ALL docs -> not null (info) notNull=false (inferrer never marks required; acceptable but note)
+Table c {
+  _id objectid [pk]
+  l7 CL7
+  k int
+}
+
+Table CL7 [embedded] {
+  l6 CL7L6
+  k int
+}
+
+Table CL7L6 [embedded] {
+  l5 CL7L6L5
+  k int
+}
+
+Table CL7L6L5 [embedded] {
+  l4 CL7L6L5L4
+  k int
+}
+
+Table CL7L6L5L4 [embedded] {
+  l3 CL7L6L5L4L3
+  k int
+}
+
+Table CL7L6L5L4L3 [embedded] {
+  l2 CL7L6L5L4L3L2
+  k int
+}
+
+Table CL7L6L5L4L3L2 [embedded] {
+  l1 CL7L6L5L4L3L2L1
+  k int
+}
+
+Table CL7L6L5L4L3L2L1 [embedded] {
+  l0 CL7L6L5L4L3L2L1L0
+  k int
+}
+
+Table CL7L6L5L4L3L2L1L0 [embedded] {
+  v int
+}
+
+Table c {
+  _id objectid [pk]
+  p string[]
+  o CO[]
+  m json[]
+  aa json[]
+  e string[]
+  eo CEo
+  mixobj json[]
+  nums double[]
+}
+
+Table CO [embedded] {
+  x int
+  y string
+}
+
+Table CEo [embedded] {
+}
+
+Table CMixobj [embedded] {
+  q int
+}
+
+Table weird {
+  _id objectid [pk]
+  "a.b" int
+  "with space" int
+  "$dollar" int
+  "ชื่อ" string
+  "1abc" int
+  "q"uote" int
+  "it's" int
+  "back`tick" int
+  "a}b" int
+  "x [pk]" int
+  "a//b" int
+  nested WeirdNested
+  Table int
+  indexes int
+  note int
+  ref int
+}
+
+Table WeirdNested [embedded] {
+  "in ner" WeirdNestedInNer
+}
+
+Table WeirdNestedInNer [embedded] {
+  "ไทย ลึก" int
+}
+
+FAIL A import weirdkeys: serialize->parse no errors Expected: <field name> <type> [settings]@8
+FAIL A import weirdkeys: parse(serialize) equals original structure differs
+FAIL A import weird key "q\"uote" survives round-trip lost/changed -> parsed names: 
+empty key -> Table emptykey {
+  _id objectid [pk]
+  "" int
+}
+
+FAIL A import emptykey: serialize->parse no errors Expected: <field name> <type> [settings]@3
+FAIL A import emptykey: parse(serialize) equals original structure differs
+Table pp {
+  _id objectid [pk]
+  __proto__ PpProto__
+  constructor int
+  toString int
+}
+
+Table PpProto__ [embedded] {
+  x int
+}
+
+Table user {
+  _id objectid [pk]
+  a_b UserAB
+  a UserA
+  items UserItem[]
+  item UserItem2
+}
+
+Table UserAB [embedded] {
+  x int
+}
+
+Table UserA [embedded] {
+  b UserAB2
+}
+
+Table UserAB2 [embedded] {
+  y int
+}
+
+Table UserItem [embedded] {
+  i int
+}
+
+Table UserItem2 [embedded] {
+  z int
+}
+
+Table User_Address {
+  _id objectid [pk]
+  a int
+}
+
+Table User {
+  _id objectid [pk]
+  address UserAddress
+}
+
+Table UserAddress [embedded] {
+  c int
+}
+
+Table User {
+  _id objectid [pk]
+  address UserAddress
+}
+
+Table UserAddress [embedded] {
+  c int
+}
+
+Table user_address {
+  _id objectid [pk]
+  a int
+}
+
+thai coll name -> [ '_' ]
+FAIL A import Thai-only collection name preserved name=_
+empty coll name -> ""
+FAIL A import emptycollname: serialize->parse no errors Unexpected "Table "" {"@1; Unexpected "_id objectid [pk]"@2; Unexpected "x int"@3
+FAIL A import emptycollname: parse(serialize) equals original structure differs
+digit coll name -> "123"
+Table cust {
+  _id objectid [pk]
+  "ที่อยู่" Cust_ที่อยู่
+}
+
+Table "Cust_ที่อยู่" [embedded] {
+  "ถนน" string
+}
+
+Table cust {
+  _id objectid [pk]
+  "ที่อยู่" Cust_ที่อยู่
+  "ที่ทำงาน" Cust_ที่ทำงาน
+}
+
+Table "Cust_ที่อยู่" [embedded] {
+  a int
+}
+
+Table "Cust_ที่ทำงาน" [embedded] {
+  b int
+}
+
+Table o {
+  _id objectid [pk]
+  "order-line" OOrderLine[]
+}
+
+Table OOrderLine [embedded] {
+  i int
+}
+
+Table c {
+  _id objectid [pk]
+  id objectid
+  d1 date
+  d2 date
+  d3 date
+  big int
+  neg int
+  bool boolean
+  s string
+  hex23 string
+  word24 objectid
+}
+
+FAIL A import type: 12345678901 (>int32) -> long got int
+Table c {
+  _id objectid [pk]
+  x json
+}
+
+Table CX [embedded] {
+  y int
+}
+
+FAIL A import hex + plain string -> string json
+FAIL A import date-string + plain string -> string json
+long+int -> int
+FAIL A import invalid JSON throws a readable error (not raw "Unexpected token") message: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+[] -> [{"name":"c","note":null,"embedded":false,"fields":[{"name":"_id","type":"objectid","pk":true,"unique":false,"notNull":true,"increment":false,"default":null,"note":null}],"indexes":[]}]
+[{}] -> Table c {
+  _id objectid [pk]
+}
+
+{} -> [{"name":"c","note":null,"embedded":false,"fields":[{"name":"_id","type":"objectid","pk":true,"unique":false,"notNull":true,"increment":false,"default":null,"note":null}],"indexes":[]}]
+5 -> []
+"str" -> []
+null -> []
+[1,2,3] -> ["c"]
+[null,{"a":1}] -> ["c"]
+[[1],[2]] -> ["c"]
+true -> []
+FAIL A import concatenated pretty-printed JSON docs (mongoexport --pretty) Expected property name or '}' in JSON at position 1 (line 1 column 2)
+Table one {
+  _id objectid [pk]
+  name string
+  address OneAddress
+}
+
+Table OneAddress [embedded] {
+  city string
+}
+
+50k docs: 11.6MB parse 133ms infer 270ms heap+33MB tables=4
+jsonl 50k parse 171 ms docs 50000
+20k keys doc 30 ms fields 20001
+200k-element array of objs 122 ms tables 1
+3000-deep 3001 63 ms
+longest table name in 3000-deep 3005
+Table c {
+  _id objectid [pk]
+  x string
+}
+
+bad $oid -> objectid
+{ 'A import': [ 93, 112 ] }

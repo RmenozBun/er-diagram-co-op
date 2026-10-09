@@ -1,0 +1,464 @@
+[
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: parses",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: PG DDL executes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: re-imported DSL parses w/o errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: same table set",
+  "pass": false,
+  "note": "missing  extra posts_tags"
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: users.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: users.email identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: users.name identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: users.created_at identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: users indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: posts.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: posts.user_id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: posts.title identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: posts.body identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: posts indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: tags.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: tags.name identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: tags indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: refs preserved (2); m2m becomes junction table (expected)",
+  "pass": false,
+  "note": "[\"posts.id>tags.id\",\"posts.user_id>users.id\"] -> [\"posts.user_id>users.id\",\"posts_tags.posts_id>posts.id\",\"posts_tags.tags_id>tags.id\"]"
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "sample: second generation of PG DDL stable (idempotent)",
+  "pass": false,
+  "note": "diff"
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: parses",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: PG DDL executes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: re-imported DSL parses w/o errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: same table set",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users.email identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users.name identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users.score identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users.active identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users.created_at identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users.tags identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users.meta identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: users indexes identical ([\"(name)\",\"U(email,name)\"])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: posts.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: posts.user_id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: posts.title identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: posts indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: order_items.order_id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: order_items.line_no identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: order_items.qty identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: order_items indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: comments.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: comments.post_id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: comments.parent_id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: comments indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: profile.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: profile.user_id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: profile indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: refs preserved (4); m2m becomes junction table (expected)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: second generation of PG DDL stable (idempotent)",
+  "pass": false,
+  "note": "diff"
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: parses",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: PG DDL executes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: re-imported DSL parses w/o errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: same table set",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: user.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: user.order identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: user indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: order.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: order.user_id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: order indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: refs preserved (1); m2m becomes junction table (expected)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "reserved: second generation of PG DDL stable (idempotent)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: parses",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: PG DDL executes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: re-imported DSL parses w/o errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: a.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: a indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: b.id identical after PG roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: b indexes identical ([])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: refs preserved (1); m2m becomes junction table (expected)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "m2m: second generation of PG DDL stable (idempotent)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "one-to-one (-) survives roundtrip as unique FK (uq via ALTER TABLE ADD CONSTRAINT UNIQUE is dropped by importer)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: mysql DDL -> import keeps all 5 tables",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: mysql DDL -> import keeps FK refs (4)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: mysql DDL -> import keeps pk/inc of users.id",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: sqlite DDL -> import keeps all 5 tables",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: sqlite DDL -> import keeps FK refs (4)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "F roundtrip DSL->PG->DDL->DSL",
+  "name": "rich: sqlite DDL -> import keeps pk/inc of users.id",
+  "pass": true,
+  "note": ""
+ }
+]

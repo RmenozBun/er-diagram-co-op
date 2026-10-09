@@ -1,0 +1,1 @@
+{"name":"sql-tests","private":true,"type":"module","dependencies":{"@electric-sql/pglite":"^0.5.8","node-sql-parser":"^5.4.0","sql.js":"^1.14.2"}}

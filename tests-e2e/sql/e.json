@@ -1,0 +1,200 @@
+[
+ {
+  "area": "E exports",
+  "name": "fixture parses",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: header row 9 cols",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: rows = total fields + 1",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: all rows have 9 cols (escaping holds)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: note with comma+quotes survives roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: default with comma survives",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: ref column users.role_id -> roles.id",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: Thai preserved",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: CRLF line terminators + trailing newline",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: pk/unique/not_null yes flags",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: empty schema = header only",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: CSV/formula injection - cell starting with \"=\" is exported raw (opens as formula in Excel); recommend prefixing with '",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: non-throw with duplicate refs",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "schemaToCsv: embedded type -> references column shows target",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "tablesToCsvFiles: one file per table",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "tablesToCsvFiles: header content parses back to field names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "tablesToCsvFiles: header has no data rows",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "tablesToCsvFiles: unique file names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "tablesToCsvFiles: filename with / : * ? is unsafe for zip/download (name used verbatim: \"weird_name_.csv\")",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "tablesToCsvFiles: tables \"t\" and \"T\" -> case-insensitive FS collision (t.csv / T.csv)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "duplicate table names -> duplicate file names in zip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "tablesToCsvFiles: header with comma/quote field names escaped",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "tablesToCsvFiles: empty table (0 fields) -> content is just newline (parseCsv -> 0 rows)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "toCsv: tab delimiter escapes tab/quote",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "toCsv: null/undefined -> empty",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "toCsv: newline in value quoted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "toCsv: leading/trailing spaces preserved",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "toCsv: lone CR in value is quoted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "parseCsv: empty string field in single column file is dropped (row [\"\"] filtered): toCsv([[\"\"],[\"x\"]])",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "parseCsv: last row w/o newline and trailing empty field \"a,b\\n1,\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "parseCsv: quoted empty string at EOF \"a\\n\\\"\\\"\"",
+  "pass": false,
+  "note": "[[\"a\"]]"
+ },
+ {
+  "area": "E exports",
+  "name": "parseCsv: delimiter detection ignores delimiters inside quoted header",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "E exports",
+  "name": "parseCsv: header \"a,b\" single column quoted with ; elsewhere",
+  "pass": true,
+  "note": ""
+ }
+]

@@ -1,0 +1,1628 @@
+[
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"int\" -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"int\" -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"int\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"bigint\" -> bigint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"bigint\" -> bigint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"bigint\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"smallint\" -> smallint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"smallint\" -> smallint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"smallint\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"decimal(10,2)\" -> decimal(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"decimal(10,2)\" -> decimal(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"decimal(10,2)\" -> decimal(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"numeric(10,2)\" -> numeric(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"numeric(10,2)\" -> numeric(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"numeric(10,2)\" -> numeric(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"float\" -> float",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"float\" -> float",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"float\" -> real",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"double\" -> double precision",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"double\" -> double",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"double\" -> real",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"varchar(255)\" -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"varchar(255)\" -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"varchar(255)\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"char(10)\" -> char(10)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"char(10)\" -> char(10)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"char(10)\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"text\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"text\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"text\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"boolean\" -> boolean",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"boolean\" -> tinyint(1)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"boolean\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"date\" -> date",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"date\" -> date",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"date\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"time\" -> time",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"time\" -> time",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"time\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"timestamp\" -> timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"timestamp\" -> timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"timestamp\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"datetime\" -> timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"datetime\" -> datetime",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"datetime\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"uuid\" -> uuid",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"uuid\" -> char(36)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"uuid\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"json\" -> jsonb",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"json\" -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"json\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"jsonb\" -> jsonb",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"jsonb\" -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"jsonb\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"blob\" -> bytea",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"blob\" -> blob",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"blob\" -> blob",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"bytea\" -> bytea",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"bytea\" -> blob",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"bytea\" -> blob",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"int[]\" -> int[]",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"int[]\" -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"int[]\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "postgres: type \"varchar(255)[]\" -> varchar(255)[]",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "mysql: type \"varchar(255)[]\" -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix SQL_TYPES (editor list)",
+  "name": "sqlite: type \"varchar(255)[]\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"string\" -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"string\" -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"string\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"objectid\" -> varchar(24)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"objectid\" -> char(24)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"objectid\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"object\" -> jsonb",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"object\" -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"object\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"bool\" -> boolean",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"bool\" -> tinyint(1)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"bool\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"number\" -> numeric",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"number\" -> decimal(20,6)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"number\" -> numeric",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"mixed\" -> jsonb",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"mixed\" -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"mixed\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"buffer\" -> bytea",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"buffer\" -> blob",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"buffer\" -> blob",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"binary\" -> bytea",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"binary\" -> blob",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"binary\" -> blob",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"integer\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"integer\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"integer\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"real\" -> real",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"real\" -> real",
+  "pass": false,
+  "note": "parse: Expected \"#\", \"--\", \".\", \"/*\", \"BIGINT\", \"BINARY\", \"BIT\", \"C"
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"real\" -> real",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"tinyint\" -> smallint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"tinyint\" -> smallint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"tinyint\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"mediumtext\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"mediumtext\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"mediumtext\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"longtext\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"longtext\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"longtext\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"serial\" -> serial",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"serial\" -> int auto_increment",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"serial\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"bigserial\" -> bigserial",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"bigserial\" -> bigint auto_increment",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"bigserial\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"money\" -> money",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"money\" -> decimal(19,4)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"money\" -> numeric",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"varchar\" -> varchar",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"varchar\" -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"varchar\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"char\" -> char",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"char\" -> char",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"char\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"timestamptz\" -> timestamptz",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"timestamptz\" -> datetime",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"timestamptz\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"year\" -> smallint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"year\" -> year",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"year\" -> year",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"string[]\" -> varchar(255)[]",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"string[]\" -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"string[]\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"objectid[]\" -> varchar(24)[]",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"objectid[]\" -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"objectid[]\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"double precision\" -> double precision",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"double precision\" -> double",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"double precision\" -> real",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"float4\" -> float",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"float4\" -> float",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"float4\" -> real",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"int4\" -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"int4\" -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"int4\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"datetime2\" -> timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"datetime2\" -> datetime2",
+  "pass": false,
+  "note": "parse: Expected \"#\", \"(\", \")\", \",\", \"--\", \"/*\", \"AS\", \"AUTO_INCREME"
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"datetime2\" -> datetime2",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"nvarchar(50)\" -> nvarchar(50)",
+  "pass": false,
+  "note": "type \"nvarchar\" does not exist"
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"nvarchar(50)\" -> nvarchar(50)",
+  "pass": false,
+  "note": "parse: Expected \"#\", \"--\", \".\", \"/*\", \"BIGINT\", \"BINARY\", \"BIT\", \"C"
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"nvarchar(50)\" -> nvarchar(50)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"varbinary(16)\" -> varbinary(16)",
+  "pass": false,
+  "note": "type \"varbinary\" does not exist"
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"varbinary(16)\" -> varbinary(16)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"varbinary(16)\" -> varbinary(16)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"bit\" -> bit",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"bit\" -> bit",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"bit\" -> bit",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"enum\" -> enum",
+  "pass": false,
+  "note": "type \"enum\" does not exist"
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"enum\" -> enum",
+  "pass": false,
+  "note": "parse: Expected \"#\", \"(\", \"--\", \"/*\", \"ROW\", or [ \\t\\n\\r] but \")\" f"
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"enum\" -> enum",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"Int\" -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"Int\" -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"Int\" -> integer",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"VARCHAR(20)\" -> varchar(20)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"VARCHAR(20)\" -> varchar(20)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"VARCHAR(20)\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "postgres: type \"Text\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "mysql: type \"Text\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B type matrix other/mongo-ish",
+  "name": "sqlite: type \"Text\" -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: int default 5 -> int default 5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: int default 5 -> integer default 5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: int default 5 -> int default 5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: int default -5 -> int default -5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: int default -5 -> integer default -5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: int default -5 -> int default -5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: float default 1.5 -> float default 1.5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: float default 1.5 -> real default 1.5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: float default 1.5 -> float default 1.5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default 'abc' -> varchar(10) default 'abc'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default 'abc' -> text default 'abc'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default 'abc' -> varchar(10) default 'abc'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default 'it''s' -> varchar(10) default 'it''''s'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default 'it''s' -> text default 'it''''s'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default 'it''s' -> varchar(10) default 'it''''s'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default '007' -> varchar(10) default '007'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default '007' -> text default '007'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default '007' -> varchar(10) default '007'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default 'null' -> varchar(10) default 'null'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default 'null' -> text default 'null'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default 'null' -> varchar(10) default 'null'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default 'true' -> varchar(10) default 'true'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default 'true' -> text default 'true'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default 'true' -> varchar(10) default 'true'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default '' -> varchar(10) default ''",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default '' -> text default ''",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default '' -> varchar(10) default ''",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: boolean default true -> boolean default true",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: boolean default true -> integer default true",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: boolean default true -> tinyint(1) default true",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: boolean default false -> boolean default false",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: boolean default false -> integer default false",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: boolean default false -> tinyint(1) default false",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: timestamp default `now()` -> timestamp default now()",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: timestamp default `now()` -> text default current_timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: timestamp default `now()` -> timestamp default current_timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: timestamp default `current_timestamp` -> timestamp default current_timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: timestamp default `current_timestamp` -> text default current_timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: timestamp default `current_timestamp` -> timestamp default current_timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: timestamp default `CURRENT_TIMESTAMP` -> timestamp default CURRENT_TIMESTAMP",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: timestamp default `CURRENT_TIMESTAMP` -> text default current_timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: timestamp default `CURRENT_TIMESTAMP` -> timestamp default current_timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: date default `current_date` -> date default current_date",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: date default `current_date` -> text default current_date",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: date default `current_date` -> date default current_date",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: uuid default `gen_random_uuid()` -> uuid default gen_random_uuid()",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: uuid default `gen_random_uuid()` -> text default (gen_random_uuid())",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: uuid default `gen_random_uuid()` -> char(36) default (gen_random_uuid())",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: uuid default `uuid_generate_v4()` -> uuid default uuid_generate_v4()",
+  "pass": false,
+  "note": "function uuid_generate_v4() does not exist"
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: uuid default `uuid_generate_v4()` -> text default (uuid_generate_v4())",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: uuid default `uuid_generate_v4()` -> char(36) default (uuid_generate_v4())",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: int default `1+2` -> int default 1+2",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: int default `1+2` -> integer default (1+2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: int default `1+2` -> int default (1+2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default abc -> varchar(10) default abc",
+  "pass": false,
+  "note": "cannot use column reference in DEFAULT expression"
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default abc -> text default abc",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default abc -> varchar(10) default abc",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default 'a;b' -> varchar(10) default 'a;b'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default 'a;b' -> text default 'a;b'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default 'a;b' -> varchar(10) default 'a;b'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: json default '{}' -> jsonb default '{}'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: json default '{}' -> text default '{}'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: json default '{}' -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: text default 'x' -> text default 'x'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: text default 'x' -> text default 'x'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: text default 'x' -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default 'a,b' -> varchar(10) default 'a,b'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default 'a,b' -> text default 'a,b'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default 'a,b' -> varchar(10) default 'a,b'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default '\\\\n' -> varchar(10) default '\\n'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default '\\\\n' -> text default '\\n'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default '\\\\n' -> varchar(10) default '\\\\n'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default \"dq\" -> varchar(10) default 'dq'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default \"dq\" -> text default 'dq'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default \"dq\" -> varchar(10) default 'dq'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: int default 1e3 -> int default 1e3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: int default 1e3 -> integer default 1e3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: int default 1e3 -> int default 1e3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: int default +5 -> int default +5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: int default +5 -> integer default +5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: int default +5 -> int default +5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: decimal(5,2) default .5 -> decimal(5,2) default .5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: decimal(5,2) default .5 -> decimal(5,2) default .5",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: decimal(5,2) default .5 -> decimal(5,2) default .5",
+  "pass": false,
+  "note": "parse: Expected \"!\", \"#\", \"$\", \"'\", \"(\", \"*\", \"+\", \"-\", \"--\", \"/*\","
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(20) default 'NULL' -> varchar(20) default 'NULL'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(20) default 'NULL' -> text default 'NULL'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(20) default 'NULL' -> varchar(20) default 'NULL'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "postgres: varchar(10) default null -> varchar(10) default null",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "sqlite: varchar(10) default null -> text default null",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B defaults matrix",
+  "name": "mysql: varchar(10) default null -> varchar(10) default null",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "postgres: varchar default 'null' stores \"null\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "sqlite: varchar default 'null' stores \"null\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "postgres: varchar default 'true' stores \"true\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "sqlite: varchar default 'true' stores \"true\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "postgres: varchar default '007' stores \"007\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "sqlite: varchar default '007' stores \"007\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "postgres: varchar default '' stores \"\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "sqlite: varchar default '' stores \"\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "postgres: varchar default 'NULL' stores \"NULL\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "sqlite: varchar default 'NULL' stores \"NULL\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "postgres: varchar default '1.50' stores \"1.50\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "sqlite: varchar default '1.50' stores \"1.50\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "postgres: varchar default 'now()' stores \"now()\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "sqlite: varchar default 'now()' stores \"now()\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "postgres: varchar default '-5' stores \"-5\"",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B default fidelity",
+  "name": "sqlite: varchar default '-5' stores \"-5\"",
+  "pass": true,
+  "note": ""
+ }
+]

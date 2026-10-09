@@ -1,0 +1,11 @@
+node_modules
+dist
+.wrangler
+.vercel
+*.log
+tests-e2e/**/node_modules
+tests-e2e/**/out
+.env
+.env.local
+tests-e2e/mongo/gen/
+tests-e2e/**/out*.txt

@@ -1,0 +1,79 @@
+mongod version 8.2.6
+shell ops {
+  ops: 5,
+  errors: [
+    'createIndex users: An existing index has the same name as the requested index. When index names are not specified, they are auto generated and can cause conflicts. Please refer to'
+  ]
+}
+FAIL C shell users: all createCollection/createIndex calls succeed on real mongod createIndex users: An existing index has the same name as the requested index. When index names are not specified, they are auto generated and can cause conflicts. Please refer to
+FAIL C shell accepted: score: 10 (JS integer -> driver Int32) into double field result=validation
+FAIL C shell accepted: big: 5 (JS number -> Int32) into long field result=validation
+FAIL C shell accepted: age: null (explicit null for optional field) result=validation
+FAIL C shell accepted: nick: null result=validation
+FAIL C shell accepted: address: null result=validation
+FAIL C shell accepted: tags: null result=validation
+FAIL C shell two docs both WITHOUT optional unique field `nick` can coexist first=dup second=dup (unique index is not sparse)
+indexes [ '_id_', 'email_1 unique', 'nick_1 unique', 'age_1_email_1 unique' ]
+db.createCollection("t", {
+  validator: {
+    "$jsonSchema": {
+      "bsonType": "object",
+      "properties": {
+        "_id": {
+          "bsonType": "objectId"
+        },
+        "email": {
+          "bsonType": "string"
+        }
+      },
+      "required": [
+        "_id"
+      ]
+    }
+  }
+})
+
+db.t.createIndex({ email: 1 }, { unique: true })
+
+db.t.createIndex({ email: 1 })
+
+FAIL C shell field [unique] + `indexes { email }` (same key, different options) does not error createIndex t: An existing index has the same name as the requested index. When index names are not specified, they are auto generated and can cause conflicts. Please refer to
+FAIL C shell same compound index declared unique and non-unique does not error createIndex t: An existing index has the same name as the requested index. When index names are not specified, they are auto generated and can cause conflicts. Please refer to
+FAIL C shell index [name: my_idx] honoured in mongosh output indexes=_id_,a_1_b_1
+OK   zero tables 
+OK   table no fields 
+OK   only embedded 
+OK   _id string pk 
+OK   _id int pk 
+OK   id int pk (SQL style) 
+OK   id objectid pk -> _id 
+OK   spaces/dots/Thai names 
+FAIL collection name with $ createCollection a$b: Invalid collection name: a$b | createIndex a$b: Invalid collection name: a$b
+FAIL C shell edge: collection name with $ createCollection a$b: Invalid collection name: a$b | createIndex a$b: Invalid collection name: a$b
+FAIL collection name system.x createCollection system.x: Invalid system namespace: t15.system.x
+FAIL C shell edge: collection name system.x createCollection system.x: Invalid system namespace: t15.system.x
+OK   collection name empty-ish "-" 
+OK   collection name with quote 
+OK   collection name with apostrophe 
+OK   ref to embedded-only 
+OK   N:M 
+OK   recursion 
+OK   compound unique 
+OK   unknown types 
+OK   enum/uuid/email/url 
+OK   huge table 500 fields 
+OK   array of embedded arrays pk 
+OK   pk non-id name 
+OK   note makes description with quotes 
+FAIL big index count (65 indexes) createIndex t: add index fails, too many indexes for t29.t key:{ f63: 1 } | createIndex t: add index fails, too many indexes for t29.t key:{ f64: 1 } | createIndex t: add index fails, too many indexes for t29.t key:{ f65: 1 }
+FAIL C shell edge: big index count (65 indexes) createIndex t: add index fails, too many indexes for t29.t key:{ f63: 1 } | createIndex t: add index fails, too many indexes for t29.t key:{ f64: 1 } | createIndex t: add index fails, too many indexes for t29.t key:{ f65: 1 }
+live shell { ops: 2, errors: [] }
+FAIL E roundtrip generated Mongoose model writes to generated validator: integer-valued price (price: 100) into `double` field result=server-validation
+FAIL E roundtrip generated Mongoose model writes to generated validator: big: 5 into long field result=server-validation
+FAIL E roundtrip generated Mongoose model writes to generated validator: big: 3e10 into long field result=server-validation
+FAIL E roundtrip generated Mongoose model writes to generated validator: amount: 12.5 into decimal field result=server-validation
+FAIL E roundtrip generated Mongoose model writes to generated validator: nested dims {w: 2, h: 3} result=server-validation
+FAIL E roundtrip generated Mongoose model writes to generated validator: second doc w/o `nick` result=dup
+FAIL E roundtrip generated Mongoose model writes to generated validator: explicit null for optional string result=server-validation
+21 failures
+{ 'C shell': [ 42, 56 ], 'E roundtrip': [ 4, 11 ] }

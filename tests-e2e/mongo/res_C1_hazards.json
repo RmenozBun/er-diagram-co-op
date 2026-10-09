@@ -1,0 +1,350 @@
+{
+ "table `user` + `User` (case twins)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst UserSchema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst User = mongoose.model(\"User\", UserSchema, \"user\")\n\nconst User2Schema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst User2 = mongoose.model(\"User2\", User2Schema, \"User\")\n\nmodule.exports = { User, User2 }\n"
+ },
+ "table `order_item` + `orderItem`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst OrderItemSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst OrderItem = mongoose.model(\"OrderItem\", OrderItemSchema, \"order_item\")\n\nconst OrderItem2Schema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst OrderItem2 = mongoose.model(\"OrderItem2\", OrderItem2Schema, \"orderItem\")\n\nmodule.exports = { OrderItem, OrderItem2 }\n"
+ },
+ "name starts with digit \"2024data\"": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst _2024dataSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst _2024data = mongoose.model(\"_2024data\", _2024dataSchema, \"2024data\")\n\nmodule.exports = { _2024data }\n"
+ },
+ "Thai table name": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ผู้ใช้Schema = new Schema(\n  {\n    \"ชื่อ\": { type: String, required: true },\n    \"อายุ\": { type: Number },\n  },\n  { timestamps: false },\n)\nconst ผู้ใช้ = mongoose.model(\"ผู้ใช้\", ผู้ใช้Schema, \"ผู้ใช้\")\n\nmodule.exports = { ผู้ใช้ }\n"
+ },
+ "Thai quoted table with space": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ผู้ใช้งานSchema = new Schema(\n  {\n    \"ชื่อ\": { type: String },\n  },\n  { timestamps: false },\n)\nconst ผู้ใช้งาน = mongoose.model(\"ผู้ใช้งาน\", ผู้ใช้งานSchema, \"ผู้ใช้ งาน\")\n\nmodule.exports = { ผู้ใช้งาน }\n"
+ },
+ "table `__proto__`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst Proto__Schema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Proto__ = mongoose.model(\"Proto__\", Proto__Schema, \"__proto__\")\n\nmodule.exports = { Proto__ }\n"
+ },
+ "table `constructor`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ConstructorSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Constructor = mongoose.model(\"Constructor\", ConstructorSchema, \"constructor\")\n\nmodule.exports = { Constructor }\n"
+ },
+ "table `schema`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst SchemaModelSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst SchemaModel = mongoose.model(\"SchemaModel\", SchemaModelSchema, \"schema\")\n\nmodule.exports = { SchemaModel }\n"
+ },
+ "table `Schema`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst SchemaModelSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst SchemaModel = mongoose.model(\"SchemaModel\", SchemaModelSchema, \"Schema\")\n\nmodule.exports = { SchemaModel }\n"
+ },
+ "table `mongoose`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst MongooseSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Mongoose = mongoose.model(\"Mongoose\", MongooseSchema, \"mongoose\")\n\nmodule.exports = { Mongoose }\n"
+ },
+ "table `date`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst DateModelSchema = new Schema(\n  {\n    a: { type: Date, default: Date.now },\n  },\n  { timestamps: false },\n)\nconst DateModel = mongoose.model(\"DateModel\", DateModelSchema, \"date\")\n\nmodule.exports = { DateModel }\n"
+ },
+ "table `string`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst StringModelSchema = new Schema(\n  {\n    a: { type: String },\n  },\n  { timestamps: false },\n)\nconst StringModel = mongoose.model(\"StringModel\", StringModelSchema, \"string\")\n\nmodule.exports = { StringModel }\n"
+ },
+ "table `number`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst NumberModelSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst NumberModel = mongoose.model(\"NumberModel\", NumberModelSchema, \"number\")\n\nmodule.exports = { NumberModel }\n"
+ },
+ "table `boolean`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst BooleanModelSchema = new Schema(\n  {\n    a: { type: Boolean },\n  },\n  { timestamps: false },\n)\nconst BooleanModel = mongoose.model(\"BooleanModel\", BooleanModelSchema, \"boolean\")\n\nmodule.exports = { BooleanModel }\n"
+ },
+ "table `buffer`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst BufferModelSchema = new Schema(\n  {\n    a: { type: Buffer },\n  },\n  { timestamps: false },\n)\nconst BufferModel = mongoose.model(\"BufferModel\", BufferModelSchema, \"buffer\")\n\nmodule.exports = { BufferModel }\n"
+ },
+ "table `object`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ObjectModelSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst ObjectModel = mongoose.model(\"ObjectModel\", ObjectModelSchema, \"object\")\n\nmodule.exports = { ObjectModel }\n"
+ },
+ "table `array`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ArrayModelSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst ArrayModel = mongoose.model(\"ArrayModel\", ArrayModelSchema, \"array\")\n\nmodule.exports = { ArrayModel }\n"
+ },
+ "table `module`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ModuleSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Module = mongoose.model(\"Module\", ModuleSchema, \"module\")\n\nmodule.exports = { Module }\n"
+ },
+ "table `exports`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ExportsSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Exports = mongoose.model(\"Exports\", ExportsSchema, \"exports\")\n\nmodule.exports = { Exports }\n"
+ },
+ "table `require`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst RequireSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Require = mongoose.model(\"Require\", RequireSchema, \"require\")\n\nmodule.exports = { Require }\n"
+ },
+ "table `class`/`function` (JS keywords)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ClassSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Class = mongoose.model(\"Class\", ClassSchema, \"class\")\n\nconst FunctionModelSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst FunctionModel = mongoose.model(\"FunctionModel\", FunctionModelSchema, \"function\")\n\nmodule.exports = { Class, FunctionModel }\n"
+ },
+ "table `a-b` / `a b`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ABSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst AB = mongoose.model(\"AB\", ABSchema, \"a-b\")\n\nconst AB2Schema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst AB2 = mongoose.model(\"AB2\", AB2Schema, \"a b\")\n\nmodule.exports = { AB, AB2 }\n"
+ },
+ "table `a_b` vs `a-b` vs `a b`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ABSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst AB = mongoose.model(\"AB\", ABSchema, \"a_b\")\n\nconst AB2Schema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst AB2 = mongoose.model(\"AB2\", AB2Schema, \"a-b\")\n\nconst AB3Schema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst AB3 = mongoose.model(\"AB3\", AB3Schema, \"a b\")\n\nmodule.exports = { AB, AB2, AB3 }\n"
+ },
+ "table with $ in name": {
+  "perr": [
+   "Unexpected \"Table $x {\"",
+   "Unexpected \"a int\"",
+   "Unexpected \"}\""
+  ],
+  "code": "// WARNING: collection name \"a$b\" is not allowed by MongoDB\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ABSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst AB = mongoose.model(\"AB\", ABSchema, \"a$b\")\n\nmodule.exports = { AB }\n"
+ },
+ "table with quote chars `it's`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ItSSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst ItS = mongoose.model(\"ItS\", ItSSchema, \"it's\")\n\nmodule.exports = { ItS }\n"
+ },
+ "table name with backslash": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ABSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst AB = mongoose.model(\"AB\", ABSchema, \"a\\\\b\")\n\nmodule.exports = { AB }\n"
+ },
+ "table name with double-quote (backtick quoted)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ABSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst AB = mongoose.model(\"AB\", ABSchema, \"a\\\"b\")\n\nmodule.exports = { AB }\n"
+ },
+ "table with emoji": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst BoxSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Box = mongoose.model(\"Box\", BoxSchema, \"📦box\")\n\nmodule.exports = { Box }\n"
+ },
+ "table name only digits \"123\"": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst _123Schema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst _123 = mongoose.model(\"_123\", _123Schema, \"123\")\n\nmodule.exports = { _123 }\n"
+ },
+ "table \"order\" and \"Order\" and \"ORDER\"": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst OrderSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Order = mongoose.model(\"Order\", OrderSchema, \"order\")\n\nconst Order2Schema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst Order2 = mongoose.model(\"Order2\", Order2Schema, \"Order\")\n\nconst ORDERSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst ORDER = mongoose.model(\"ORDER\", ORDERSchema, \"ORDER\")\n\nmodule.exports = { Order, Order2, ORDER }\n"
+ },
+ "zero tables": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nmodule.exports = {  }\n"
+ },
+ "table with no fields": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst EmptySchema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst Empty = mongoose.model(\"Empty\", EmptySchema, \"empty\")\n\nmodule.exports = { Empty }\n"
+ },
+ "only embedded tables": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nmodule.exports = {  }\n"
+ },
+ "field named _id non-objectid (string)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    _id: { type: String },\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field named _id int pk": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    _id: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "pk `id` int (SQL style)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    id: { type: Number },\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "pk `id` objectid -> _id": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "pk `id` objectid + also `_id` field": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    id: { type: Schema.Types.ObjectId },\n    _id: { type: Schema.Types.ObjectId },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field named `type`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    type: { type: String, required: true },\n    name: { type: String },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "embedded with field `type`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    addr: {\n      type: { type: String },\n      city: { type: String },\n    },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field named `__proto__`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    [\"__proto__\"]: { type: String },\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field named `constructor`/`toString`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    constructor: { type: String },\n    toString: { type: String },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names with dots \"a.b\"": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    \"a.b\": { type: String },\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names with $": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    $x: { type: String },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names reserved by mongoose (errors, schema, isNew, collection, db, save, validate, set, get, init)": {
+  "perr": [],
+  "code": "// WARNING: \"t.errors\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.schema\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.isNew\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.collection\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.db\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.save\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.validate\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.set\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.get\" is a reserved Mongoose property name - rename the field\n// WARNING: \"t.init\" is a reserved Mongoose property name - rename the field\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    errors: { type: String },\n    schema: { type: String },\n    isNew: { type: String },\n    collection: { type: String },\n    db: { type: String },\n    save: { type: String },\n    validate: { type: String },\n    set: { type: String },\n    get: { type: String },\n    init: { type: String },\n    on: { type: String },\n  },\n  { timestamps: false, suppressReservedKeysWarning: true },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names reserved single: `errors`": {
+  "perr": [],
+  "code": "// WARNING: \"t.errors\" is a reserved Mongoose property name - rename the field\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    errors: { type: String },\n  },\n  { timestamps: false, suppressReservedKeysWarning: true },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names reserved single: `schema`": {
+  "perr": [],
+  "code": "// WARNING: \"t.schema\" is a reserved Mongoose property name - rename the field\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    schema: { type: String },\n  },\n  { timestamps: false, suppressReservedKeysWarning: true },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names reserved single: `collection`": {
+  "perr": [],
+  "code": "// WARNING: \"t.collection\" is a reserved Mongoose property name - rename the field\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    collection: { type: String },\n  },\n  { timestamps: false, suppressReservedKeysWarning: true },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names reserved single: `db`": {
+  "perr": [],
+  "code": "// WARNING: \"t.db\" is a reserved Mongoose property name - rename the field\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    db: { type: String },\n  },\n  { timestamps: false, suppressReservedKeysWarning: true },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names reserved single: `save`": {
+  "perr": [],
+  "code": "// WARNING: \"t.save\" is a reserved Mongoose property name - rename the field\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    save: { type: String },\n  },\n  { timestamps: false, suppressReservedKeysWarning: true },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names reserved single: `isNew`": {
+  "perr": [],
+  "code": "// WARNING: \"t.isNew\" is a reserved Mongoose property name - rename the field\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    isNew: { type: String },\n  },\n  { timestamps: false, suppressReservedKeysWarning: true },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field names reserved single: `get`": {
+  "perr": [],
+  "code": "// WARNING: \"t.get\" is a reserved Mongoose property name - rename the field\n\nconst mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    get: { type: String },\n  },\n  { timestamps: false, suppressReservedKeysWarning: true },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field named `id` (virtual conflict)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    id: { type: String },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "field Thai / spaces / digits": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    \"first name\": { type: String },\n    \"ชื่อ\": { type: String },\n    \"1x\": { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "default with quotes/newline": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: String, default: \"it's\" },\n    b: { type: String, default: \"say \\\"hi\\\"\" },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "default `now()` on string and date": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: Date, default: Date.now },\n    b: { type: String, default: Date.now },\n    c: { type: Date, default: Date.now },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "default numeric on string field": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: String, default: 0 },\n    b: { type: Number, default: -5 },\n    c: { type: Number, default: 1.5 },\n    d: { type: Boolean, default: false },\n    e: { type: String, default: null },\n    f: { type: String, default: \"\" },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "default string looking like a number \"007\"": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: String, default: \"007\" },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "default expression `uuid()`": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: String },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "default on array / embedded": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: [{ type: String, default: 0 }],\n    b: {\n      x: { type: Number },\n    },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "ref to embedded-only table": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    e_id: { type: Schema.Types.ObjectId, ref: \"E\" },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "N:M with both root tables": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ASchema = new Schema(\n  {\n    b_ids: [{ type: Schema.Types.ObjectId, ref: \"B\" }],\n  },\n  { timestamps: false },\n)\nconst A = mongoose.model(\"A\", ASchema, \"a\")\n\nconst BSchema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst B = mongoose.model(\"B\", BSchema, \"b\")\n\nmodule.exports = { A, B }\n"
+ },
+ "N:M where from-table has field named b_ids": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ASchema = new Schema(\n  {\n    b_ids: [{ type: String }],\n  },\n  { timestamps: false },\n)\nconst A = mongoose.model(\"A\", ASchema, \"a\")\n\nconst BSchema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst B = mongoose.model(\"B\", BSchema, \"b\")\n\nmodule.exports = { A, B }\n"
+ },
+ "N:M twice to same table": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ASchema = new Schema(\n  {\n    b_ids: [{ type: Schema.Types.ObjectId, ref: \"B\" }],\n  },\n  { timestamps: false },\n)\nconst A = mongoose.model(\"A\", ASchema, \"a\")\n\nconst BSchema = new Schema(\n  {\n    x: { type: Number },\n  },\n  { timestamps: false },\n)\nconst B = mongoose.model(\"B\", BSchema, \"b\")\n\nmodule.exports = { A, B }\n"
+ },
+ "one-to-one ref": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ASchema = new Schema(\n  {\n    b_id: { type: Schema.Types.ObjectId, ref: \"B\" },\n  },\n  { timestamps: false },\n)\nconst A = mongoose.model(\"A\", ASchema, \"a\")\n\nconst BSchema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst B = mongoose.model(\"B\", BSchema, \"b\")\n\nmodule.exports = { A, B }\n"
+ },
+ "one-to-many `<` ref": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ASchema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst A = mongoose.model(\"A\", ASchema, \"a\")\n\nconst BSchema = new Schema(\n  {\n    a_id: { type: Schema.Types.ObjectId, ref: \"A\" },\n  },\n  { timestamps: false },\n)\nconst B = mongoose.model(\"B\", BSchema, \"b\")\n\nmodule.exports = { A, B }\n"
+ },
+ "ref to non-objectid field (string key)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ASchema = new Schema(\n  {\n    code: { type: String },\n  },\n  { timestamps: false },\n)\nconst A = mongoose.model(\"A\", ASchema, \"a\")\n\nconst BSchema = new Schema(\n  {\n    a_code: { type: Schema.Types.ObjectId, ref: \"A\" },\n  },\n  { timestamps: false },\n)\nconst B = mongoose.model(\"B\", BSchema, \"b\")\n\nmodule.exports = { A, B }\n"
+ },
+ "ref inside embedded table": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst ASchema = new Schema(\n  {\n    e: {\n      user_id: { type: Schema.Types.ObjectId, ref: \"U\" },\n    },\n  },\n  { timestamps: false },\n)\nconst A = mongoose.model(\"A\", ASchema, \"a\")\n\nconst USchema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst U = mongoose.model(\"U\", USchema, \"u\")\n\nmodule.exports = { A, U }\n"
+ },
+ "array of refs via inline ref": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst USchema = new Schema(\n  {\n    \n  },\n  { timestamps: false },\n)\nconst U = mongoose.model(\"U\", USchema, \"u\")\n\nconst ASchema = new Schema(\n  {\n    friends: [{ type: Schema.Types.ObjectId, ref: \"U\" }],\n  },\n  { timestamps: false },\n)\nconst A = mongoose.model(\"A\", ASchema, \"a\")\n\nmodule.exports = { U, A }\n"
+ },
+ "unique + not null + default combos": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: String, required: true, unique: true, default: \"x\" },\n    b: { type: Number, unique: true, sparse: true },\n    c: [{ type: String, unique: true, sparse: true }],\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "index on missing field": {
+  "perr": [
+   "Index uses unknown field \"zzz\" in table \"t\"",
+   "Index uses unknown field \"yyy\" in table \"t\""
+  ],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "index names (name: \"foo\")": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: Number },\n    b: { type: Number },\n  },\n  { timestamps: false },\n)\nTSchema.index({ a: 1, b: 1 }, { unique: true, name: \"my_idx\" })\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "index with Thai/quoted fields": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    \"first name\": { type: String },\n    \"ชื่อ\": { type: String },\n  },\n  { timestamps: false },\n)\nTSchema.index({ \"ชื่อ\": 1, \"first name\": 1 }, { unique: true })\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "embedded self-recursion": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    n: {\n      v: { type: Number },\n      next: Schema.Types.Mixed,\n      kids: [Schema.Types.Mixed],\n    },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "embedded mutual recursion A<->B": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: {\n      b: {\n        a: Schema.Types.Mixed,\n        v: { type: Number, required: true },\n      },\n    },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "embedded type case-insensitive match (\"address\" vs Address)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: {\n      s: { type: String, required: true },\n    },\n    b: [{\n      s: { type: String, required: true },\n    }],\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "type names unknown": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: String },\n    b: { type: String },\n    c: [{ type: String }],\n    d: { type: Schema.Types.Mixed },\n    e: { type: String },\n    f: { type: String },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "embedded table that has pk (becomes root too?)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    e: {\n      x: { type: Number },\n    },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nconst ESchema = new Schema(\n  {\n    x: { type: Number },\n  },\n  { timestamps: false },\n)\nconst E = mongoose.model(\"E\", ESchema, \"E\")\n\nmodule.exports = { T, E }\n"
+ },
+ "table referencing itself embedded not-array": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    me: Schema.Types.Mixed,\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "duplicate field names": {
+  "perr": [
+   "Duplicate field \"a\""
+  ],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: Number },\n    a: { type: String },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "duplicate table names": {
+  "perr": [
+   "Duplicate table \"t\""
+  ],
+  "error": "Identifier 'T2Schema' has already been declared",
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst T2Schema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T2 = mongoose.model(\"T2\", T2Schema, \"t\")\n\nconst T2Schema = new Schema(\n  {\n    b: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T2 = mongoose.model(\"T2\", T2Schema, \"t\")\n\nmodule.exports = { T2, T2 }\n"
+ },
+ "huge table (500 fields)": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    f0: { type: Number },\n    f1: { type: String },\n    f2: { type: Date },\n    f3: { type: Boolean },\n    f4: { type: Number },\n    f5: { type: String },\n    f6: { type: Date },\n    f7: { type: Boolean },\n    f8: { type: Number },\n    f9: { type: String },\n    f10: { type: Date },\n    f11: { type: Boolean },\n    f12: { type: Number },\n    f13: { type: String },\n    f14: { type: Date },\n    f15: { type: Boolean },\n    f16: { type: Number },\n    f17: { type: String },\n    f18: { type: Date },\n    f19: { type: Boolean },\n    f20: { type: Number },\n    f21: { type: String },\n    f22: { type: Date },\n    f23: { type: Boolean },\n    f24: { type: Number },\n    f25: { type: String },\n    f26: { type: Date },\n    f27: { type: Boolean },\n    f28: { type: Number },\n    f29: { type: String },\n    f30: { type: Date },\n    f31: { type: Boolean },\n    f32: { type: Number },\n    f33: { type: String },\n    f34: { type: Date },\n    f35: { type: Boolean },\n    f36: { type: Number },\n    f37: { type: String },\n    f38: { type: Date },\n    f39: { type: Boolean },\n    f40: { type: Number },\n    f41: { type: String },\n    f42: { type: Date },\n    f43: { type: Boolean },\n    f44: { type: Number },\n    f45: { type: String },\n    f46: { type: Date },\n    f47: { type: Boolean },\n    f48: { type: Number },\n    f49: { type: String },\n    f50: { type: Date },\n    f51: { type: Boolean },\n    f52: { type: Number },\n    f53: { type: String },\n    f54: { type: Date },\n    f55: { type: Boolean },\n    f56: { type: Number },\n    f57: { type: String },\n    f58: { type: Date },\n    f59: { type: Boolean },\n    f60: { type: Number },\n    f61: { type: String },\n    f62: { type: Date },\n    f63: { type: Boolean },\n    f64: { type: Number },\n    f65: { type: String },\n    f66: { type: Date },\n    f67: { type: Boolean },\n    f68: { type: Number },\n    f69: { type: String },\n    f70: { type: Date },\n    f71: { type: Boolean },\n    f72: { type: Number },\n    f73: { type: String },\n    f74: { type: Date },\n    f75: { type: Boolean },\n    f76: { type: Number },\n    f77: { type: String },\n    f78: { type: Date },\n    f79: { type: Boolean },\n    f80: { type: Number },\n    f81: { type: String },\n    f82: { type: Date },\n    f83: { type: Boolean },\n    f84: { type: Number },\n    f85: { type: String },\n    f86: { type: Date },\n    f87: { type: Boolean },\n    f88: { type: Number },\n    f89: { type: String },\n    f90: { type: Date },\n    f91: { type: Boolean },\n    f92: { type: Number },\n    f93: { type: String },\n    f94: { type: Date },\n    f95: { type: Boolean },\n    f96: { type: Number },\n    f97: { type: String },\n    f98: { type: Date },\n    f99: { type: Boolean },\n    f100: { type: Number },\n    f101: { type: String },\n    f102: { type: Date },\n    f103: { type: Boolean },\n    f104: { type: Number },\n    f105: { type: String },\n    f106: { type: Date },\n    f107: { type: Boolean },\n    f108: { type: Number },\n    f109: { type: String },\n    f110: { type: Date },\n    f111: { type: Boolean },\n    f112: { type: Number },\n    f113: { type: String },\n    f114: { type: Date },\n    f115: { type: Boolean },\n    f116: { type: Number },\n    f117: { type: String },\n    f118: { type: Date },\n    f119: { type: Boolean },\n    f120: { type: Number },\n    f121: { type: String },\n    f122: { type: Date },\n    f123: { type: Boolean },\n    f124: { type: Number },\n    f125: { type: String },\n    f126: { type: Date },\n    f127: { type: Boolean },\n    f128: { type: Number },\n    f129: { type: String },\n    f130: { type: Date },\n    f131: { type: Boolean },\n    f132: { type: Number },\n    f133: { type: String },\n    f134: { type: Date },\n    f135: { type: Boolean },\n    f136: { type: Number },\n    f137: { type: String },\n    f138: { type: Date },\n    f139: { type: Boolean },\n    f140: { type: Number },\n    f141: { type: String },\n    f142: { type: Date },\n    f143: { type: Boolean },\n    f144: { type: Number },\n    f145: { type: String },\n    f146: { type: Date },\n    f147: { type: Boolean },\n    f148: { type: Number },\n    f149: { type: String },\n    f150: { type: Date },\n    f151: { type: Boolean },\n    f152: { type: Number },\n    f153: { type: String },\n    f154: { type: Date },\n    f155: { type: Boolean },\n    f156: { type: Number },\n    f157: { type: String },\n    f158: { type: Date },\n    f159: { type: Boolean },\n    f160: { type: Number },\n    f161: { type: String },\n    f162: { type: Date },\n    f163: { type: Boolean },\n    f164: { type: Number },\n    f165: { type: String },\n    f166: { type: Date },\n    f167: { type: Boolean },\n    f168: { type: Number },\n    f169: { type: String },\n    f170: { type: Date },\n    f171: { type: Boolean },\n    f172: { type: Number },\n    f173: { type: String },\n    f174: { type: Date },\n    f175: { type: Boolean },\n    f176: { type: Number },\n    f177: { type: String },\n    f178: { type: Date },\n    f179: { type: Boolean },\n    f180: { type: Number },\n    f181: { type: String },\n    f182: { type: Date },\n    f183: { type: Boolean },\n    f184: { type: Number },\n    f185: { type: String },\n    f186: { type: Date },\n    f187: { type: Boolean },\n    f188: { type: Number },\n    f189: { type: String },\n    f190: { type: Date },\n    f191: { type: Boolean },\n    f192: { type: Number },\n    f193: { type: String },\n    f194: { type: Date },\n    f195: { type: Boolean },\n    f196: { type: Number },\n    f197: { type: String },\n    f198: { type: Date },\n    f199: { type: Boolean },\n    f200: { type: Number },\n    f201: { type: String },\n    f202: { type: Date },\n    f203: { type: Boolean },\n    f204: { type: Number },\n    f205: { type: String },\n    f206: { type: Date },\n    f207: { type: Boolean },\n    f208: { type: Number },\n    f209: { type: String },\n    f210: { type: Date },\n    f211: { type: Boolean },\n    f212: { type: Number },\n    f213: { type: String },\n    f214: { type: Date },\n    f215: { type: Boolean },\n    f216: { type: Number },\n    f217: { type: String },\n    f218: { type: Date },\n    f219: { type: Boolean },\n    f220: { type: Number },\n    f221: { type: String },\n    f222: { type: Date },\n    f223: { type: Boolean },\n    f224: { type: Number },\n    f225: { type: String },\n    f226: { type: Date },\n    f227: { type: Boolean },\n    f228: { type: Number },\n    f229: { type: String },\n    f230: { type: Date },\n    f231: { type: Boolean },\n    f232: { type: Number },\n    f233: { type: String },\n    f234: { type: Date },\n    f235: { type: Boolean },\n    f236: { type: Number },\n    f237: { type: String },\n    f238: { type: Date },\n    f239: { type: Boolean },\n    f240: { type: Number },\n    f241: { type: String },\n    f242: { type: Date },\n    f243: { type: Boolean },\n    f244: { type: Number },\n    f245: { type: String },\n    f246: { type: Date },\n    f247: { type: Boolean },\n    f248: { type: Number },\n    f249: { type: String },\n    f250: { type: Date },\n    f251: { type: Boolean },\n    f252: { type: Number },\n    f253: { type: String },\n    f254: { type: Date },\n    f255: { type: Boolean },\n    f256: { type: Number },\n    f257: { type: String },\n    f258: { type: Date },\n    f259: { type: Boolean },\n    f260: { type: Number },\n    f261: { type: String },\n    f262: { type: Date },\n    f263: { type: Boolean },\n    f264: { type: Number },\n    f265: { type: String },\n    f266: { type: Date },\n    f267: { type: Boolean },\n    f268: { type: Number },\n    f269: { type: String },\n    f270: { type: Date },\n    f271: { type: Boolean },\n    f272: { type: Number },\n    f273: { type: String },\n    f274: { type: Date },\n    f275: { type: Boolean },\n    f276: { type: Number },\n    f277: { type: String },\n    f278: { type: Date },\n    f279: { type: Boolean },\n    f280: { type: Number },\n    f281: { type: String },\n    f282: { type: Date },\n    f283: { type: Boolean },\n    f284: { type: Number },\n    f285: { type: String },\n    f286: { type: Date },\n    f287: { type: Boolean },\n    f288: { type: Number },\n    f289: { type: String },\n    f290: { type: Date },\n    f291: { type: Boolean },\n    f292: { type: Number },\n    f293: { type: String },\n    f294: { type: Date },\n    f295: { type: Boolean },\n    f296: { type: Number },\n    f297: { type: String },\n    f298: { type: Date },\n    f299: { type: Boolean },\n    f300: { type: Number },\n    f301: { type: String },\n    f302: { type: Date },\n    f303: { type: Boolean },\n    f304: { type: Number },\n    f305: { type: String },\n    f306: { type: Date },\n    f307: { type: Boolean },\n    f308: { type: Number },\n    f309: { type: String },\n    f310: { type: Date },\n    f311: { type: Boolean },\n    f312: { type: Number },\n    f313: { type: String },\n    f314: { type: Date },\n    f315: { type: Boolean },\n    f316: { type: Number },\n    f317: { type: String },\n    f318: { type: Date },\n    f319: { type: Boolean },\n    f320: { type: Number },\n    f321: { type: String },\n    f322: { type: Date },\n    f323: { type: Boolean },\n    f324: { type: Number },\n    f325: { type: String },\n    f326: { type: Date },\n    f327: { type: Boolean },\n    f328: { type: Number },\n    f329: { type: String },\n    f330: { type: Date },\n    f331: { type: Boolean },\n    f332: { type: Number },\n    f333: { type: String },\n    f334: { type: Date },\n    f335: { type: Boolean },\n    f336: { type: Number },\n    f337: { type: String },\n    f338: { type: Date },\n    f339: { type: Boolean },\n    f340: { type: Number },\n    f341: { type: String },\n    f342: { type: Date },\n    f343: { type: Boolean },\n    f344: { type: Number },\n    f345: { type: String },\n    f346: { type: Date },\n    f347: { type: Boolean },\n    f348: { type: Number },\n    f349: { type: String },\n    f350: { type: Date },\n    f351: { type: Boolean },\n    f352: { type: Number },\n    f353: { type: String },\n    f354: { type: Date },\n    f355: { type: Boolean },\n    f356: { type: Number },\n    f357: { type: String },\n    f358: { type: Date },\n    f359: { type: Boolean },\n    f360: { type: Number },\n    f361: { type: String },\n    f362: { type: Date },\n    f363: { type: Boolean },\n    f364: { type: Number },\n    f365: { type: String },\n    f366: { type: Date },\n    f367: { type: Boolean },\n    f368: { type: Number },\n    f369: { type: String },\n    f370: { type: Date },\n    f371: { type: Boolean },\n    f372: { type: Number },\n    f373: { type: String },\n    f374: { type: Date },\n    f375: { type: Boolean },\n    f376: { type: Number },\n    f377: { type: String },\n    f378: { type: Date },\n    f379: { type: Boolean },\n    f380: { type: Number },\n    f381: { type: String },\n    f382: { type: Date },\n    f383: { type: Boolean },\n    f384: { type: Number },\n    f385: { type: String },\n    f386: { type: Date },\n    f387: { type: Boolean },\n    f388: { type: Number },\n    f389: { type: String },\n    f390: { type: Date },\n    f391: { type: Boolean },\n    f392: { type: Number },\n    f393: { type: String },\n    f394: { type: Date },\n    f395: { type: Boolean },\n    f396: { type: Number },\n    f397: { type: String },\n    f398: { type: Date },\n    f399: { type: Boolean },\n    f400: { type: Number },\n    f401: { type: String },\n    f402: { type: Date },\n    f403: { type: Boolean },\n    f404: { type: Number },\n    f405: { type: String },\n    f406: { type: Date },\n    f407: { type: Boolean },\n    f408: { type: Number },\n    f409: { type: String },\n    f410: { type: Date },\n    f411: { type: Boolean },\n    f412: { type: Number },\n    f413: { type: String },\n    f414: { type: Date },\n    f415: { type: Boolean },\n    f416: { type: Number },\n    f417: { type: String },\n    f418: { type: Date },\n    f419: { type: Boolean },\n    f420: { type: Number },\n    f421: { type: String },\n    f422: { type: Date },\n    f423: { type: Boolean },\n    f424: { type: Number },\n    f425: { type: String },\n    f426: { type: Date },\n    f427: { type: Boolean },\n    f428: { type: Number },\n    f429: { type: String },\n    f430: { type: Date },\n    f431: { type: Boolean },\n    f432: { type: Number },\n    f433: { type: String },\n    f434: { type: Date },\n    f435: { type: Boolean },\n    f436: { type: Number },\n    f437: { type: String },\n    f438: { type: Date },\n    f439: { type: Boolean },\n    f440: { type: Number },\n    f441: { type: String },\n    f442: { type: Date },\n    f443: { type: Boolean },\n    f444: { type: Number },\n    f445: { type: String },\n    f446: { type: Date },\n    f447: { type: Boolean },\n    f448: { type: Number },\n    f449: { type: String },\n    f450: { type: Date },\n    f451: { type: Boolean },\n    f452: { type: Number },\n    f453: { type: String },\n    f454: { type: Date },\n    f455: { type: Boolean },\n    f456: { type: Number },\n    f457: { type: String },\n    f458: { type: Date },\n    f459: { type: Boolean },\n    f460: { type: Number },\n    f461: { type: String },\n    f462: { type: Date },\n    f463: { type: Boolean },\n    f464: { type: Number },\n    f465: { type: String },\n    f466: { type: Date },\n    f467: { type: Boolean },\n    f468: { type: Number },\n    f469: { type: String },\n    f470: { type: Date },\n    f471: { type: Boolean },\n    f472: { type: Number },\n    f473: { type: String },\n    f474: { type: Date },\n    f475: { type: Boolean },\n    f476: { type: Number },\n    f477: { type: String },\n    f478: { type: Date },\n    f479: { type: Boolean },\n    f480: { type: Number },\n    f481: { type: String },\n    f482: { type: Date },\n    f483: { type: Boolean },\n    f484: { type: Number },\n    f485: { type: String },\n    f486: { type: Date },\n    f487: { type: Boolean },\n    f488: { type: Number },\n    f489: { type: String },\n    f490: { type: Date },\n    f491: { type: Boolean },\n    f492: { type: Number },\n    f493: { type: String },\n    f494: { type: Date },\n    f495: { type: Boolean },\n    f496: { type: Number },\n    f497: { type: String },\n    f498: { type: Date },\n    f499: { type: Boolean },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "timestamps-ish: created_at/updated_at": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    created_at: { type: Date, default: Date.now },\n    updated_at: { type: Date },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ },
+ "notes with quotes": {
+  "perr": [],
+  "code": "const mongoose = require('mongoose')\nconst { Schema } = mongoose\n\nconst TSchema = new Schema(\n  {\n    a: { type: Number },\n  },\n  { timestamps: false },\n)\nconst T = mongoose.model(\"T\", TSchema, \"t\")\n\nmodule.exports = { T }\n"
+ }
+}

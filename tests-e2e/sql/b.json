@@ -1,0 +1,1316 @@
+[
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: mongo-types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: basic-fk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: sample",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: m2m",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: m2m-uuid",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: one-to-one",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: self-ref",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: composite-pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: composite-pk-fk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: no-pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: empty-table",
+  "pass": false,
+  "note": "incomplete input <= create table \"t\" ( || near \")\": syntax error <= ); "
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: dup-names",
+  "pass": false,
+  "note": "table \"t\" already exists <= create table \"t\" ( \"id\" integer ); "
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: dup-fields",
+  "pass": false,
+  "note": "duplicate column name: id <= create table \"t\" ( \"id\" integer, \"id\" integer ); "
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: reserved",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: quote-names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: defaults",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: autoinc-types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: mysql-hazards",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: fk-type-mismatch",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: fk-to-nonunique",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: index-collide",
+  "pass": false,
+  "note": "index a_x_idx already exists <= create index \"a_x_idx\" on \"a\" (\"x\");"
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: fk-collide",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: index-quoted-cols",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: array-pg",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: embedded",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: unknown-types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: varchar-nolen",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: upper-types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: pk-text-mysql",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: unique-and-pk-composite",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: ref-bad",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: ref-to-nonpk-m2m-self",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: m2m-name-collision",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: m2m-twice",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: long-names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: thai",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite executes with 0 errors: big-150",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite basic: users has 6 cols",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite basic: users.id pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite basic: email notnull",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite basic: posts unique index exists",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite basic: posts idx user_id",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite basic: FK posts.user_id -> users.id actually exists (generator emits only a comment)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: autoincrement users.id",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: unique enforced",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: bool default true -> 1?",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: now() default works (created_at not null)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: FKs emitted as real constraints (not comments)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: m2m junction has FKs",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: m2m junction composite pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: one-to-one unique on child (generator skips for sqlite)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: composite pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: reserved names ok",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: autoinc non-integer pk (id varchar [pk, increment]) -> not silently dropped",
+  "pass": false,
+  "note": "ok info"
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: composite pk + increment on one col is handled",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: smallint/bigint pk increment -> integer primary key autoincrement (rowid alias)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: increment without pk (table d) emits nothing for autoinc",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: thai names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: big-150 FK chain present",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: quote in names (a'b) executes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite: names containing double-quote are escaped",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite defaults schema executes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B sqlite exec",
+  "name": "sqlite defaults insert",
+  "pass": false,
+  "note": "unknown function: gen_random_uuid()"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: mongo-types",
+  "pass": false,
+  "note": "type \"enum\" does not exist <= create table \"t\" ( \"id\" serial primary key, \"c0\" varchar(255), \"c1\" varchar(24),"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: basic-fk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: sample",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: m2m",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: m2m-uuid",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: one-to-one",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: self-ref",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: composite-pk",
+  "pass": false,
+  "note": "there is no unique constraint matching given keys for referenced table \"oi\" <= alter table \"x\" add constraint \"fk_x_a\" foreign key (\"a\") references \"oi\" (\"orde"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: composite-pk-fk",
+  "pass": false,
+  "note": "there is no unique constraint matching given keys for referenced table \"oi\" <= alter table \"x\" add constraint \"fk_x_a\" foreign key (\"a\") references \"oi\" (\"orde || there is no unique constraint matching given keys for referenced table \"oi\" <= alter table \"x\" add constraint \"fk_x_b\" foreign key (\"b\") references \"oi\" (\"item"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: no-pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: empty-table",
+  "pass": false,
+  "note": "syntax error at end of input <= create table \"t\" ( || syntax error at or near \")\" <= ); "
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: dup-names",
+  "pass": false,
+  "note": "relation \"t\" already exists <= create table \"t\" ( \"id\" int ); "
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: dup-fields",
+  "pass": false,
+  "note": "column \"id\" specified more than once <= create table \"t\" ( \"id\" int, \"id\" int ); "
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: reserved",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: quote-names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: defaults",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: autoinc-types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: mysql-hazards",
+  "pass": false,
+  "note": "there is no unique constraint matching given keys for referenced table \"t\" <= alter table \"ch\" add constraint \"fk_ch_tid\" foreign key (\"tid\") references \"t\" ("
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: fk-type-mismatch",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: fk-to-nonunique",
+  "pass": false,
+  "note": "there is no unique constraint matching given keys for referenced table \"a\" <= alter table \"b\" add constraint \"fk_b_c\" foreign key (\"c\") references \"a\" (\"code\""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: index-collide",
+  "pass": false,
+  "note": "relation \"a_x_idx\" already exists <= create index \"a_x_idx\" on \"a\" (\"x\");"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: fk-collide",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: index-quoted-cols",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: array-pg",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: embedded",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: unknown-types",
+  "pass": false,
+  "note": "type \"geometry\" does not exist <= create table \"t\" ( \"id\" int primary key, \"a\" geometry, \"b\" point, \"c\" \"weird typ"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: varchar-nolen",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: upper-types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: pk-text-mysql",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: unique-and-pk-composite",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: ref-bad",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: ref-to-nonpk-m2m-self",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: m2m-name-collision",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: m2m-twice",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: long-names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: thai",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "postgres executes with 0 errors: big-150",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg basic: FK constraint on posts",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg basic: users.id serial default nextval",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg basic: created_at default now()",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg basic: bigint id -> bigserial",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg basic: indexes exist",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg m2m: junction table a_b",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg m2m: junction 2 FK + PK",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg m2m: junction col types are integer/bigint not serial",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg one-to-one: unique on child",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg composite-pk-fk: individual FK to one col of composite PK fails/needs unique",
+  "pass": false,
+  "note": "there is no unique constraint matching given keys for referenced table \"oi\" <= alter table \"x\" add constraint \"fk_x_a\" foreign key (\"a\") references \"oi\" (\"orde || there is no unique constraint matching given keys for referenced table \"oi\" <= alter table \"x\" add constraint \"fk_x_b\" foreign key (\"b\") references \"oi\" (\"item"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg types: all 22 SQL_TYPES columns created",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg types: int[] -> _int4, varchar[] -> _varchar",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg types: jsonb",
+  "pass": false,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg types: uuid/bytea",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg types: blob (mysql type) in PG executes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg types: datetime executes in PG",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg mongo-style types in SQL mode all map to valid PG types",
+  "pass": false,
+  "note": "type \"enum\" does not exist <= create table \"t\" ( \"id\" serial primary key, \"c0\" varchar(255), \"c1\" varchar(24),"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg reserved names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg reserved: FKs created",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg autoinc types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg autoinc: varchar/uuid [increment] does not produce serial silently",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg index-collide (duplicate index definitions)",
+  "pass": false,
+  "note": "relation \"a_x_idx\" already exists <= create index \"a_x_idx\" on \"a\" (\"x\");"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg fk-collide (same ref twice)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg m2m twice",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg m2m self",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg m2m junction name collides with existing table a_b",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg fk-to-nonunique (FK to non-unique col) - invalid input, generator should warn",
+  "pass": false,
+  "note": "there is no unique constraint matching given keys for referenced table \"a\" <= alter table \"b\" add constraint \"fk_b_c\" foreign key (\"c\") references \"a\" (\"code\""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg self-ref",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg embedded table",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg unknown types pass-through",
+  "pass": false,
+  "note": "type \"geometry\" does not exist <= create table \"t\" ( \"id\" int primary key, \"a\" geometry, \"b\" point, \"c\" \"weird typ"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg varchar no length + unique/pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg upper-case types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg long names (>63 chars identifiers truncate silently; collisions?)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg fk-type-mismatch int->bigint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg thai",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg big-150",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg unique-and-pk-composite",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg array",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default 'it''s' preserved",
+  "pass": false,
+  "note": "it''s"
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default '007' stays '007'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default 'null' string stays text 'null' (not NULL)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default 'true' text stays 'true'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default '' empty string stays ''",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default json '{}'",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default gen_random_uuid()",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default current_date",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg default (1+2) expr",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B postgres exec (PGlite)",
+  "name": "pg: names containing double-quote are escaped",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): mongo-types",
+  "pass": false,
+  "note": "Expected \"#\", \"--\", \".\", \"/*\", \"BIGINT\", \"BINARY\", \"BIT\", \"CHAR\", \"COLLATE\", \"DATE\", \"DATETIME\", \"DECIMAL\", \"DOUBLE\", \"ENUM\", \"FLOAT\", \"GEOMETRY\", \"GEOMETRYCOLLECTION\", \"INT\", \"INTEGER\", \"JSON\", \"LINE"
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): basic-fk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): sample",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): m2m",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): m2m-uuid",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): one-to-one",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): self-ref",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): composite-pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): composite-pk-fk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): no-pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): empty-table",
+  "pass": false,
+  "note": "Expected \"#\", \"'\", \"(\", \"*\", \"--\", \"/*\", \"CHECK\", \"CONSTRAINT\", \"FOREIGN KEY\", \"FULLTEXT\", \"INDEX\", \"KEY\", \"LIKE\", \"PRIMARY\", \"SELECT\", \"SPATIAL\", \"UNIQUE\", \"WITH\", \"\\\"\", \"`\", [ \\t\\n\\r], [0-9], or [A-"
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): dup-names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): dup-fields",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): reserved",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): quote-names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): defaults",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): autoinc-types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): mysql-hazards",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): fk-type-mismatch",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): fk-to-nonunique",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): index-collide",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): fk-collide",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): index-quoted-cols",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): array-pg",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): embedded",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): unknown-types",
+  "pass": false,
+  "note": "Expected \"#\", \"--\", \".\", \"/*\", \"BIGINT\", \"BINARY\", \"BIT\", \"CHAR\", \"COLLATE\", \"DATE\", \"DATETIME\", \"DECIMAL\", \"DOUBLE\", \"ENUM\", \"FLOAT\", \"GEOMETRY\", \"GEOMETRYCOLLECTION\", \"INT\", \"INTEGER\", \"JSON\", \"LINE"
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): varchar-nolen",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): upper-types",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): pk-text-mysql",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): unique-and-pk-composite",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): ref-bad",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): ref-to-nonpk-m2m-self",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): m2m-name-collision",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): m2m-twice",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): long-names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): thai",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql syntax (node-sql-parser): big-150",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: types (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: mongo-types (real MySQL would accept)",
+  "pass": false,
+  "note": "auto_increment without key: `c16` int auto_increment | auto_increment without key: `c17` bigint auto_increment | varchar/char without length: `c20` char"
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: basic-fk (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: sample (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: m2m (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: m2m-uuid (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: one-to-one (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: self-ref (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: composite-pk (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: composite-pk-fk (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: no-pk (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: empty-table (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: reserved (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: quote-names (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: defaults (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: autoinc-types (real MySQL would accept)",
+  "pass": false,
+  "note": "auto_increment on non-numeric: `id` varchar(10) auto_increment primary key | auto_increment without key: `id` int auto_increment | auto_increment on non-numeric: `id` char(36) auto_increment primary key"
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: mysql-hazards (real MySQL would accept)",
+  "pass": false,
+  "note": "unique varchar > 768 chars (utf8mb4 3072-byte key limit): `k` varchar(5000) unique"
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: index-quoted-cols (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: array-pg (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: varchar-nolen (real MySQL would accept)",
+  "pass": false,
+  "note": "varchar/char without length: `c` char"
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: upper-types (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: pk-text-mysql (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: unique-and-pk-composite (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: ref-to-nonpk-m2m-self (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: long-names (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: thai (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql rules: big-150 (real MySQL would accept)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql: types list maps timestamp/date/time/etc.",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql: int[] -> json",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql: m2m junction: FK before PK, col types equal parents",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "B mysql syntax",
+  "name": "mysql: backticks inside names escaped",
+  "pass": true,
+  "note": ""
+ }
+]

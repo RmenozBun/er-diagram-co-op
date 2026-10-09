@@ -1,0 +1,57 @@
+space table label -> "my table" (inserting an unquoted name with space as a type: parse ok?)
+typing "Address[" -> [ 'pk', 'primary key', 'unique', 'not null', 'null' ] replaced= 
+FAIL D autocomplete cursor after "Address[" offers Address[] type completion (not settings) labels=["pk","primary key","unique","not null","null","increment"] (the `[` is treated as the start of a settings block)
+FAIL D autocomplete cursor after "string[" offers string[] (not pk/unique settings) labels=["pk","primary key","unique","not null","null","increment"]
+after "string[] " explicit -> null
+after "string " explicit -> null
+inside note string -> null
+FAIL D autocomplete cursor inside quoted default after a comma offers nothing (comma in string) ["pk","primary key","unique","not null","null"]
+mid-line cursor "a str|ing" -> [ 'str', [ 'string', 'int', 'long' ] ]
+"//" inside a quoted note then comma -> null
+FAIL D autocomplete "//" inside quoted note is not treated as comment (settings offered after comma) completion source regex /\/\// ignores quotes -> returns none
+indexes block -> null
+snippet apply type function
+empty doc explicit -> [ 'Table', 'Ref' ]
+Ref after quoted table -> [ 'users._id', 'users.address', 'Address.street' ]
+FAIL D autocomplete Thai UNQUOTED field name: type list offered undefined (regex [\w$]+ is ASCII-only, and the parser rejects unquoted Thai too)
+Thai partial type -> null
+FAIL D autocomplete Thai partial type "ที่" replaces the typed Thai chars (from) null (validFor/regex uses \w)
+Thai after Table -> null
+Thai at line start -> null
+unknown prefix "x" -> 28 options (CodeMirror filters client side)
+sql "int[" -> [ 'pk', 'primary key', 'unique' ]
+sql "decimal(" -> [ 'decimal(', [ 'int', 'bigint', 'smallint' ] ]
+inline ref "users." -> [ 'users.', [ 'users._id', 'users.address', 'Address.street' ] ]
+    f0: { type: String },
+    f1: { type: Number },
+    f2: { type: Number },
+    f3: { type: Number },
+    f4: { type: Number },
+    f5: { type: Boolean },
+    f6: { type: Date },
+    f7: { type: Schema.Types.ObjectId },
+    f8: { type: Schema.Types.Mixed },
+    f9: { type: Schema.Types.Mixed },
+    f10: { type: Buffer },
+    f11: [{ type: String }],
+    f12: [{ type: Number }],
+    f13: [{ type: Number }],
+    f14: [{ type: Schema.Types.ObjectId }],
+    f15: [{ type: Schema.Types.Mixed }],
+string => { type: String } => string
+int => { type: Number } => int
+long => { type: Number } => long
+double => { type: Number } => double
+decimal => { type: Number } => decimal
+bool => { type: Boolean } => bool
+date => { type: Date } => date
+objectid => { type: Schema.Types.ObjectId } => objectId
+object => { type: Schema.Types.Mixed } => 
+json => { type: Schema.Types.Mixed } => 
+buffer => { type: Buffer } => binData
+string[] => [{ type: String }] => string
+int[] => [{ type: Number }] => int
+double[] => [{ type: Number }] => double
+objectid[] => [{ type: Schema.Types.ObjectId }] => objectId
+object[] => [{ type: Schema.Types.Mixed }] => array
+{ 'D autocomplete': [ 38, 44 ] }

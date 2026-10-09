@@ -1,0 +1,698 @@
+[
+ {
+  "area": "D csv import",
+  "name": "basic",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "header only -> 1 row",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "header-only csv -> table with 2 cols (varchar(255), nullable)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "BOM stripped",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "semicolon delimiter detect",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "tab delimiter detect",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "pipe delimiter detect",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "quoted embedded comma/quote/newline",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "CRLF",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "CR only (old mac)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "ragged rows kept (no throw)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "ragged: short row => missing cell treated as empty (nullable col c with 3rd value)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "ragged: extra cells beyond header dropped silently (info)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "duplicate headers get unique names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "headers differing by case only: name / Name (collide in MySQL/SQLite case-insens.)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "empty headers -> column, column_2 ...",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "weird headers sanitised",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "Thai headers: regex /[^\\w$]+/ strips Thai letters -> names become \"column\", \"column_2\" (data loss of header text)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "header starting with digit \"1st\" yields name usable unquoted in DSL (DSL IDENT needs letter/_)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "Thai file name -> table name not \"table\"/blank (name lost)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "file name with spaces/parens -> my_data_1",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "multi-dot filename",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "same file twice -> a, a_2",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "empty file -> no table, no throw",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "only newlines",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "unterminated quote does not throw",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "all-empty column -> varchar(255), nullable",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D csv import",
+  "name": "header-only: notNull false",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "ints: [\"1\",\"2\",\"-3\"] -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "big ints: [\"1\",\"3000000000\"] -> bigint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "very big ints (>2^53): [\"12345678901234567890\"] -> bigint",
+  "pass": false,
+  "note": "got varchar(255)"
+ },
+ {
+  "area": "D type inference",
+  "name": "bigger than int64: [\"99999999999999999999999\"] -> varchar(255),text,numeric",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "floats: [\"1.5\",\"2.25\",\"-0.1\"] -> float,double,numeric,decimal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "int+float mix -> number: [\"1\",\"2.5\",\"3\"] -> float,double,numeric,decimal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "int+text -> text: [\"1\",\"abc\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "zip leading zero: [\"01234\",\"02134\",\"10110\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "zip mixed (some w/o leading zero): [\"10110\",\"90210\",\"02134\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "phone leading 0: [\"0812345678\",\"0898765432\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "phone with +66: [\"+66812345678\",\"+66898765432\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "\"+5\" plus sign ints: [\"+5\",\"+6\"] -> varchar(255),int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "thousand sep: [\"1,000\",\"2,500\",\"10,000\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "thousand sep float: [\"1,000.50\",\"2,500.25\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "negative decimals w/ \"-.5\": [\"-.5\",\".5\"] -> float,double",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "exp notation: [\"1e5\",\"2.5E-3\"] -> float,double,varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "\"0\" \"00\": [\"0\",\"00\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "\"0\" alone: [\"0\",\"0\"] -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "\"-0\": [\"-0\",\"1\"] -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "\"0.5\" leading zero decimal: [\"0.5\",\"0.25\"] -> float,double,numeric",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "\"007.5\": [\"007.5\",\"1.5\"] -> varchar(255),float",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "NaN/Infinity: [\"NaN\",\"Infinity\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "bool true/false: [\"true\",\"false\",\"TRUE\"] -> boolean",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "bool yes/no: [\"yes\",\"no\",\"Yes\"] -> boolean",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "bool Y/N: [\"Y\",\"N\",\"y\"] -> boolean",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "bool 1/0: [\"1\",\"0\",\"1\"] -> boolean,int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "bool t/f: [\"t\",\"f\"] -> boolean",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "bool with blanks: [\"true\",\"\",\"false\"] -> boolean",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "ISO date: [\"2020-01-31\",\"2021-12-01\"] -> date",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "ISO date invalid (2020-13-45): [\"2020-13-45\",\"2020-02-30\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "timestamp T: [\"2020-01-31T10:00:00Z\",\"2020-01-31T10:00:00.123+07:00\"] -> timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "timestamp space: [\"2020-01-31 10:00:00\",\"2020-01-31 23:59\"] -> timestamp",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "date mixed with timestamp: [\"2020-01-31\",\"2020-01-31 10:00:00\"] -> timestamp,varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "dd/mm/yyyy: [\"31/01/2020\",\"01/02/2021\"] -> date,varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "mm/dd/yyyy: [\"01/31/2020\",\"12/25/2021\"] -> date,varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "dd-mm-yyyy: [\"31-01-2020\"] -> date,varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "dd.mm.yyyy: [\"31.01.2020\"] -> date,varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "thai buddhist date 2563-01-31: [\"2563-01-31\",\"2564-02-01\"] -> date,varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "time only: [\"10:30\",\"23:59:59\"] -> time,varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "epoch seconds: [\"1700000000\",\"1700000001\"] -> int,bigint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "epoch ms: [\"1700000000000\"] -> bigint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "uuid values: [\"550e8400-e29b-41d4-a716-446655440000\",\"550e8400-e29b-41d4-a716-446655440001\"] -> varchar(255),uuid",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "json values: [\"{\\\"a\\\":1}\",\"[1,2]\"] -> varchar(255),json,jsonb",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "long text: [\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"] -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "255 char text exactly: [\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "thai text: [\"สวัสดี\",\"ทดสอบ\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "thai text > 255: [\"กกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกกก\"] -> text",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "whitespace-only: [\"   \",\" \"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "ints with spaces \" 5 \": [\" 5 \",\"6\"] -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "currency \"$5\": [\"$5\",\"$6.50\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "percent \"5%\": [\"5%\",\"10%\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "hex \"0x1F\": [\"0x1F\"] -> varchar(255)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "ints 2147483647: [\"2147483647\"] -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "ints 2147483648: [\"2147483648\"] -> bigint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "ints -2147483648 (fits int): [\"-2147483648\"] -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "ints -2147483649: [\"-2147483649\"] -> bigint",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "float of ints > 15 digits \"1234567890123456.5\": [\"1234567890123456.5\"] -> numeric,decimal,varchar(255),float,double",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D type inference",
+  "name": "currency decimal(10,2)-like \"19.99\" prices -> float (precision loss for money): [\"19.99\",\"5.50\"] -> numeric,decimal,float",
+  "pass": false,
+  "note": "got double"
+ },
+ {
+  "area": "D type inference",
+  "name": "single column of \"1\" and \"\": [\"1\",\"\"] -> int",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "id unique ints -> pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "pk id should maybe get increment (info)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "duplicate ids -> no pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "ID uppercase -> pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "Id mixed case",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "id with a blank cell -> not pk (blank = dup of other blank?)",
+  "pass": false,
+  "note": "{\"name\":\"id\",\"type\":\"int\",\"pk\":true,\"unique\":false,\"notNull\":true,\"increment\":false,\"default\":null,\"defaultKind\":null,\"note\":null}"
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "id with two blanks -> not pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "text id unique -> pk (heuristic only matches int; text ids e.g. uuid/codes ignored)",
+  "pass": false,
+  "note": "not pk: only /int/ type accepted"
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "user_id not pk (correct)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "_id not pk (info)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "duplicate id headers: only first id is pk, second renamed id_2",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "header-only id -> not pk (no rows)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "ids with whitespace \" 1\" vs \"1 \" (dup after trim) -> not pk",
+  "pass": false,
+  "note": "{\"name\":\"id\",\"type\":\"int\",\"pk\":true,\"unique\":false,\"notNull\":true,\"increment\":false,\"default\":null,\"defaultKind\":null,\"note\":null}"
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "leading-zero ids -> varchar, not pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "csv id => pk produces valid PG DDL",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "CSV -> schema -> PG DDL executes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "CSV -> DSL parses with 0 errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "inferred: zip varchar, joined date, score float, active boolean",
+  "pass": false,
+  "note": "[\"id:int\",\"Full_Name:varchar(255)\",\"zip:varchar(255)\",\"joined:date\",\"score:double\",\"active:boolean\",\"note:varchar(255)\"]"
+ },
+ {
+  "area": "D id pk heuristic",
+  "name": "float inferred type is single-precision in MySQL (float) -> precision loss for monetary values; suggest decimal/double",
+  "pass": false,
+  "note": "inferType returns \"float\": MySQL FLOAT is 4-byte (7 digits): 1234567.89 stored as 1234570. Prefer double or decimal(p,s)"
+ },
+ {
+  "area": "D performance",
+  "name": "100k rows (9.4MB) parseCsv 205ms, rowsToSchema 175ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D performance",
+  "name": "100k rows: heap growth 135MB < 500MB",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D performance",
+  "name": "100k rows inferred types",
+  "pass": false,
+  "note": "[\"id:int\",\"name:varchar(255)\",\"email:varchar(255)\",\"age:int\",\"score:double\",\"joined:date\",\"active:boolean\",\"zip:varchar(255)\",\"notes:varchar(255)\"]"
+ },
+ {
+  "area": "D performance",
+  "name": "100k: id is pk",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D performance",
+  "name": "500 cols x 2000 rows in 250ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D performance",
+  "name": "inferType 1M values 97ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D performance",
+  "name": "inferType 300k text values (Math.max(...vals) spread -> RangeError?)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D performance",
+  "name": "inferType 1.5M text values spread safe",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D performance",
+  "name": "end-to-end 200k text rows ok (127ms)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "D performance",
+  "name": "end-to-end 1M text rows ok (600ms)",
+  "pass": true,
+  "note": ""
+ }
+]

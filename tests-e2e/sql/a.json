@@ -1,0 +1,530 @@
+[
+ {
+  "area": "A parser",
+  "name": "readme roundtrip stable",
+  "pass": false,
+  "note": "s1:\nTable users [note: 'users table'] {\n  id int [pk, increment]\n  email varchar(255) [unique, not null, note: 'login, primary']\n  name varchar(100) [default: 'N/A']\n  created_at timestamp [default: `now()`]\n  role_id int\n\n  indexes {\n    email [unique]\n    (name, created_at) [name: 'idx_name_created']\n    (role_id, name) [unique, name: 'uq_rn']\n  }\n}\n\nTable roles [note: 'Roles, with comma'] {\n  i"
+ },
+ {
+  "area": "A parser",
+  "name": "readme roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "readme no errors (note: one-line \"Table a { id int [pk] }\" is NOT documented DSL, expected errors)",
+  "pass": false,
+  "note": "[{\"line\":24,\"message\":\"Unexpected \\\"Table a { id int [pk] }\\\"\"},{\"line\":25,\"message\":\"Unexpected \\\"Table b { id int [pk] a_id int\\\"\"},{\"line\":26,\"message\":\"Unexpected \\\"Table c { id int [pk] }\\\"\"},{\"line\":28,\"message\":\"Unexpected \\\"Ref r1: a.id - c.id\\\"\"},{\"line\":27,\"message\":\"Ref points to unknown table \\\"b\\\"\"},{\"line\":27,\"message\":\"Ref points to unknown table \\\"a\\\"\"},{\"line\":29,\"message\":\"Ref po"
+ },
+ {
+  "area": "A parser",
+  "name": "readme-multiline roundtrip stable",
+  "pass": false,
+  "note": "s1:\nTable users [note: 'users table'] {\n  id int [pk, increment]\n  email varchar(255) [unique, not null, note: 'login, primary']\n  name varchar(100) [default: 'N/A']\n  created_at timestamp [default: `now()`]\n  role_id int\n\n  indexes {\n    email [unique]\n    (name, created_at) [name: 'idx_name_created']\n    (role_id, name) [unique, name: 'uq_rn']\n  }\n}\n\nTable roles [note: 'Roles, with comma'] {\n  i"
+ },
+ {
+  "area": "A parser",
+  "name": "readme-multiline roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "readme multiline no errors",
+  "pass": false,
+  "note": "[{\"line\":35,\"message\":\"Unexpected \\\"Ref r1: a.id - c.id\\\"\"}]"
+ },
+ {
+  "area": "A parser",
+  "name": "users fields",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "email unique notnull note with comma",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "default quoted",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "default backtick now()",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "inline ref",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "table note",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "indexes 3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "table with comma note",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "quoted table",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "4 ref ops",
+  "pass": false,
+  "note": "[{\"from\":{\"table\":\"users\",\"field\":\"role_id\"},\"to\":{\"table\":\"roles\",\"field\":\"id\"},\"type\":\">\"},{\"from\":{\"table\":\"b\",\"field\":\"a_id\"},\"to\":{\"table\":\"a\",\"field\":\"id\"},\"type\":\">\"},{\"from\":{\"table\":\"a\",\"field\":\"id\"},\"to\":{\"table\":\"b\",\"field\":\"id\"},\"type\":\"<\"},{\"from\":{\"table\":\"a\",\"field\":\"id\"},\"to\":{\"table\":\"c\",\"field\":\"id\"},\"type\":\"<>\"}]"
+ },
+ {
+  "area": "A parser",
+  "name": "single-line table `Table a { id int [pk] }` (DBML allows; not in README)",
+  "pass": false,
+  "note": "[{\"line\":1,\"message\":\"Unexpected \\\"Table a { id int [pk] }\\\"\"}]"
+ },
+ {
+  "area": "A parser",
+  "name": "crlf roundtrip stable",
+  "pass": false,
+  "note": "s1:\nTable users [note: 'users table'] {\n  id int [pk, increment]\n  email varchar(255) [unique, not null, note: 'login, primary']\n  name varchar(100) [default: 'N/A']\n  created_at timestamp [default: `now()`]\n  role_id int\n\n  indexes {\n    email [unique]\n    (name, created_at) [name: 'idx_name_created']\n    (role_id, name) [unique, name: 'uq_rn']\n  }\n}\n\nTable roles [note: 'Roles, with comma'] {\n  i"
+ },
+ {
+  "area": "A parser",
+  "name": "crlf roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "crlf same as lf",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "tabs roundtrip stable",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "tabs roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "tabs parse",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "thai roundtrip stable",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "thai roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "thai unquoted identifiers",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "thai quoted roundtrip stable",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "thai quoted roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "thai quoted ident",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "thai note value",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "note brackets roundtrip stable",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "note brackets roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "note with ] inside",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "note with // inside quotes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "apostrophe in note/default survives serialize->parse (serializer emits \\')",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "type with comma decimal(10,2)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "default with comma in quotes",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "default negative",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "garbage reports error at line 1",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "missing brace reports error at line 3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "bad ref reports error at line 3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "field no type reports error at line 2",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "dup field reports error at line 3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "dup table reports error at line 4",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "ref unknown table reports error at line 4",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "extra close brace reports error at line 4",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "nested table reports error",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "unterminated quote reports error",
+  "pass": false,
+  "note": "[]"
+ },
+ {
+  "area": "A parser",
+  "name": "unterminated index block reports error",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "unknown setting reports error at line 2",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "index on unknown field reports error at line 5",
+  "pass": false,
+  "note": "[{\"line\":4,\"message\":\"Index uses unknown field \\\"zz\\\" in table \\\"t\\\"\"}]"
+ },
+ {
+  "area": "A parser",
+  "name": "Table w/o brace reports error at line 1",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "ref unknown field line number points to ref line reports error at line 4",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "id [pk] (type missing) reports error at line 2",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "Ref in table body reports error at line 3",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "empty -> empty schema no errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "null -> empty schema no errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "undefined -> empty schema no errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "ws -> empty schema no errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "only comments -> empty schema no errors",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "200k char line fast (<2s) 17ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "200k unterminated quote <2s 3ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "SETTINGS_RE on [[[[ <2s 2ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "SETTINGS_RE on quoted reps <2s 1ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "SETTINGS_RE no closing ] <2s 3ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "2000 tables parse <1s 28ms",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "case-insens settings",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "primary key setting",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "\"e int[pk]\" without space",
+  "pass": false,
+  "note": "{\"name\":\"e\",\"type\":\"int[pk]\",\"pk\":false,\"unique\":false,\"notNull\":false,\"increment\":false,\"default\":null,\"defaultKind\":null,\"note\":null}"
+ },
+ {
+  "area": "A parser",
+  "name": "inline ref ops - < <>",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "Ref with quoted idents containing spaces",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "Ref without spaces around operator",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "schema-qualified Table public.users",
+  "pass": false,
+  "note": "[{\"line\":1,\"message\":\"Unexpected \\\"Table public.users {\\\"\"},{\"line\":2,\"message\":\"Unexpected \\\"id int\\\"\"},{\"line\":3,\"message\":\"Unexpected \\\"}\\\"\"}]"
+ },
+ {
+  "area": "A parser",
+  "name": "comments",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "block comments /* */ (DBML supports; not in README)",
+  "pass": false,
+  "note": "[{\"line\":1,\"message\":\"Unexpected \\\"/* block */\\\"\"}]"
+ },
+ {
+  "area": "A parser",
+  "name": "Note: inside table",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "no space before [",
+  "pass": false,
+  "note": "{\"name\":\"n\",\"type\":\"varchar(10)[unique]\",\"pk\":false,\"unique\":false,\"notNull\":false,\"increment\":false,\"default\":null,\"defaultKind\":null,\"note\":null}"
+ },
+ {
+  "area": "A parser",
+  "name": "Table b{ without space",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "enum type with quotes/comma",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "quoted names rt roundtrip stable",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "quoted names rt roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "serializer quotes Ref endpoints with odd names",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "default string numeric-looking roundtrip stable",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "default string numeric-looking roundtrip structure equal",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "default '007' stays string after roundtrip",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "backtick expr default now() round-trips as expression (serializer writes quoted?)",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "default quote styles",
+  "pass": true,
+  "note": ""
+ },
+ {
+  "area": "A parser",
+  "name": "index [pk] on composite via indexes { (a,b) [pk] }",
+  "pass": true,
+  "note": ""
+ }
+]

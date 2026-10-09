@@ -1,0 +1,18 @@
+{
+  "name": "collaborative-er",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w apps/web",
+    "build": "npm run build -w apps/web",
+    "test": "npm run test -w packages/schema",
+    "relay:dev": "npm run dev -w apps/relay"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,224 @@
+FAIL B spec school: ref field type is objectid (should match target pk) type is string (string but Ref to objectid _id)
+FAIL B spec school: STATUS lookup rows (8 values) kept anywhere? row data dropped (by design for data sheets), only column types survive
+TYPE MAP {
+  '"int"': 'int',
+  '"integer"': 'int',
+  '"number"': 'int',
+  '"num"': 'int',
+  '"bool"': 'bool',
+  '"boolean"': 'bool',
+  '"float"': 'double',
+  '"double"': 'double',
+  '"ObjectId"': 'objectid',
+  '"objectid"': 'objectid',
+  '"Date"': 'date',
+  '"datetime"': 'date',
+  '"timestamp"': 'date',
+  '"String"': 'string',
+  '"string"': 'string',
+  '"text"': 'string',
+  '"array"': 'json[]',
+  '"array(string)"': 'string[]',
+  '"array(obj)"': 'object[]',
+  '"array<string>"': 'json[]',
+  '"array(ObjectId)"': 'objectid[]',
+  '"array(int)"': 'int[]',
+  '"obj"': 'object',
+  '"object"': 'object',
+  '"map"': 'map',
+  '"any"': 'any',
+  '"mixed"': 'mixed',
+  '"Number"': 'int',
+  '"INT"': 'int',
+  '"Boolean"': 'bool',
+  '"long"': 'long',
+  '"decimal"': 'double',
+  '"bigint"': 'bigint',
+  '"uuid"': 'uuid',
+  '"email"': 'email',
+  '"buffer"': 'buffer',
+  '"binary"': 'binary',
+  '"string[]"': 'string',
+  '"int[]"': 'int',
+  '"varchar(255)"': 'string [note:255]',
+  '"enum"': 'enum',
+  '"Mixed"': 'mixed',
+  '"time"': 'date',
+  '"long text"': 'long',
+  '"string "': 'string',
+  '" string"': 'string',
+  '"string\\t"': 'string',
+  '"double precision"': 'double',
+  '"Array(String)"': 'string[]',
+  '"array (string)"': 'string[]',
+  '"string(50)"': 'string [note:50]',
+  '"ภาษาไทย"': 'string',
+  '"จำนวนเต็ม"': 'string',
+  '"String (ภาษาไทย)"': 'string [note:ภาษาไทย]',
+  '"array of string"': 'json[]',
+  '"dict"': 'dict',
+  '"list"': 'list',
+  '"array<obj>"': 'json[]',
+  '"array[string]"': 'json[]',
+  '"Date/Time"': 'date'
+}
+FAIL B spec types: vocabulary mapped sensibly (34/50) array<string> => json[] (expected string[]); map => map (expected object); any => any (expected json); mixed => mixed (expected json); decimal => double (expected decimal); bigint => bigint (expected long); uuid => uuid (expected string); binary => binary (expected buffer); string[] => string (expected string[]); int[] => int (expected int[]); Mixed => mixed (expected json); array<obj> => json[] (expected object[]); array[string] => json[] (expected string[]); dict => dict (expected object); list => list (expected json[]); array of string => json[] (expected string[])
+  TYPE BAD array<string> => json[] (expected string[])
+  TYPE BAD map => map (expected object)
+  TYPE BAD any => any (expected json)
+  TYPE BAD mixed => mixed (expected json)
+  TYPE BAD decimal => double (expected decimal)
+  TYPE BAD bigint => bigint (expected long)
+  TYPE BAD uuid => uuid (expected string)
+  TYPE BAD binary => binary (expected buffer)
+  TYPE BAD string[] => string (expected string[])
+  TYPE BAD int[] => int (expected int[])
+  TYPE BAD Mixed => mixed (expected json)
+  TYPE BAD array<obj> => json[] (expected object[])
+  TYPE BAD array[string] => json[] (expected string[])
+  TYPE BAD dict => dict (expected object)
+  TYPE BAD list => list (expected json[])
+  TYPE BAD array of string => json[] (expected string[])
+Table Person [note: 'Hello world'] {
+  _id objectid [pk]
+  name string
+  age int
+  nick string
+}
+
+FAIL B spec extra: "Required" column is used (name notNull) Required column silently ignored: name.notNull=false
+FAIL B spec extra: "Description" column used as note note=null
+FAIL B spec extra: "Default" column used default=null
+FAIL B spec header ["ฟิลด์","ชนิด"] detected not detected -> treated as DATA table
+FAIL B spec header ["Field name","Type"] detected not detected -> treated as DATA table
+FAIL B spec header ["Fields","Types"] detected not detected -> treated as DATA table
+FAIL B spec header ["Attribute","Type"] detected not detected -> treated as DATA table
+FAIL B spec header ["Key","Type"] detected not detected -> treated as DATA table
+Table School {
+  _id objectid [pk]
+  name string
+  parentId string
+  owner string [note: 'ref: Ghost']
+  boss string [note: 'USER']
+  x string
+  y objectid
+  z string_ref_School[]
+  zz ref_School[]
+  w string [note: 'ref: school.id']
+  v string
+}
+
+Table table {
+  _id objectid [pk]
+  n string
+}
+
+Ref: School.parentId > School._id
+Ref: School.x > School._id
+Ref: School.y > School._id
+Ref: School.zz > School._id
+Ref: School.v > table._id
+
+FAIL B spec ref: "ref: school.id" (table.field form) ref=false note=ref: school.id
+    parentId: { type: Schema.Types.ObjectId, ref: 'School' },
+    x: { type: Schema.Types.ObjectId, ref: 'School' },
+    y: { type: Schema.Types.ObjectId, ref: 'School' },
+    zz: [{ type: Schema.Types.ObjectId, ref: 'School' }],
+    v: { type: Schema.Types.ObjectId, ref: 'Table' },
+[
+  'Dup',         'Dup',
+  'my_sheet_v2', 'table',
+  'table',       '2024_data',
+  'a_b_c',       'table',
+  'table',       'Sheet1',
+  'sheet1',      'proto',
+  'constructor'
+]
+FAIL B spec sheetnames: reparse no errors [{"line":5,"message":"Duplicate table \"Dup\""},{"line":18,"message":"Duplicate table \"table\""},{"line":30,"message":"Duplicate table \"table\""}]
+FAIL B spec sheetnames: 2 sheets "Dup" kept distinct names=Dup|Dup|my_sheet_v2|table|table|2024_data|a_b_c|table|table|Sheet1|sheet1|proto|constructor (duplicate table names!)
+FAIL B spec sheetnames: Thai names preserved Dup|Dup|my_sheet_v2|table|table|2024_data|a_b_c|table|table|Sheet1|sheet1|proto|constructor
+FAIL B spec sheetnames: case-insensitively unique (Sheet1/sheet1) Dup|Dup|my_sheet_v2|table|table|2024_data|a_b_c|table|table|Sheet1|sheet1|proto|constructor
+A _id:objectid:pk,_id:objectid:pk,name:string
+B _id:objectid:pk,Id:string
+C _id:objectid:pk
+D id:string
+E id:int
+F _id:objectid:pk
+G _id:objectid:pk
+H userId:object
+I id:object[]
+J _id:objectid:pk
+FAIL B spec _id: A has both id obj & _id objectid -> no duplicate field names _id:objectid:pk,_id:objectid:pk,name:string
+FAIL B spec _id: reparse errors only dup-field related? [{"line":3,"message":"Duplicate field \"_id\""}]
+csv name -> my_schema_1
+Table Empty {
+}
+
+FAIL B spec spec: duplicate field rows deduped/reported reparse gives: [{"line":3,"message":"Duplicate field \"a\""}] (importer emits duplicate fields silently)
+Table Q [note: 'hello second'] {
+  "first name" string
+  "ชื่อ" string
+  "a.b" int
+  "x"y" int
+  "0" int
+  "Note x" int
+}
+
+FAIL B spec spec: weird field names reparse clean [{"line":5,"message":"Expected: <field name> <type> [settings]"}]
+Users: [["Field","Type","Required"],["id","obj","1"],["name","string","0"],["123","num",""],["age","num (18-99)"],["ชื่อ","string (ภาษาไทย)"],["f","string"],["g","Field"],["rich",""],["bool","1"],["d","43831"]]
+Hidden: [["Field","Type"],["id","obj"]]
+VeryHidden: [["Field","Type"],["id","obj"]]
+Empty: []
+Data (lookup): [["Code","Name"],["1","a"],["2","b"]]
+Sparse: [["","","Field","Type"],["","","x","int"]]
+Offset: [["Field","Type"],["x","int"]]
+Titled: [["My collection"],["Field","Type"],["x","int"]]
+FAIL B spec xlsx(shared strings): all 10 sheets read got 8
+FAIL B spec xlsx: richText cell concatenated ["rich",""]
+sparse isSpec false
+FAIL B spec xlsx: sheet with title row above header recognized as spec [["My collection"],["Field","Type"],["x","int"]]
+FAIL B spec xlsx: sparse sheet (header at C3) recognized [["","","Field","Type"],["","","x","int"]]
+FAIL B spec xlsx: hidden sheets are skipped (user hid them) hidden sheets imported: Hidden,VeryHidden
+Table Users {
+  _id objectid [pk]
+  name string
+  "123" int
+  age int [note: '18-99']
+  "ชื่อ" string [note: 'ภาษาไทย']
+  f string
+  g field
+  rich string
+  bool string
+  d string
+}
+
+Table Hidden {
+  _id objectid [pk]
+}
+
+Table VeryHidden {
+  _id objectid [pk]
+}
+
+Table Offset {
+  x int
+}
+
+Table Data_lookup {
+  Code int [not null]
+  Name varchar(255) [not null]
+}
+
+Table Sparse {
+  column varchar(255)
+  column_2 varchar(255)
+  Field varchar(255) [not null]
+  Type varchar(255) [not null]
+}
+
+Table Titled {
+  My_collection varchar(255) [not null]
+}
+
+merged row ["rich",""]
+{ 'B spec': [ 73, 98 ] }

@@ -1,0 +1,129 @@
+:root {
+  --er-bg: #f6f7f9;
+  --cm-keyword: #c2410c;
+  --cm-string: #15803d;
+  --cm-comment: #6b7280;
+  --cm-atom: #7c3aed;
+  --cm-number: #0369a1;
+  --cm-operator: #be185d;
+}
+:root.er-dark {
+  --er-bg: #1b1d21;
+  --cm-keyword: #fb923c;
+  --cm-string: #4ade80;
+  --cm-comment: #9ca3af;
+  --cm-atom: #c4b5fd;
+  --cm-number: #7dd3fc;
+  --cm-operator: #f9a8d4;
+}
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+/* Keep the workspace exactly viewport-sized so long code scrolls inside the editor
+   instead of stretching the page (which pushed the diagram off screen). */
+.v-main {
+  height: 100vh;
+  box-sizing: border-box;
+}
+/* menu section headings: SQL = blue, MongoDB = green, everything else = neutral */
+.head {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+.head-sql {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+.head-mongo {
+  color: rgb(var(--v-theme-success)) !important;
+}
+.head-table {
+  color: rgb(var(--v-theme-secondary)) !important;
+}
+.split {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.pane-left {
+  display: flex;
+  flex-direction: column;
+  min-width: 260px;
+  max-width: 80vw;
+  border-right: 1px solid rgba(var(--v-border-color), 0.25);
+}
+.pane-right {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+.divider {
+  width: 5px;
+  margin-left: -3px;
+  cursor: col-resize;
+  z-index: 5;
+  background: transparent;
+  transition: background 0.15s;
+}
+.divider:hover,
+.divider.active {
+  background: rgba(var(--v-theme-primary), 0.5);
+}
+.errors {
+  max-height: 140px;
+  overflow: auto;
+  border-top: 1px solid rgba(var(--v-border-color), 0.25);
+  font-size: 12.5px;
+}
+.errors button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 4px 12px;
+  color: rgb(var(--v-theme-error));
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+.errors button:hover {
+  background: rgba(var(--v-theme-error), 0.08);
+}
+.overlay-tools {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+}
+.empty-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.55;
+  z-index: 4;
+}
+@media (max-width: 760px) {
+  .split {
+    flex-direction: column;
+  }
+  .pane-left {
+    width: 100% !important;
+    max-width: none;
+    height: 45%;
+    border-right: 0;
+    border-bottom: 1px solid rgba(var(--v-border-color), 0.25);
+  }
+  .divider {
+    display: none;
+  }
+}
