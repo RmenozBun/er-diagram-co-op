@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import {
   parseMongoose, toMongoose, toValidatorJson, validatorToSchema, collectionNameFromFile, parseSource, convertSource, parse, serialize,
-  mergeMongooseSources, convertMongooseModuleStyle, looksLikeMongoose, looksLikeDsl, SAMPLE_MONGO, SAMPLE_SQL, toSQL,
+  mergeMongooseSources, mergeViews, codeToView, viewToCode, convertMongooseModuleStyle, looksLikeMongoose, looksLikeDsl, SAMPLE_MONGO, SAMPLE_SQL, toSQL,
 } from '../src/index.js'
 
 const dir = dirname(fileURLToPath(import.meta.url))
@@ -187,9 +187,10 @@ describe('MongoDB mode: the editor holds Mongoose code', () => {
 
   it('converts SQL DSL <-> Mongoose code (both directions, types renamed)', () => {
     const code = convertSource(SAMPLE_SQL, 'sql', 'mongodb')
-    expect(code).toContain('const usersSchema = new mongoose.Schema(')
+    expect(code).toContain('Model User {')
+    expect(code).not.toContain('mongoose.model(')
     expect(code).toContain('email: { type: String, required: true, unique: true }')
-    expect(parseMongoose(code).errors).toEqual([])
+    expect(parseSource(code, 'mongodb').errors).toEqual([])
     const back = convertSource(code, 'mongodb', 'sql')
     const s = parse(back)
     expect(s.errors).toEqual([])
@@ -209,11 +210,15 @@ describe('MongoDB mode: the editor holds Mongoose code', () => {
   it('merging model files keeps a single valid module', () => {
     const a = convertSource(SAMPLE_SQL, 'sql', 'mongodb')
     const b = 'import mongoose from "mongoose";\nconst petSchema = new mongoose.Schema({ name: String });\nconst Pet = mongoose.model("PetModel", petSchema, "pets");\nexport default Pet;\n'
-    const merged = mergeMongooseSources(a, b)
-    expect(merged.match(/^import mongoose/gm)).toHaveLength(1)
-    expect(merged).toContain('export { Pet };')
-    expect(parseMongoose(merged).errors).toEqual([])
-    expect(parseMongoose(merged).tables.map((t) => t.name)).toEqual(expect.arrayContaining(['users', 'pets']))
+    const merged = mergeViews({ text: a, extras: null }, codeToView(b))
+    const full = viewToCode(merged.text, merged.extras)
+    expect(full.match(/^import mongoose/gm)).toHaveLength(1)
+    expect(full).toContain('export { User, Post, Tag, Pet };')
+    expect(parseSource(merged.text, 'mongodb', merged.extras).errors).toEqual([])
+    expect(parseMongoose(full).errors).toEqual([])
+    expect(parseMongoose(full).tables.map((t) => t.name)).toEqual(expect.arrayContaining(['users', 'pets']))
+    // the whole-file merge (older saved projects) still works
+    expect(mergeMongooseSources(viewToCode(a), b).match(/^import mongoose/gm)).toHaveLength(1)
   })
 
   it('ES module <-> CommonJS switch', () => {
@@ -239,7 +244,7 @@ describe('module style switch with other imports', () => {
 describe('converting a Mongoose diagram to SQL and back', () => {
   it('keeps the collection structure: ObjectIds, enums, required, unique, embedded documents', () => {
     const toSql = convertSource(usersModel, 'mongodb', 'sql')
-    const back = parseMongoose(convertSource(toSql, 'sql', 'mongodb'))
+    const back = parseSource(convertSource(toSql, 'sql', 'mongodb'), 'mongodb')
     expect(back.errors).toEqual([])
     const want = shape(parseMongoose(usersModel))
     const got = shape(back)
@@ -250,7 +255,7 @@ describe('converting a Mongoose diagram to SQL and back', () => {
   it('a plain SQL "id int pk increment" becomes an ObjectId _id in MongoDB', () => {
     const code = convertSource('Table items {\n  id int [pk, increment]\n  name varchar(50) [not null]\n}', 'sql', 'mongodb')
     expect(code).not.toContain('_id:') // `_id` is implicit (ObjectId)
-    const s = parseMongoose(code)
+    const s = parseSource(code, 'mongodb')
     expect(s.tables[0].fields[0]).toMatchObject({ name: '_id', type: 'objectid', pk: true })
   })
 })

@@ -1,7 +1,7 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { Compartment, EditorState } from '@codemirror/state'
-import { EditorView, keymap, lineNumbers, highlightActiveLine, drawSelection, placeholder } from '@codemirror/view'
+import { Decoration, EditorView, MatchDecorator, ViewPlugin, keymap, lineNumbers, highlightActiveLine, drawSelection, placeholder } from '@codemirror/view'
 import { defaultKeymap, indentWithTab } from '@codemirror/commands'
 import { acceptCompletion, autocompletion, completionKeymap, completionStatus } from '@codemirror/autocomplete'
 import { StreamLanguage, HighlightStyle, syntaxHighlighting, indentOnInput, bracketMatching } from '@codemirror/language'
@@ -22,11 +22,11 @@ const props = defineProps({
 const host = ref(null)
 let view = null
 let undoManager = null
-// the editor holds DSL in SQL mode and real Mongoose (JavaScript) code in MongoDB mode
+// the editor holds DSL in SQL mode and the short Mongoose form (Model X { fields }) in MongoDB mode
 const language = new Compartment()
 const hint = new Compartment()
 const hintFor = (mode) =>
-  placeholder(mode === 'mongodb' ? 'const usersSchema = new mongoose.Schema({\n  name: { type: String, required: true },\n});\nmongoose.model("UserModel", usersSchema, "users");' : 'Table users {\n  id int [pk]\n}')
+  placeholder(mode === 'mongodb' ? 'Model User {\n  name: { type: String, required: true },\n  email: { type: String, unique: true },\n}' : 'Table users {\n  id int [pk]\n}')
 const dslSource = dslCompletions(() => props.mode, () => props.schema)
 const mongooseSource = mongooseCompletions(() => props.schema)
 const completionSource = (context) => (props.mode === 'mongodb' ? mongooseSource(context) : dslSource(context))
@@ -65,7 +65,27 @@ const highlight = HighlightStyle.define([
   { tag: t.regexp, color: 'var(--cm-string)' },
 ])
 
-const languageFor = (mode) => (mode === 'mongodb' ? javascript() : dsl)
+// `Model` / `Schema` at the start of a line (the rest of the short form is plain JavaScript)
+const blockKeyword = new MatchDecorator({
+  regexp: /^[ \t]*(Model|Schema)(?=\s+[\p{L}_$])/gu,
+  decorate: (add, from, to, match) => {
+    const start = from + match[0].indexOf(match[1])
+    add(start, start + match[1].length, Decoration.mark({ class: 'cm-er-block' }))
+  },
+})
+const blockKeywords = ViewPlugin.fromClass(
+  class {
+    constructor(view) {
+      this.decorations = blockKeyword.createDeco(view)
+    }
+    update(update) {
+      this.decorations = blockKeyword.updateDeco(update, this.decorations)
+    }
+  },
+  { decorations: (v) => v.decorations },
+)
+
+const languageFor = (mode) => (mode === 'mongodb' ? [javascript(), blockKeywords] : dsl)
 
 const theme = EditorView.theme({
   '&': { height: '100%', backgroundColor: 'rgb(var(--v-theme-surface))', color: 'rgb(var(--v-theme-on-surface))', fontSize: '13.5px' },
@@ -157,6 +177,11 @@ defineExpose({
   opacity: 0.65;
   margin-left: 0.8em;
   font-style: normal;
+}
+/* Model / Schema keywords of the MongoDB short form */
+.cm-er-block {
+  color: var(--cm-keyword);
+  font-weight: 700;
 }
 /* remote cursors from y-codemirror.next */
 .cm-ySelectionInfo {

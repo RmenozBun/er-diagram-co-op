@@ -20,14 +20,14 @@ const LITERAL_OPTS = new Set(['trim', 'lowercase', 'uppercase', 'min', 'max', 'm
 
 const pascal = (n) => String(n).replace(/(^|[^\p{L}\p{M}\p{N}]+)([\p{L}\p{M}\p{N}])/gu, (_, __, c) => c.toUpperCase()).replace(/[^\p{L}\p{M}\p{N}_$]/gu, '')
 const singular = (n) => (/ies$/i.test(n) ? n.replace(/ies$/i, 'y') : /(ss|us)$/i.test(n) ? n : n.replace(/s$/i, ''))
-const pluralize = (n) => {
+export const pluralize = (n) => {
   const w = n.toLowerCase()
   if (/[^aeiou]y$/.test(w)) return w.slice(0, -1) + 'ies'
   if (/(s|x|z|ch|sh)$/.test(w)) return w + 'es'
   return w + 's'
 }
 
-function parseJs(source) {
+export function parseJs(source) {
   const base = { ecmaVersion: 'latest', locations: true, allowHashBang: true, allowReturnOutsideFunction: true, allowAwaitOutsideFunction: true }
   try {
     return acorn.parse(source, { ...base, sourceType: 'module' })
@@ -40,7 +40,7 @@ function parseJs(source) {
   }
 }
 
-function walk(node, visit, parent = null) {
+export function walk(node, visit, parent = null) {
   if (!node || typeof node.type !== 'string') return
   visit(node, parent)
   for (const key of Object.keys(node)) {

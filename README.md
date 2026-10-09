@@ -3,7 +3,7 @@
 เว็บออกแบบฐานข้อมูล / ER diagram แบบ real-time (แนว dbdiagram.io) รองรับ SQL และ MongoDB
 แก้พร้อมกันได้หลายคน (ทดสอบแล้วสำหรับ 5-6 คน) ไม่มีฐานข้อมูล ไม่มีระบบ login
 
-- **ซ้าย** เขียนโครงสร้าง → **ขวา** เห็น diagram ทันที ลากย้ายตารางได้ โหมด **SQL** เขียนด้วย DSL (แนว dbdiagram.io) โหมด **MongoDB** เขียน **โค้ด Mongoose จริง** (`mongoose.Schema` / `mongoose.model`) มี **autocomplete** ตามโหมด (Ctrl+Space, Tab/Enter เพื่อยอมรับ)
+- **ซ้าย** เขียนโครงสร้าง → **ขวา** เห็น diagram ทันที ลากย้ายตารางได้ โหมด **SQL** เขียนด้วย DSL (แนว dbdiagram.io) โหมด **MongoDB** เขียนเป็น `Model User { ... }` เนื้อในแบบ Mongoose (`mongoose.Schema`) มี **autocomplete** ตามโหมด (Ctrl+Space, Tab/Enter เพื่อยอมรับ)
 - **Share** → ได้ลิงก์ห้อง ใครมีลิงก์เข้ามาแก้ด้วยกันได้ เห็น cursor/ชื่อของแต่ละคน
 - **Save project file** (`.dbd.json`) / **Open project file** เพื่อทำงานต่อภายหลัง
 - **Import** แยกเมนูชัดเจน: **SQL** (dump `.sql`, SQLite `.sqlite/.db`) · **MongoDB** (ไฟล์ model Mongoose `.js`, validator `$jsonSchema` `.json`, ข้อมูล `mongoexport` `.json/.jsonl`) · **CSV / Excel** (เลือกได้ว่าจะนำเข้าเป็นตาราง SQL หรือ collection MongoDB; ถ้าเนื้อหาดูเป็นสไตล์ Mongo จะแนะนำให้อัตโนมัติ)
@@ -33,7 +33,7 @@ tests-e2e/    สคริปต์และรายงานการทดส
 npm install
 npm run relay:dev   # relay ที่ http://localhost:8787
 npm run dev         # เว็บที่ http://localhost:5173
-npm test            # 82 unit tests (parser/generator/importer, Mongoose)
+npm test            # 101 unit tests (parser/generator/importer, Mongoose + รูปแบบย่อ Model { })
 npm test -w apps/relay   # 11 tests การบันทึก/หมดอายุของห้อง และการล็อก Origin
 ```
 
@@ -73,31 +73,34 @@ Ref: lines.(o_region, o_number) > orders.(region, number)   // composite (multi-
 
 ชื่อที่มีช่องว่างหรืออักขระพิเศษใส่เครื่องหมายคำพูดได้ (`"my table"`) ชื่อไทยพิมพ์ได้ตรงๆ รองรับคอมเมนต์ `// ...` และ `/* ... */`
 
-**โหมด MongoDB ใช้โค้ด Mongoose จริง ไม่ใช่ DSL** ช่องซ้ายคือไฟล์ model แบบที่เขียนด้วยมือ:
+**โหมด MongoDB เขียนเป็นรูปแบบย่อ `Model Name { ... }`** เนื้อในเขียนเหมือน `mongoose.Schema` แต่ไม่ต้องมี `import`, `mongoose.model(...)`, `export` (เว็บใส่ให้ตอน export):
 
 ```js
-import mongoose from "mongoose";
+Model User {
+  login: { type: String, required: true, unique: true }
+  role: { type: String, enum: ["member", "admin"], default: "member" }
+  partnerId: { type: mongoose.Schema.Types.ObjectId, ref: "PartnerModel", default: null }
+  address: { street: String, city: String }          // sub-document
+  certificates: { type: [{ kind: { type: String, required: true } }], default: [] }
+}
 
-const usersSchema = new mongoose.Schema(
-  {
-    login: { type: String, required: true, unique: true },
-    role: { type: String, enum: ["member", "admin"], default: "member" },
-    partnerId: { type: mongoose.Schema.Types.ObjectId, ref: "PartnerModel", default: null },
-    address: { street: { type: String }, city: { type: String } },          // sub-document
-    certificates: { type: [{ kind: { type: String, required: true } }], default: [] },
-  },
-  { timestamps: false, versionKey: false },
-);
+Model People [collection: "people"] {                 // ชื่อ collection ปกติ = ชื่อ model เป็นพหูพจน์ (User -> users)
+  name: String
+}
 
-const User = mongoose.model("UserModel", usersSchema, "users");
-export default User;
+Schema addressSchema {                                // sub-schema ที่ field อื่นใช้เป็นชนิดได้: home: addressSchema
+  street: String
+}
 ```
 
-- **Import ไฟล์ model (.js)** → โหลดเข้ามาตามที่เป็นทุกตัวอักษร (hooks, methods, คอมเมนต์ครบ) diagram สร้างจากโค้ดด้วยตัวอ่าน JavaScript จริง (acorn) รองรับ ESM/CommonJS, `new Schema` / `mongoose.Schema`, sub-schema, object ซ้อน, array ของ sub-document, `ref`, `enum`, `index`, `timestamps`, `_id: false`
-- **Import validator JSON (`$jsonSchema`)** เช่น `users_collection_validator.json` และ **ข้อมูล mongoexport** → แปลงเป็นโค้ด Mongoose
-- **Export** → Mongoose (โค้ดจากช่องแก้ไขตรงๆ เลือก ES modules / CommonJS ได้), Validator JSON (`users_collection_validator.json`), สคริปต์ mongosh
+- ใส่ `,` ท้ายบรรทัดหรือไม่ใส่ก็ได้ (หนึ่ง field ต่อบรรทัด) ภายในเขียนได้ทุกอย่างที่ Mongoose รองรับ
+- **Export > Mongoose models** → ได้ไฟล์เต็ม: `import mongoose`, `new mongoose.Schema(...)`, `mongoose.model("UserModel", usersSchema, "users")`, `export` (เลือก ES modules / CommonJS ได้)
+- **Import ไฟล์ model (.js)** → ช่องแก้ไขแสดงเฉพาะ field ส่วนที่เหลือ (import อื่น, options ของ schema เช่น `timestamps`, hooks `schema.pre(...)`, methods, helper) เว็บเก็บไว้เบื้องหลัง (ในห้อง/ไฟล์โปรเจกต์ด้วย) แล้วใส่กลับตอน export diagram สร้างจากโค้ดด้วยตัวอ่าน JavaScript จริง (acorn) รองรับ ESM/CommonJS, `new Schema` / `mongoose.Schema`, sub-schema, object ซ้อน, array ของ sub-document, `ref`, `enum`, `index`, `timestamps`, `_id: false`
+- **Import validator JSON (`$jsonSchema`)** เช่น `users_collection_validator.json` และ **ข้อมูล mongoexport** → แปลงเป็น `Model ...`
+- **Export** อื่นๆ: Validator JSON (`users_collection_validator.json`), สคริปต์ mongosh
 - สลับ SQL ↔ MongoDB ตอนที่มีงานของคุณ: ข้อความจะถูกแปลง (มีหน้าต่างยืนยัน) ตาราง/ฟิลด์/คีย์/ความสัมพันธ์คงอยู่ แต่คอมเมนต์ hooks และ methods ไม่ถูกส่งต่อ
-- เขียนใน editor ได้เลยพร้อม autocomplete: ชนิด (`type:`), ตัวเลือก (`required`, `unique`, ...), ชื่อ model ใน `ref: ""`
-- ชื่อที่ generate ให้: collection `users` → `usersSchema`, `User`, `"UserModel"`; pk ObjectId ที่ชื่อ `id` จะเป็น `_id` อัตโนมัติ
+- **Autocomplete:** `Model` / `Schema` (Ctrl+Space), template ของ field บรรทัดใหม่ (email, password, enum, reference, tags, sub-document, createdAt ...), ชนิดแบบสั้นหลัง `name:` และหลัง `type:`, ตัวเลือก (`required`, `unique`, `match`, `validate`, ... ไม่เสนอซ้ำตัวที่ใส่แล้ว), ค่าของ option (`true/false`, `default`, `enum`), ชื่อ model ใน `ref: ""`
+- ชื่อที่เว็บตั้งให้ตอน export: `Model User` → collection `users`, `usersSchema`, `"UserModel"` (ถ้า import มาจากไฟล์ที่ตั้งชื่ออื่น จะใช้ชื่อเดิมของไฟล์); pk ObjectId ที่ชื่อ `id` จะเป็น `_id` อัตโนมัติ
+- ข้อจำกัด: options ของ schema (เช่น `timestamps`, `toJSON`) แก้ในหน้าเว็บไม่ได้ ใช้ค่าจากไฟล์ที่ import หรือค่าเริ่มต้น `{ timestamps: false, versionKey: false }`; ห้อง/ไฟล์โปรเจกต์ที่บันทึกไว้เป็นไฟล์ Mongoose เต็ม (เวอร์ชันก่อน) จะแปลงเป็นรูปแบบย่อให้เองเมื่อเปิดในเบราว์เซอร์ (ห้องที่แชร์ไว้ยังอ่านได้ แต่ยังแสดงเป็นโค้ดเต็มจนกว่าจะ import ใหม่)
 
 ใน SQL mode ยังใช้ DSL ตามเดิม (ด้านบน) และฟิลด์รองรับ `enum: ['a', 'b']` (export เป็น `check` constraint)

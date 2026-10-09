@@ -1,15 +1,17 @@
 import { parse } from './parser.js'
 import { serialize } from './serializer.js'
 import { parseMongoose } from './importers/mongoose.js'
-import { toMongoose } from './generators/mongo.js'
+import { hasViewBlocks, looksLikeFullMongoose, parseView, toMongooseView } from './mongoView.js'
 import { tablesToMongo, tablesToSql } from './types.js'
 
 /**
- * The text in the editor is DSL in SQL mode and real Mongoose code in MongoDB mode.
- * `parseSource` turns either into the common Schema used by the diagram and the generators.
+ * The text in the editor is DSL in SQL mode and the short Mongoose form (`Model User { ... }`, see mongoView.js) in MongoDB mode;
+ * `extras` is what the short form leaves out (options, hooks, methods). A whole Mongoose module saved by an older version is still read.
+ * `parseSource` turns any of them into the common Schema used by the diagram and the generators.
  */
-export function parseSource(text, mode) {
-  return mode === 'mongodb' ? parseMongoose(text) : parse(text)
+export function parseSource(text, mode, extras = null) {
+  if (mode !== 'mongodb') return parse(text)
+  return looksLikeFullMongoose(text) && !hasViewBlocks(text) ? parseMongoose(text) : parseView(text, extras)
 }
 
 /**
@@ -31,10 +33,21 @@ function sqlToMongoTables(tables) {
   })
 }
 
-/** Rewrites the editor text from one mode's language to the other's (lossy: hooks, methods and comments are not carried over). */
-export function convertSource(text, from, to) {
-  if (from === to) return text
-  const schema = parseSource(text, from)
-  if (to === 'mongodb') return toMongoose({ ...schema, tables: sqlToMongoTables(schema.tables) })
-  return serialize({ ...schema, tables: tablesToSql(schema.tables) })
+/**
+ * Rewrites the editor text from one mode's language to the other's (lossy: hooks, methods and comments are not carried over).
+ * Returns { code, extras }: `extras` only exists for MongoDB (what the short form cannot show, e.g. composite indexes).
+ */
+export function convertDocument({ code, extras = null }, from, to) {
+  if (from === to) return { code, extras }
+  const schema = parseSource(code, from, extras)
+  if (to === 'mongodb') {
+    const view = toMongooseView({ ...schema, tables: sqlToMongoTables(schema.tables) })
+    return { code: view.text, extras: view.extras }
+  }
+  return { code: serialize({ ...schema, tables: tablesToSql(schema.tables) }), extras: null }
+}
+
+/** Same as `convertDocument` for callers that only need the text. */
+export function convertSource(text, from, to, extras = null) {
+  return convertDocument({ code: text, extras }, from, to).code
 }

@@ -1,5 +1,5 @@
 import { parse as _parse } from './parser.js'
-import { toMongoose as _toMongoose } from './generators/mongo.js'
+import { toMongooseView as _toMongooseView } from './mongoView.js'
 export * from './model.js'
 export { parse } from './parser.js'
 export { serialize } from './serializer.js'
@@ -39,7 +39,8 @@ Ref: posts.id <> tags.id
 
 export { sqlTypeToMongo, tablesToMongo, mongoTypeToSql, tablesToSql, normalizeImportedType } from './types.js'
 export { validatorToSchema, findValidators, collectionNameFromFile } from './importers/validator.js'
-export { parseSource, convertSource } from './source.js'
+export { parseSource, convertSource, convertDocument } from './source.js'
+export { parseView, viewToCode, codeToView, toMongooseView, mergeViews, splitView, hasViewBlocks, looksLikeFullMongoose, fixCommas } from './mongoView.js'
 
 /** The same example as DSL text (used by tests and by the SQL <-> MongoDB conversions). */
 export const SAMPLE_MONGO_DSL = `// MongoDB example: a field whose type is another table = embedded sub-document
@@ -77,7 +78,8 @@ Table OrderItem [embedded] {
 Ref: orders.user_id > users._id
 `
 
-/** Example shown in MongoDB mode: real Mongoose code (users with an embedded address, orders that reference users). */
+/** Example shown in MongoDB mode: users with an embedded address, orders that reference users (short Mongoose form). */
 export const SAMPLE_MONGO =
-  '// MongoDB mode: this is real Mongoose code. Edit it and the diagram follows.\n// Import your own model files (.js) from the Import menu.\n' +
-  _toMongoose(_parse(SAMPLE_MONGO_DSL))
+  '// MongoDB mode: one Model per collection, fields written like a mongoose.Schema. Edit it and the diagram follows.\n' +
+  '// Import real Mongoose model files (.js) from the Import menu; Export > Mongoose writes the full file.\n\n' +
+  _toMongooseView(_parse(SAMPLE_MONGO_DSL)).text

@@ -1,14 +1,16 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { toSQL, toMongoose, toMongoShell, toValidatorJson, convertMongooseModuleStyle, serialize, rootTables } from '@er/schema'
+import { toSQL, toMongoose, viewToCode, toMongoShell, toValidatorJson, serialize, rootTables } from '@er/schema'
 import { download } from '../lib/files.js'
 
 const props = defineProps({
   modelValue: Boolean,
   /** the diagram as a schema (parsed from the editor) */
   schema: { type: Object, required: true },
-  /** the editor text: DSL in SQL mode, Mongoose code in MongoDB mode */
+  /** the editor text: DSL in SQL mode, the short Mongoose form (Model X { ... }) in MongoDB mode */
   code: { type: String, default: '' },
+  /** what the short form leaves out (options, hooks, methods) */
+  extras: { type: Object, default: null },
   mode: { type: String, default: 'sql' },
   /** which tab to open on: postgres | mysql | sqlite | mongoose | validator | mongosh | dsl (default: first of the current mode) */
   initialTarget: { type: String, default: '' },
@@ -70,8 +72,8 @@ const output = computed(() => {
       case 'sqlite':
         return toSQL(props.schema, target.value)
       case 'mongoose':
-        // in MongoDB mode the editor already holds the Mongoose code: export exactly that (hooks and comments included)
-        return props.mode === 'mongodb' ? convertMongooseModuleStyle(props.code, style.value) : toMongoose(props.schema, { style: style.value })
+        // in MongoDB mode the editor holds the short form: the full file is put together from it and the kept hooks / options
+        return props.mode === 'mongodb' ? viewToCode(props.code, props.extras, { style: style.value }) : toMongoose(props.schema, { style: style.value })
       case 'validator':
         return toValidatorJson(props.schema)
       case 'mongosh':
@@ -157,7 +159,7 @@ function save() {
           {{ current.group.badge }} equivalents automatically; review the result before using it.
         </v-alert>
         <v-alert v-if="target === 'mongoose' && mode === 'mongodb'" type="success" variant="tonal" density="compact" class="mt-3">
-          This is the code from the editor, exactly as you wrote it.
+          The complete model file: your fields from the editor plus the <code>import</code>, <code>mongoose.model(...)</code> and export lines, and any hooks or methods kept from imported files.
         </v-alert>
         <pre class="out">{{ output }}</pre>
         <v-alert v-if="schema.errors.length" type="warning" variant="tonal" density="compact" class="mt-3">

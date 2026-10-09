@@ -31,11 +31,11 @@ const KINDS = {
     icon: 'mdi-leaf',
     exts: ['js', 'mjs', 'cjs', 'json', 'jsonl', 'ndjson'],
     formats: [
-      ['.js · .mjs', 'Mongoose model file: mongoose.Schema + mongoose.model (used as it is)'],
+      ['.js · .mjs', 'Mongoose model file: mongoose.Schema + mongoose.model (hooks and methods are kept for export)'],
       ['.json', '$jsonSchema validator (e.g. users_collection_validator.json) or mongoexport data'],
       ['.jsonl · .ndjson', 'mongoexport data, one document per line'],
     ],
-    hint: 'The editor shows real Mongoose code. A model file is loaded exactly as it is (hooks, methods and comments are kept); a validator JSON or exported documents are turned into a Mongoose schema.',
+    hint: 'The editor shows each collection as Model Name { fields }, written like a mongoose.Schema. From a model file the fields are shown and the rest (import, options, hooks, methods) is kept and written back on export; a validator JSON or exported documents are turned into models.',
   },
   table: {
     badge: 'CSV · Excel',
@@ -119,7 +119,7 @@ async function run() {
       emit('toast', 'Nothing could be imported from these files')
       return
     }
-    emit('apply', { code: res.code, mode: resultMode.value, replace: strategy.value === 'replace' })
+    emit('apply', { code: res.code, extras: res.extras ?? null, mode: resultMode.value, replace: strategy.value === 'replace' })
     emit('update:modelValue', false)
   } catch (e) {
     notes.value = [e.message]

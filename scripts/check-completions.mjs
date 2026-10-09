@@ -34,3 +34,29 @@ console.log('Thai field then type:', has(run('Table ผู้ใช้ {\n  ช�
 console.log('// inside quotes is not a comment:', has(run("Table t {\n  a int [note: '// x', ", 'sql'), 'pk'))
 console.log('no suggestions inside quoted note:', run("Table t {\n  a int [note: 'abc ", 'sql') === null)
 console.log('Ref targets quote odd names:', JSON.stringify(run('Table "my table" {\n  "first name" int\n}\nRef: ', 'sql')))
+
+console.log('--- MongoDB editor (short Mongoose form) ---')
+import { mongooseCompletions } from '../apps/web/src/lib/mongoose-completions.js'
+import { parseSource } from '@er/schema'
+function runMongo(doc, explicit = true) {
+  const state = EditorState.create({ doc })
+  const src = mongooseCompletions(() => parseSource(doc, 'mongodb'))
+  const res = src(new CompletionContext(state, doc.length, explicit))
+  return res ? res.options.map((o) => o.label) : null
+}
+const body = 'Model User {\n  name: String\n}\n\nModel Order {\n  '
+show('top level (empty)', runMongo(''))
+show('top level "Mo"', runMongo('Mo'))
+show('after "Model User "', runMongo('Model User '))
+show('new line in a model', runMongo(body))
+show('new line, partial "em"', runMongo(body + 'em'))
+show('short form "total: "', runMongo(body + 'total: '))
+show('"type: " in options', runMongo(body + 'total: { type: '))
+show('inline options', runMongo(body + 'total: { type: Number, '))
+show('options skip used keys', (runMongo(body + 'total: { type: Number, required: true, ') ?? []).includes('required') ? ['BUG: required offered twice'] : ['ok'])
+show('required: ->', runMongo(body + 'total: { type: Number, required: '))
+show('default: ->', runMongo(body + 'total: { type: Number, default: '))
+show('ref: "' + '" models', runMongo(body + 'owner: { type: mongoose.Schema.Types.ObjectId, ref: "'))
+show('sub-document fields', runMongo(body + 'address: {\n    '))
+show('sub-schema as type', runMongo('Schema addressSchema {\n  city: String\n}\nModel A {\n  home: '))
+show('comment -> none', runMongo(body + '// '))

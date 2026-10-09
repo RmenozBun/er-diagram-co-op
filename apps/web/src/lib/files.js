@@ -1,6 +1,6 @@
 import {
   ddlToSchema, mongoToSchema, parseMongoExport, parseCsv, rowsToSchema, isSpecRows, specToSchema, serialize, emptySchema, tablesToMongo,
-  parseMongoose, validatorToSchema, collectionNameFromFile, toMongoose, mergeMongooseSources, looksLikeDsl, convertSource,
+  parseMongoose, validatorToSchema, collectionNameFromFile, codeToView, toMongooseView, mergeViews, looksLikeDsl, looksLikeFullMongoose, convertDocument,
 } from '@er/schema'
 import { readXlsx } from './xlsx.js'
 
@@ -28,11 +28,11 @@ export function readText(file) {
   return file.text()
 }
 
-export function makeProjectFile({ mode, code, positions }) {
-  return JSON.stringify({ format: PROJECT_FORMAT, version: 1, mode, code, positions }, null, 2)
+export function makeProjectFile({ mode, code, extras = null, positions }) {
+  return JSON.stringify({ format: PROJECT_FORMAT, version: 1, mode, code, ...(extras ? { extras } : {}), positions }, null, 2)
 }
 
-/** Returns { mode, code, positions } or throws a readable Error. */
+/** Returns { mode, code, extras, positions } or throws a readable Error. */
 export function readProjectFile(text) {
   let data
   try {
@@ -44,9 +44,22 @@ export function readProjectFile(text) {
     throw new Error('Not an ER Designer project file.')
   }
   const mode = data.mode === 'mongodb' ? 'mongodb' : 'sql'
+  let code = data.code
+  let extras = mode === 'mongodb' && data.extras && typeof data.extras === 'object' ? data.extras : null
+  if (mode === 'mongodb' && looksLikeDsl(code)) {
+    // saved by an early version: the DSL becomes Mongoose models
+    ;({ code, extras } = convertDocument({ code }, 'sql', 'mongodb'))
+  } else if (mode === 'mongodb' && looksLikeFullMongoose(code)) {
+    // saved by a version that showed the whole Mongoose file: show the short form, keep hooks / options as extras
+    try {
+      const view = codeToView(code)
+      if (view.text) ({ text: code, extras } = view)
+    } catch {}
+  }
   return {
     mode,
-    code: normalizeEol(mode === 'mongodb' && looksLikeDsl(data.code) ? convertSource(data.code, 'sql', 'mongodb') : data.code),
+    code: normalizeEol(code),
+    extras,
     positions: data.positions && typeof data.positions === 'object' ? data.positions : {},
   }
 }
@@ -54,21 +67,21 @@ export function readProjectFile(text) {
 const extOf = (name) => (name.match(/\.([^.]+)$/)?.[1] ?? '').toLowerCase()
 
 /**
- * Turn dropped/selected files into editor text: DSL for SQL, real Mongoose code for MongoDB.
+ * Turn dropped/selected files into editor text: DSL for SQL, the short Mongoose form (`Model X { ... }`) for MongoDB.
  * Supported: .csv/.tsv (one table each), .xlsx (one table per sheet), .sql (DDL dump), .sqlite/.db/.sqlite3 (SQLite file),
- * .js/.mjs/.cjs (Mongoose model files, kept as they are), .json with a $jsonSchema validator, .json/.jsonl/.ndjson (mongoexport data).
+ * .js/.mjs/.cjs (Mongoose model files: fields are shown, hooks / methods / options are kept for export), .json with a $jsonSchema validator, .json/.jsonl/.ndjson (mongoexport data).
  * A CSV/sheet headed `Field, Type` is read as a schema description (one collection/table),
  * anything else as table data.
  * `options.target` ('sql' | 'mongodb'): the kind of database the result is meant for. CSV / Excel data tables get that kind's
  * type names and the returned `mode` is the target; without it `mode` is only a guess from the content (or null).
- * @returns {Promise<{ code: string, notes: string[], mode: 'sql'|'mongodb'|null }>}
+ * @returns {Promise<{ code: string, extras: object|null, notes: string[], mode: 'sql'|'mongodb'|null }>}
  */
 export async function importFiles(files, options = {}) {
   const notes = []
   const schema = emptySchema()
   const dataTables = emptySchema() // plain data sheets go last, after the schema descriptions
   const specs = []
-  const mongooseSources = [] // Mongoose model files are kept verbatim (hooks, methods and comments survive)
+  const mongooseViews = [] // Mongoose model files: field lists in the short form, hooks / methods / options in the extras
   let mode = null
   const addSheet = (label, name, rows) => {
     if (isSpecRows(rows)) {
@@ -104,7 +117,7 @@ export async function importFiles(files, options = {}) {
         const text = await readText(file)
         const parsed = parseMongoose(text)
         if (parsed.errors.length) throw new Error(`line ${parsed.errors[0].line}: ${parsed.errors[0].message}`)
-        mongooseSources.push(text)
+        mongooseViews.push(codeToView(text))
         const roots = parsed.tables.filter((t) => !t.embedded).length
         notes.push(`${file.name}: Mongoose model file, ${roots} collection(s), ${parsed.tables.length - roots} embedded document type(s)`)
         mode = 'mongodb'
@@ -146,11 +159,12 @@ export async function importFiles(files, options = {}) {
   schema.tables.push(...(options.target === 'mongodb' ? tablesToMongo(dataTables.tables) : dataTables.tables))
   if (options.target) mode = options.target
   if (mode === 'mongodb') {
-    const parts = [...mongooseSources]
-    if (schema.tables.length) parts.push(toMongoose(schema))
-    return { code: normalizeEol(parts.reduce((all, part) => mergeMongooseSources(all, part), '')), notes, mode }
+    const parts = [...mongooseViews]
+    if (schema.tables.length) parts.push(toMongooseView(schema))
+    const merged = parts.reduce((all, part) => mergeViews(all, part), { text: '', extras: null })
+    return { code: normalizeEol(merged.text), extras: merged.extras, notes, mode }
   }
-  return { code: normalizeEol(serialize(schema)), notes, mode }
+  return { code: normalizeEol(serialize(schema)), extras: null, notes, mode }
 }
 
 async function sqliteToSchema(buffer) {
