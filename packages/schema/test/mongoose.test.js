@@ -24,29 +24,29 @@ describe('Mongoose model files (the real users.model.js)', () => {
 
   it('is read without errors: one collection plus an embedded sub-document', () => {
     expect(s.errors).toEqual([])
-    expect(s.tables.map((t) => `${t.name}${t.embedded ? ' (embedded)' : ''}`)).toEqual(['users', 'LicenseNumber (embedded)'])
+    expect(s.tables.map((t) => `${t.name}${t.embedded ? ' (embedded)' : ''}`)).toEqual(['users', 'Certificate (embedded)'])
   })
 
   it('keeps types, required / unique, enum, defaults, index, ref and embedded arrays', () => {
     const users = s.tables[0]
     expect(users.fields.map((f) => f.name)).toEqual([
-      '_id', 'username', 'password', 'hint', 'CustomerID', 'fullname', 'profileImage', 'role', 'isActive', 'membershipStatus', 'memberId', 'memberNumber', 'licenseNumbers', 'createAt', 'updateAt',
+      '_id', 'login', 'secret', 'nickname', 'accountCode', 'displayName', 'avatarUrl', 'level', 'active', 'tier', 'partnerId', 'partnerNumber', 'certificates', 'createdOn', 'updatedOn',
     ])
     expect(field(s, 'users', '_id')).toMatchObject({ type: 'objectid', pk: true })
-    expect(field(s, 'users', 'username')).toMatchObject({ type: 'string', notNull: true, unique: true })
-    expect(field(s, 'users', 'CustomerID')).toMatchObject({ unique: true, notNull: true })
-    expect(field(s, 'users', 'role')).toMatchObject({ type: 'number', notNull: true })
-    expect(field(s, 'users', 'isActive')).toMatchObject({ default: '1', defaultKind: 'literal' })
-    expect(field(s, 'users', 'hint')).toMatchObject({ default: '', defaultKind: 'string' })
-    expect(field(s, 'users', 'membershipStatus')).toMatchObject({ enum: ['none', 'pending', 'approved', 'rejected'], default: 'none' })
-    expect(users.indexes).toEqual([{ fields: ['membershipStatus'], unique: false, name: null }])
-    expect(field(s, 'users', 'memberId')).toMatchObject({ type: 'objectid', refModel: 'MemberModel', default: 'null', defaultKind: 'literal' })
-    expect(field(s, 'users', 'createAt')).toMatchObject({ default: 'nowInBangkok', defaultKind: 'expr' }) // a function reference
-    expect(field(s, 'users', 'licenseNumbers').type).toBe('LicenseNumber[]')
-    expect(s.tables[1].fields.map((f) => `${f.name}:${f.type}:${f.notNull}`)).toEqual(['professionType:string:true', 'licenseNumber:string:true'])
+    expect(field(s, 'users', 'login')).toMatchObject({ type: 'string', notNull: true, unique: true })
+    expect(field(s, 'users', 'accountCode')).toMatchObject({ unique: true, notNull: true })
+    expect(field(s, 'users', 'level')).toMatchObject({ type: 'number', notNull: true })
+    expect(field(s, 'users', 'active')).toMatchObject({ default: '1', defaultKind: 'literal' })
+    expect(field(s, 'users', 'nickname')).toMatchObject({ default: '', defaultKind: 'string' })
+    expect(field(s, 'users', 'tier')).toMatchObject({ enum: ['free', 'silver', 'gold', 'banned'], default: 'free' })
+    expect(users.indexes).toEqual([{ fields: ['tier'], unique: false, name: null }])
+    expect(field(s, 'users', 'partnerId')).toMatchObject({ type: 'objectid', refModel: 'PartnerModel', default: 'null', defaultKind: 'literal' })
+    expect(field(s, 'users', 'createdOn')).toMatchObject({ default: 'nowLocal', defaultKind: 'expr' }) // a function reference
+    expect(field(s, 'users', 'certificates').type).toBe('Certificate[]')
+    expect(s.tables[1].fields.map((f) => `${f.name}:${f.type}:${f.notNull}`)).toEqual(['kind:string:true', 'code:string:true'])
   })
 
-  it('hooks (pre save / pre update) and the timezone import do not disturb it', () => {
+  it('hooks (pre save / pre update) and the helper import do not disturb it', () => {
     expect(usersModel).toContain("usersSchema.pre('save'")
     expect(s.errors).toEqual([])
   })
@@ -56,10 +56,10 @@ describe('Mongoose model files (the real users.model.js)', () => {
     expect(code).toContain('const usersSchema = new mongoose.Schema(')
     expect(code).toContain('const User = mongoose.model("UserModel", usersSchema, "users");')
     expect(code).toContain('export default User;')
-    expect(code).toContain('username: { type: String, required: true, unique: true },')
-    expect(code).toContain('memberId: { type: mongoose.Schema.Types.ObjectId, ref: "MemberModel", default: null },')
-    expect(code).toContain('enum: ["none", "pending", "approved", "rejected"],')
-    expect(code).toContain('createAt: { type: String, default: nowInBangkok },')
+    expect(code).toContain('login: { type: String, required: true, unique: true },')
+    expect(code).toContain('partnerId: { type: mongoose.Schema.Types.ObjectId, ref: "PartnerModel", default: null },')
+    expect(code).toContain('enum: ["free", "silver", "gold", "banned"],')
+    expect(code).toContain('createdOn: { type: String, default: nowLocal },')
     expect(code).toContain('{ timestamps: false, versionKey: false }')
     expect(shape(parseMongoose(code))).toEqual(shape(s))
   })
@@ -75,9 +75,9 @@ describe('Mongoose model files (the real users.model.js)', () => {
     for (const [name, prop] of Object.entries(want.properties)) {
       expect(got.properties[name].bsonType, name).toEqual(prop.bsonType)
     }
-    expect(got.properties.licenseNumbers.items.required).toEqual(want.properties.licenseNumbers.items.required)
-    expect(Object.keys(got.properties.licenseNumbers.items.properties)).toEqual(Object.keys(want.properties.licenseNumbers.items.properties))
-    expect(got.properties.membershipStatus.enum).toEqual(expect.arrayContaining(want.properties.membershipStatus.enum))
+    expect(got.properties.certificates.items.required).toEqual(want.properties.certificates.items.required)
+    expect(Object.keys(got.properties.certificates.items.properties)).toEqual(Object.keys(want.properties.certificates.items.properties))
+    expect(got.properties.tier.enum).toEqual(expect.arrayContaining(want.properties.tier.enum))
   })
 })
 
@@ -86,7 +86,7 @@ describe('validator JSON (users_collection_validator.json) as an import', () => 
     const name = collectionNameFromFile('users_collection_validator.json')
     expect(name).toBe('users')
     const s = validatorToSchema(usersValidator, name)
-    expect(s.tables.map((t) => t.name)).toEqual(['users', 'LicenseNumber'])
+    expect(s.tables.map((t) => t.name)).toEqual(['users', 'Certificate'])
   })
 
   it('gives the same structure as the Mongoose file', () => {
@@ -99,12 +99,12 @@ describe('validator JSON (users_collection_validator.json) as an import', () => 
 
   it('picks up the details that the descriptions mention (unique, default, referenced model)', () => {
     const s = validatorToSchema(usersValidator, 'users')
-    expect(field(s, 'users', 'username')).toMatchObject({ unique: true })
-    expect(field(s, 'users', 'CustomerID')).toMatchObject({ unique: true })
-    expect(field(s, 'users', 'hint')).toMatchObject({ default: '', defaultKind: 'string' })
-    expect(field(s, 'users', 'isActive')).toMatchObject({ default: '1', defaultKind: 'literal' })
-    expect(field(s, 'users', 'membershipStatus')).toMatchObject({ default: 'none' })
-    expect(field(s, 'users', 'memberId')).toMatchObject({ refModel: 'MemberModel' })
+    expect(field(s, 'users', 'login')).toMatchObject({ unique: true })
+    expect(field(s, 'users', 'accountCode')).toMatchObject({ unique: true })
+    expect(field(s, 'users', 'nickname')).toMatchObject({ default: '', defaultKind: 'string' })
+    expect(field(s, 'users', 'active')).toMatchObject({ default: '1', defaultKind: 'literal' })
+    expect(field(s, 'users', 'tier')).toMatchObject({ default: 'free' })
+    expect(field(s, 'users', 'partnerId')).toMatchObject({ refModel: 'PartnerModel' })
   })
 
   it('understands several shapes and ignores non-validators', () => {
@@ -228,9 +228,9 @@ describe('MongoDB mode: the editor holds Mongoose code', () => {
 
 describe('module style switch with other imports', () => {
   it('converts every import / require line, not only mongoose', () => {
-    const esm = 'import mongoose from "mongoose";\nimport nowInBangkok from "../timezone.js";\nimport { a, b } from "./x.js";\n\nexport default User;\n'
+    const esm = 'import mongoose from "mongoose";\nimport nowLocal from "../clock.js";\nimport { a, b } from "./x.js";\n\nexport default User;\n'
     const cjs = convertMongooseModuleStyle(esm, 'cjs')
-    expect(cjs).toBe('const mongoose = require("mongoose");\nconst nowInBangkok = require("../timezone.js");\nconst { a, b } = require("./x.js");\n\nmodule.exports = User;\n')
+    expect(cjs).toBe('const mongoose = require("mongoose");\nconst nowLocal = require("../clock.js");\nconst { a, b } = require("./x.js");\n\nmodule.exports = User;\n')
     expect(convertMongooseModuleStyle(cjs, 'esm')).toBe(esm.replace('{ a, b }', '{ a, b }'))
     expect(convertMongooseModuleStyle(usersModel, 'cjs')).not.toMatch(/^import\s/m)
   })

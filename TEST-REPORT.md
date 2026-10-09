@@ -110,11 +110,11 @@
 
 ## โหมด MongoDB แบบโค้ด Mongoose
 
-ทดสอบด้วยไฟล์จริงของผู้ใช้ (`users.model.js` และ `users_collection_validator.json` ใน `packages/schema/test/fixtures/`):
+ทดสอบด้วยไฟล์ตัวอย่างที่ทำตามโครงสร้างของไฟล์จริงของผู้ใช้ (`users.model.js` และ `users_collection_validator.json` ใน `packages/schema/test/fixtures/` ใช้ชื่อฟิลด์สมมติ):
 
 | ทดสอบ | ผล |
 |---|---|
-| อ่าน `users.model.js` (ฟิลด์ `required`/`unique`, `enum`, `default` ที่เป็นฟังก์ชัน, `index`, `ref: "MemberModel"`, array ของ sub-document, hooks) | อ่านถูกต้องหมด ไม่มี error |
+| อ่าน `users.model.js` (ฟิลด์ `required`/`unique`, `enum`, `default` ที่เป็นฟังก์ชัน, `index`, `ref: "PartnerModel"`, array ของ sub-document, hooks) | อ่านถูกต้องหมด ไม่มี error |
 | generate กลับเป็นโค้ด Mongoose | เหมือนไฟล์เดิมเกือบทุกบรรทัด (ต่างเฉพาะ import ของ helper และ hooks) และอ่านกลับได้โครงเดียวกัน |
 | import validator JSON | อ่านเป็น validator (ไม่ใช่ข้อมูลตัวอย่างเหมือนเดิมที่ได้ตารางขยะ 22 ตาราง) ได้ `unique`, `default`, `ref` จากคำอธิบาย |
 | validator ที่ export จากโค้ด เทียบกับ validator ที่ผู้ใช้ทำเอง | `required`, ชื่อและชนิดของ property ตรงกัน |

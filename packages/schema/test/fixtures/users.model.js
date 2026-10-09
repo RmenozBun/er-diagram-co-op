@@ -1,36 +1,36 @@
 import mongoose from "mongoose";
-import nowInBangkok from "../timezone.js";
+import nowLocal from "../clock.js";
 const usersSchema = new mongoose.Schema(
   {
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    hint: { type: String, default: '' },
-    CustomerID: { type: String, required: true, unique: true },
-    fullname: { type: String, required: true },
-    profileImage: { type: String, default: "" },
-    role: { type: Number, required: true },
-    isActive: { type: Number, default: 1 },
-    membershipStatus: {
+    login: { type: String, required: true, unique: true },
+    secret: { type: String, required: true },
+    nickname: { type: String, default: '' },
+    accountCode: { type: String, required: true, unique: true },
+    displayName: { type: String, required: true },
+    avatarUrl: { type: String, default: "" },
+    level: { type: Number, required: true },
+    active: { type: Number, default: 1 },
+    tier: {
       type: String,
-      enum: ["none", "pending", "approved", "rejected"],
-      default: "none",
+      enum: ["free", "silver", "gold", "banned"],
+      default: "free",
       index: true,
     },
-    memberId: {
+    partnerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "MemberModel",
+      ref: "PartnerModel",
       default: null,
     },
-    memberNumber: { type: String, default: "" },
-    licenseNumbers: {
+    partnerNumber: { type: String, default: "" },
+    certificates: {
       type: [{
-        professionType: { type: String, required: true },
-        licenseNumber: { type: String, required: true },
+        kind: { type: String, required: true },
+        code: { type: String, required: true },
       }],
       default: [],
     },
-    createAt: { type: String, default: nowInBangkok },
-    updateAt: { type: String, default: nowInBangkok },
+    createdOn: { type: String, default: nowLocal },
+    updatedOn: { type: String, default: nowLocal },
   },
   {
     timestamps: false,
@@ -38,13 +38,13 @@ const usersSchema = new mongoose.Schema(
   },
 );
 
-// update updateAt อัตโนมัติ
+// update updatedOn อัตโนมัติ
 usersSchema.pre(['updateOne','findOneAndUpdate','updateMany'], function(){
-  this.set({ updateAt: nowInBangkok() });
+  this.set({ updatedOn: nowLocal() });
 });
 
 usersSchema.pre('save', function(){
-  this.updateAt = nowInBangkok();
+  this.updatedOn = nowLocal();
 });
 
 const User = mongoose.model("UserModel", usersSchema, "users");

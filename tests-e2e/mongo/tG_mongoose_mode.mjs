@@ -30,16 +30,16 @@ try {
   const original = readFileSync('../../packages/schema/test/fixtures/users.model.js', 'utf8')
   const schema = L.parseMongoose(original)
   // the original imports a helper that is not available here: stub it so the file can be loaded
-  const regenerated = 'const nowInBangkok = () => "now";\n' + L.toMongoose(schema).replace('import mongoose from "mongoose";', 'import mongoose from "mongoose";')
+  const regenerated = 'const nowLocal = () => "now";\n' + L.toMongoose(schema).replace('import mongoose from "mongoose";', 'import mongoose from "mongoose";')
   const mod = await load(regenerated, 'gen/mode_users.mjs')
   const User = mod.default
   check('1. regenerated users model loads in real Mongoose', typeof User === 'function' && User.modelName === 'UserModel' && User.collection.name === 'users')
-  const good = { username: 'a', password: 'p', CustomerID: 'C1', fullname: 'A B', role: 3, licenseNumbers: [{ professionType: 'x', licenseNumber: '1' }] }
+  const good = { login: 'a', secret: 'p', accountCode: 'C1', displayName: 'A B', level: 3, certificates: [{ kind: 'x', code: '1' }] }
   check('1b. valid document passes validation', (await new User(good).validate().then(() => true, () => false)) === true)
-  const missing = await new User({ username: 'a' }).validate().then(() => null, (e) => Object.keys(e.errors))
-  check('1c. required fields are enforced', missing?.includes('password') && missing?.includes('CustomerID') && missing?.includes('fullname') && missing?.includes('role'), JSON.stringify(missing))
-  check('1d. enum is enforced', (await new User({ ...good, membershipStatus: 'bogus' }).validate().then(() => true, () => false)) === false)
-  check('1e. embedded sub-document fields are required', (await new User({ ...good, licenseNumbers: [{ professionType: 'x' }] }).validate().then(() => true, () => false)) === false)
+  const missing = await new User({ login: 'a' }).validate().then(() => null, (e) => Object.keys(e.errors))
+  check('1c. required fields are enforced', missing?.includes('secret') && missing?.includes('accountCode') && missing?.includes('displayName') && missing?.includes('level'), JSON.stringify(missing))
+  check('1d. enum is enforced', (await new User({ ...good, tier: 'bogus' }).validate().then(() => true, () => false)) === false)
+  check('1e. embedded sub-document fields are required', (await new User({ ...good, certificates: [{ kind: 'x' }] }).validate().then(() => true, () => false)) === false)
 
   // 2. validator JSON generated from the same diagram works on a real mongod
   const validator = JSON.parse(L.toValidatorJson(schema))
@@ -48,15 +48,15 @@ try {
   const coll = db.collection('users')
   const ins = (doc) => coll.insertOne(doc).then(() => 'ok', (e) => (e.code === 121 ? 'rejected' : e.message))
   check('2. valid document is accepted by the validator', (await ins({ ...good })) === 'ok')
-  check('2b. missing required field is rejected', (await ins({ username: 'b' })) === 'rejected')
-  check('2c. unknown property is rejected (additionalProperties: false)', (await ins({ ...good, username: 'c', surprise: 1 })) === 'rejected')
-  check('2d. wrong enum value is rejected', (await ins({ ...good, username: 'd', membershipStatus: 'bogus' })) === 'rejected')
-  check('2e. optional ObjectId reference may be null (as in the model default)', (await ins({ ...good, username: 'e', memberId: null })) === 'ok')
+  check('2b. missing required field is rejected', (await ins({ login: 'b' })) === 'rejected')
+  check('2c. unknown property is rejected (additionalProperties: false)', (await ins({ ...good, login: 'c', surprise: 1 })) === 'rejected')
+  check('2d. wrong enum value is rejected', (await ins({ ...good, login: 'd', tier: 'bogus' })) === 'rejected')
+  check('2e. optional ObjectId reference may be null (as in the model default)', (await ins({ ...good, login: 'e', partnerId: null })) === 'ok')
   check('2f. a document created by Mongoose itself passes the validator', await (async () => {
     const m = mongoose.createConnection(server.getUri() + 'mode_users')
     const M = m.model('UserModel2', User.schema, 'users')
     try {
-      await M.create({ ...good, username: 'from-mongoose', CustomerID: 'C-M', memberId: null })
+      await M.create({ ...good, login: 'from-mongoose', accountCode: 'C-M', partnerId: null })
       return true
     } catch (e) {
       return e.message
@@ -71,11 +71,11 @@ try {
   await db2.createCollection('users', { validator: handMade })
   const both = async (doc) => [await coll.insertOne({ ...doc }).then(() => 'ok', () => 'rejected'), await db2.collection('users').insertOne({ ...doc }).then(() => 'ok', () => 'rejected')]
   const cases = [
-    ['valid', { ...good, username: 'v1', CustomerID: 'V1' }],
-    ['missing role', { username: 'v2', password: 'p', CustomerID: 'V2', fullname: 'x' }],
-    ['extra property', { ...good, username: 'v3', CustomerID: 'V3', nope: 1 }],
-    ['bad enum', { ...good, username: 'v4', CustomerID: 'V4', membershipStatus: 'x' }],
-    ['bad license item', { ...good, username: 'v5', CustomerID: 'V5', licenseNumbers: [{ professionType: 'x' }] }],
+    ['valid', { ...good, login: 'v1', accountCode: 'V1' }],
+    ['missing level', { login: 'v2', secret: 'p', accountCode: 'V2', displayName: 'x' }],
+    ['extra property', { ...good, login: 'v3', accountCode: 'V3', nope: 1 }],
+    ['bad enum', { ...good, login: 'v4', accountCode: 'V4', tier: 'x' }],
+    ['bad license item', { ...good, login: 'v5', accountCode: 'V5', certificates: [{ kind: 'x' }] }],
   ]
   for (const [name, doc] of cases) {
     const [ours, theirs] = await both(doc)

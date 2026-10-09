@@ -80,11 +80,11 @@ import mongoose from "mongoose";
 
 const usersSchema = new mongoose.Schema(
   {
-    username: { type: String, required: true, unique: true },
+    login: { type: String, required: true, unique: true },
     role: { type: String, enum: ["member", "admin"], default: "member" },
-    memberId: { type: mongoose.Schema.Types.ObjectId, ref: "MemberModel", default: null },
+    partnerId: { type: mongoose.Schema.Types.ObjectId, ref: "PartnerModel", default: null },
     address: { street: { type: String }, city: { type: String } },          // sub-document
-    licenseNumbers: { type: [{ professionType: { type: String, required: true } }], default: [] },
+    certificates: { type: [{ kind: { type: String, required: true } }], default: [] },
   },
   { timestamps: false, versionKey: false },
 );

@@ -3,89 +3,89 @@
     "bsonType": "object",
     "title": "users validation",
     "required": [
-      "username",
-      "password",
-      "CustomerID",
-      "fullname",
-      "role"
+      "login",
+      "secret",
+      "accountCode",
+      "displayName",
+      "level"
     ],
     "additionalProperties": false,
     "properties": {
       "_id": {
         "bsonType": "objectId"
       },
-      "username": {
+      "login": {
         "bsonType": "string",
         "description": "ต้องเป็น string และห้ามซ้ำ (ตั้ง unique index แยกต่างหาก)"
       },
-      "password": {
+      "secret": {
         "bsonType": "string",
         "description": "ต้องเป็น string"
       },
-      "hint": {
+      "nickname": {
         "bsonType": "string",
         "description": "ค่าเริ่มต้นคือ string ว่าง"
       },
-      "CustomerID": {
+      "accountCode": {
         "bsonType": "string",
         "description": "ต้องเป็น string และห้ามซ้ำ (ตั้ง unique index แยกต่างหาก)"
       },
-      "fullname": {
+      "displayName": {
         "bsonType": "string",
         "description": "ต้องเป็น string"
       },
-      "profileImage": {
+      "avatarUrl": {
         "bsonType": "string",
         "description": "ค่าเริ่มต้นคือ string ว่าง"
       },
-      "role": {
+      "level": {
         "bsonType": "number",
         "description": "ต้องเป็นตัวเลข"
       },
-      "isActive": {
+      "active": {
         "bsonType": "number",
         "description": "ค่าเริ่มต้นคือ 1"
       },
-      "membershipStatus": {
+      "tier": {
         "bsonType": "string",
-        "enum": ["none", "pending", "approved", "rejected"],
-        "description": "ค่าเริ่มต้นคือ 'none'"
+        "enum": ["free", "silver", "gold", "banned"],
+        "description": "ค่าเริ่มต้นคือ 'free'"
       },
-      "memberId": {
+      "partnerId": {
         "bsonType": ["objectId", "null"],
-        "description": "อ้างอิงถึง MemberModel, ค่าเริ่มต้นคือ null"
+        "description": "อ้างอิงถึง PartnerModel, ค่าเริ่มต้นคือ null"
       },
-      "memberNumber": {
+      "partnerNumber": {
         "bsonType": "string",
         "description": "ค่าเริ่มต้นคือ string ว่าง"
       },
-      "licenseNumbers": {
+      "certificates": {
         "bsonType": "array",
         "description": "ค่าเริ่มต้นคือ array ว่าง",
         "items": {
           "bsonType": "object",
-          "required": ["professionType", "licenseNumber"],
+          "required": ["kind", "code"],
           "additionalProperties": false,
           "properties": {
             "_id": {
               "bsonType": "objectId"
             },
-            "professionType": {
+            "kind": {
               "bsonType": "string"
             },
-            "licenseNumber": {
+            "code": {
               "bsonType": "string"
             }
           }
         }
       },
-      "createAt": {
+      "createdOn": {
         "bsonType": "string",
-        "description": "วันที่สร้าง (string, timezone Bangkok)"
+        "description": "วันที่สร้าง (string)"
       },
-      "updateAt": {
+      "updatedOn": {
         "bsonType": "string",
-        "description": "วันที่แก้ไขล่าสุด (string, timezone Bangkok)"
+        "description": "วันที่แก้ไขล่าสุด (string)"
       }
     }
   }

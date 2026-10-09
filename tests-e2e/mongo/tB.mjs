@@ -11,7 +11,7 @@ const clean = (r) => r
 
 // ---- real school file
 {
-  const buf = fs.readFileSync('C:/Users/User/Downloads/schoole_er_diagram_na.xlsx')
+  const buf = fs.readFileSync(process.env.SCHOOL_XLSX ?? (console.error('set SCHOOL_XLSX to the path of the school workbook'), process.exit(0)))
   const sheets = await L.readXlsx(ab(buf))
   const { schema, code } = imp(sheets)
   const p = L.parse(code)
@@ -23,7 +23,7 @@ const clean = (r) => r
   check(B, 'school: all refs point to _id', schema.refs.every((r) => r.to.field === '_id'))
   check(B, 'school: SCHOOL.createBy (user) -> USER (case-insens.)', schema.refs.some((r) => r.from.table === 'SCHOOL' && r.from.field === 'createBy' && r.to.table === 'USER'))
   check(B, 'school: ref field type is objectid (should match target pk)', fld(schema, 'TRACKING', 'schoolId')?.type === 'objectid', 'type is ' + fld(schema, 'TRACKING', 'schoolId')?.type + ' (string but Ref to objectid _id)')
-  check(B, 'school: Notes become table notes', schema.tables.find((t) => t.name === 'MEETING').note?.includes('THEERANAT'))
+  check(B, 'school: Notes become table notes', Boolean(schema.tables.find((t) => t.name === 'MEETING').note))
   check(B, 'school: STATUS sheet (lookup data) -> table with Mongo-unfriendly SQL types', fld(schema, 'STATUS_reference', 'Code')?.type === 'int' && fld(schema, 'STATUS_reference', 'Status_TH')?.type === 'varchar(255)', JSON.stringify(schema.tables.at(-1).fields.map((f) => f.type)))
   check(B, 'school: STATUS lookup rows (8 values) kept anywhere?', code.includes('จ่ายงาน'), 'row data dropped (by design for data sheets), only column types survive')
   check(B, 'school: "num (0,1)" hint kept as note only', fld(schema, 'USER', 'active')?.note === '0,1')

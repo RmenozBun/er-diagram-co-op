@@ -43,7 +43,7 @@ Table Dim [embedded] {
   unit string
 }
 Ref: prod.owner > prod._id
-`, fs.readFileSync('school.dsl', 'utf8')]
+`, (fs.existsSync('school.dsl') ? fs.readFileSync('school.dsl', 'utf8') : '')]
 for (const [si, dsl] of SRC.entries()) {
   const schema = useMongoIds(L.parse(dsl))
   const r = loadMongoose(L.parse(dsl), 'e1_' + si)

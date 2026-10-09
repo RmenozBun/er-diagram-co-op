@@ -9,3 +9,5 @@ tests-e2e/**/out
 .env.local
 tests-e2e/mongo/gen/
 tests-e2e/**/out*.txt
+tests-e2e/mongo/school.dsl
+tests-e2e/mongo/res_*.json
