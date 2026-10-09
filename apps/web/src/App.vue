@@ -131,7 +131,11 @@ function init() {
 
   if (provider) {
     connection.value = 'connecting'
-    const onStatus = ({ status }) => (connection.value = status)
+    const onStatus = ({ status }) => {
+      // while retrying after a lost connection the provider flips disconnected <-> connecting: keep showing Offline until it is connected again
+      if (status === 'connecting' && connection.value === 'disconnected') return
+      connection.value = status
+    }
     provider.on('status', onStatus)
     const onSync = (synced) => synced && seedIfNeeded()
     provider.on('sync', onSync)
@@ -549,7 +553,8 @@ const statusChip = computed(() => {
           <v-list-item prepend-icon="mdi-console" title="mongosh script (validators + indexes)" @click="openExport('mongosh')" />
           <v-divider />
           <v-list-subheader class="head head-table"><v-icon size="14">mdi-file-multiple-outline</v-icon> Any mode</v-list-subheader>
-          <v-list-item prepend-icon="mdi-code-braces" title="Diagram source (DSL text)" @click="openExport('dsl')" />
+          <v-list-item prepend-icon="mdi-code-braces" title="Diagram source (DSL text, SQL types)" @click="openExport('dsl')" />
+          <v-list-item prepend-icon="mdi-file-code-outline" title="DBML (dbdiagram.io)" @click="openExport('dbml')" />
           <v-list-item prepend-icon="mdi-file-delimited-outline" title="Schema as CSV" @click="exportCsvSchema" />
           <v-list-item prepend-icon="mdi-folder-zip-outline" title="Tables as CSV (ZIP)" @click="exportCsvZip" />
           <v-divider />

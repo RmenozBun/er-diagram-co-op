@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { toSQL, toMongoose, viewToCode, toMongoShell, toValidatorJson, serialize, rootTables } from '@er/schema'
+import { toSQL, toMongoose, viewToCode, toMongoShell, toValidatorJson, serialize, mongoSchemaToSql, rootTables } from '@er/schema'
 import { download } from '../lib/files.js'
 
 const props = defineProps({
@@ -45,7 +45,10 @@ const GROUPS = [
     badge: 'Diagram source',
     color: 'secondary',
     icon: 'mdi-code-braces',
-    targets: [{ id: 'dsl', label: 'DSL text', ext: 'dbd' }],
+    targets: [
+      { id: 'dsl', label: 'DSL text (SQL types)', ext: 'dbd' },
+      { id: 'dbml', label: 'DBML (dbdiagram.io)', ext: 'dbml' },
+    ],
   },
 ]
 const TARGETS = GROUPS.flatMap((g) => g.targets.map((t) => ({ ...t, group: g })))
@@ -63,6 +66,8 @@ const current = computed(() => TARGETS.find((t) => t.id === target.value) ?? TAR
 const mismatch = computed(() => current.value.group.id !== 'both' && current.value.group.id !== props.mode)
 const roots = computed(() => rootTables(props.schema))
 
+const sqlSchema = () => (props.mode === 'mongodb' ? mongoSchemaToSql(props.schema) : props.schema)
+
 const output = computed(() => {
   if (!props.modelValue) return ''
   try {
@@ -70,7 +75,8 @@ const output = computed(() => {
       case 'postgres':
       case 'mysql':
       case 'sqlite':
-        return toSQL(props.schema, target.value)
+        // a MongoDB diagram is converted to SQL types first (e.g. `date` + default now() would be an invalid MySQL column)
+        return toSQL(sqlSchema(), target.value)
       case 'mongoose':
         // in MongoDB mode the editor holds the short form: the full file is put together from it and the kept hooks / options
         return props.mode === 'mongodb' ? viewToCode(props.code, props.extras, { style: style.value }) : toMongoose(props.schema, { style: style.value })
@@ -78,8 +84,11 @@ const output = computed(() => {
         return toValidatorJson(props.schema)
       case 'mongosh':
         return toMongoShell(props.schema)
+      case 'dbml':
+        return serialize(sqlSchema(), { dbml: true })
       default:
-        return props.mode === 'mongodb' ? serialize(props.schema) : props.code
+        // the DSL is the SQL language: a MongoDB diagram is converted first (ObjectId -> varchar(24), sub-documents -> jsonb ...)
+        return props.mode === 'mongodb' ? serialize(sqlSchema()) : props.code
     }
   } catch (e) {
     return `-- Could not generate: ${e.message}`
@@ -97,6 +106,8 @@ const fileName = computed(() => {
       return 'mongo-setup.js'
     case 'dsl':
       return 'diagram.dbd'
+    case 'dbml':
+      return 'diagram.dbml'
     default:
       return `schema-${target.value}.sql`
   }
@@ -157,6 +168,13 @@ function save() {
         <v-alert v-if="mismatch" type="info" variant="tonal" density="compact" class="mt-3">
           This diagram is in {{ mode === 'mongodb' ? 'MongoDB' : 'SQL' }} mode. Types are converted to
           {{ current.group.badge }} equivalents automatically; review the result before using it.
+        </v-alert>
+        <v-alert v-if="(target === 'dsl' || target === 'dbml') && mode === 'mongodb'" type="info" variant="tonal" density="compact" class="mt-3">
+          This MongoDB diagram is written as SQL tables: ObjectId becomes <code>varchar(24)</code>, string / number / date get SQL types, and
+          sub-documents become <code>jsonb</code> columns.
+        </v-alert>
+        <v-alert v-if="target === 'dbml'" type="info" variant="tonal" density="compact" class="mt-3">
+          DBML for <strong>dbdiagram.io</strong>: paste it into the editor there. <code>enum</code> fields are written as <code>Enum</code> blocks.
         </v-alert>
         <v-alert v-if="target === 'mongoose' && mode === 'mongodb'" type="success" variant="tonal" density="compact" class="mt-3">
           The complete model file: your fields from the editor plus the <code>import</code>, <code>mongoose.model(...)</code> and export lines, and any hooks or methods kept from imported files.

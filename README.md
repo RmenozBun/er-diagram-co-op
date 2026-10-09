@@ -7,7 +7,7 @@
 - **Share** → ได้ลิงก์ห้อง ใครมีลิงก์เข้ามาแก้ด้วยกันได้ เห็น cursor/ชื่อของแต่ละคน
 - **Save project file** (`.dbd.json`) / **Open project file** เพื่อทำงานต่อภายหลัง
 - **Import** แยกเมนูชัดเจน: **SQL** (dump `.sql`, SQLite `.sqlite/.db`) · **MongoDB** (ไฟล์ model Mongoose `.js`, validator `$jsonSchema` `.json`, ข้อมูล `mongoexport` `.json/.jsonl`) · **CSV / Excel** (เลือกได้ว่าจะนำเข้าเป็นตาราง SQL หรือ collection MongoDB; ถ้าเนื้อหาดูเป็นสไตล์ Mongo จะแนะนำให้อัตโนมัติ)
-- **Export** แยกเมนูชัดเจน: **SQL** (PostgreSQL / MySQL / SQLite) · **MongoDB** (Mongoose models, Validator JSON, สคริปต์ mongosh) · ใช้ได้ทั้งสองโหมด (DSL, CSV, ZIP ต่อตาราง, รูป PNG / SVG) หัวข้อ SQL เป็นสีน้ำเงิน MongoDB เป็นสีเขียวทั้งในเมนูและหน้าต่าง
+- **Export** แยกเมนูชัดเจน: **SQL** (PostgreSQL / MySQL / SQLite) · **MongoDB** (Mongoose models, Validator JSON, สคริปต์ mongosh) · ใช้ได้ทั้งสองโหมด (DSL, **DBML สำหรับ dbdiagram.io**, CSV, ZIP ต่อตาราง, รูป PNG / SVG) ในโหมด MongoDB, DSL / DBML / SQL จะแปลงเป็นชนิดของ SQL ให้ (ObjectId → `varchar(24)`, sub-document → คอลัมน์ `jsonb`, default ที่เป็นฟังก์ชัน JS ไปอยู่ใน note) หัวข้อ SQL เป็นสีน้ำเงิน MongoDB เป็นสีเขียวทั้งในเมนูและหน้าต่าง
 - สลับโหมด **SQL ↔ MongoDB** ตอนที่ในช่องแก้ไขยังเป็นตัวอย่างสำเร็จรูป ตัวอย่างจะเปลี่ยนตามโหมดให้เอง (ถ้าแก้อะไรไปแล้ว ระบบไม่แทนที่งานของคุณ)
 - รองรับชื่อภาษาไทย/Unicode ทั้งใน DSL, CSV และชื่อ sheet
 - งานถูก autosave ในเบราว์เซอร์ (IndexedDB) กันปิดแท็บพลาด
@@ -33,7 +33,7 @@ tests-e2e/    สคริปต์และรายงานการทดส
 npm install
 npm run relay:dev   # relay ที่ http://localhost:8787
 npm run dev         # เว็บที่ http://localhost:5173
-npm test            # 101 unit tests (parser/generator/importer, Mongoose + รูปแบบย่อ Model { })
+npm test            # 105 unit tests (parser/generator/importer, Mongoose + รูปแบบย่อ Model { })
 npm test -w apps/relay   # 11 tests การบันทึก/หมดอายุของห้อง และการล็อก Origin
 ```
 

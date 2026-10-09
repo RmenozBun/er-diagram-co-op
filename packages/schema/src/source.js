@@ -2,7 +2,7 @@ import { parse } from './parser.js'
 import { serialize } from './serializer.js'
 import { parseMongoose } from './importers/mongoose.js'
 import { hasViewBlocks, looksLikeFullMongoose, parseView, toMongooseView } from './mongoView.js'
-import { tablesToMongo, tablesToSql } from './types.js'
+import { tablesToMongo, mongoSchemaToSql } from './types.js'
 
 /**
  * The text in the editor is DSL in SQL mode and the short Mongoose form (`Model User { ... }`, see mongoView.js) in MongoDB mode;
@@ -44,7 +44,7 @@ export function convertDocument({ code, extras = null }, from, to) {
     const view = toMongooseView({ ...schema, tables: sqlToMongoTables(schema.tables) })
     return { code: view.text, extras: view.extras }
   }
-  return { code: serialize({ ...schema, tables: tablesToSql(schema.tables) }), extras: null }
+  return { code: serialize(mongoSchemaToSql(schema)), extras: null }
 }
 
 /** Same as `convertDocument` for callers that only need the text. */

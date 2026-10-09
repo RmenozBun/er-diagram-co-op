@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import {
-  parseMongoose, parseSource, parseView, codeToView, viewToCode, mergeViews, splitView, fixCommas, hasViewBlocks, looksLikeFullMongoose, convertDocument, SAMPLE_MONGO,
+  parseMongoose, parseSource, parseView, parse, serialize, mongoSchemaToSql, toSQL, convertSource, codeToView, viewToCode, mergeViews, splitView, fixCommas, hasViewBlocks, looksLikeFullMongoose, convertDocument, SAMPLE_MONGO,
 } from '../src/index.js'
 
 const dir = dirname(fileURLToPath(import.meta.url))
@@ -192,5 +192,50 @@ describe('short form: conversions, legacy text and merging', () => {
     expect(full).toContain('s.methods.hi')
     expect(full).toContain('export { User, User2 };')
     expect(parseMongoose(full).errors).toEqual([])
+  })
+})
+
+describe('MongoDB -> SQL: the DSL is converted for real, not just renamed', () => {
+  const toSqlDsl = () => convertSource(SAMPLE_MONGO, 'mongodb', 'sql')
+
+  it('sub-documents become json columns and their tables disappear', () => {
+    const dsl = toSqlDsl()
+    expect(dsl).not.toMatch(/embedded|Table Address|Table Item/)
+    expect(dsl).toMatch(/address jsonb/)
+    expect(dsl).toMatch(/items jsonb/)
+    expect(dsl).not.toMatch(/objectid|\bstring\b|\bnumber\b|\bdate\b/)
+    const back = parse(dsl)
+    expect(back.errors).toEqual([])
+    expect(back.tables.map((t) => t.name)).toEqual(['users', 'orders'])
+    expect(back.refs).toHaveLength(1)
+    expect(toSQL(back, 'postgres')).toContain('"address" jsonb')
+  })
+
+  it('DBML: enum fields become Enum blocks, no inline enum and no embedded tables', () => {
+    const dbml = serialize(mongoSchemaToSql(parseSource(SAMPLE_MONGO, 'mongodb')), { dbml: true })
+    expect(dbml).toContain('Enum users_role {\n  member\n  admin\n}')
+    expect(dbml).toContain("role users_role [default: 'member']")
+    expect(dbml).not.toMatch(/enum:|embedded|objectid/)
+    expect(dbml).toContain('Ref: orders.user_id > users._id')
+  })
+
+  it('a table that is only embedded is dropped, a collection that has its own pk is kept', () => {
+    const s = parseSource('Model A {\n  b: { x: String }\n}\nModel B {\n  y: String\n}', 'mongodb')
+    const sql = mongoSchemaToSql(s)
+    expect(sql.tables.map((t) => t.name)).toEqual(['as', 'bs'])
+    expect(sql.tables[0].fields.find((f) => f.name === 'b').type).toBe('jsonb')
+  })
+})
+
+describe('MongoDB -> SQL: defaults that are JavaScript are not written as SQL', () => {
+  it('a function default becomes a note, now() stays', () => {
+    const s = parseSource('Model T {\n  at: { type: Date, default: Date.now }\n  by: { type: String, default: nowLocal }\n}', 'mongodb')
+    const sql = mongoSchemaToSql(s)
+    const f = (n) => sql.tables[0].fields.find((x) => x.name === n)
+    expect(f('at').default).toBe('now()')
+    expect(f('by').default).toBeNull()
+    expect(f('by').note).toContain('nowLocal')
+    expect(toSQL(sql, 'mysql')).not.toMatch(/nowLocal(?!.*COMMENT)/)
+    expect(toSQL(sql, 'mysql')).toMatch(/`at` timestamp/i)
   })
 })

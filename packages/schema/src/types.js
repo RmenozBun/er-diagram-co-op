@@ -36,6 +36,9 @@ export function normalizeImportedType(raw) {
   return { type: t, note }
 }
 
+import { embeddedTarget, rootTables } from './relations.js'
+import { defaultKind } from './model.js'
+
 const MONGO_OF = {
   int: 'int', integer: 'int', smallint: 'int', bigint: 'long', double: 'double', float: 'double', real: 'double',
   decimal: 'decimal', numeric: 'decimal', boolean: 'bool', bool: 'bool', date: 'date', timestamp: 'date', timestamptz: 'date',
@@ -87,4 +90,32 @@ export function tablesToSql(tables) {
       return embedded.has(base) ? f : { ...f, type: mongoTypeToSql(f.type) }
     }),
   }))
+}
+
+// default expressions that mean the same thing in SQL; anything else written as an expression is JavaScript (`nowLocal`, `uuid()` ...)
+const SQL_DEFAULT_OK = /^(now\(\)|current_timestamp(\(\))?|current_date|current_time|gen_random_uuid\(\)|uuid_generate_v4\(\))$/i
+
+/**
+ * A whole MongoDB schema -> a schema that is valid SQL: embedded documents (sub-document types) are not tables, a field that holds one
+ * (or an array of them) becomes a json column, ObjectId / string / number ... get SQL type names, and relations to dropped tables go away.
+ * @param {import('./model.js').Schema} schema
+ */
+export function mongoSchemaToSql(schema) {
+  const keep = rootTables(schema)
+  const keepNames = new Set(keep.map((t) => t.name))
+  const tables = keep.map((t) => ({
+    ...t,
+    embedded: false,
+    note: t.note && /^Mongoose model /.test(t.note) ? null : t.note,
+    fields: t.fields.map((f) => {
+      // a JavaScript default (a function or variable) is not a SQL default: keep it as a note instead of writing invalid SQL
+      const js = f.default != null && defaultKind(f) === 'expr' && !SQL_DEFAULT_OK.test(f.default)
+      const base = js ? { ...f, default: null, defaultKind: null, note: [f.note, `JS default: ${f.default}`].filter(Boolean).join('; ') } : f
+      const emb = embeddedTarget(schema, base)
+      if (emb && !keepNames.has(emb.name)) return { ...base, type: 'jsonb', enum: null }
+      return emb ? base : { ...base, type: mongoTypeToSql(base.type) }
+    }),
+  }))
+  const refs = schema.refs.filter((r) => keepNames.has(r.from.table) && keepNames.has(r.to.table))
+  return { ...schema, tables, refs }
 }

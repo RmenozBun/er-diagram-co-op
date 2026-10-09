@@ -242,14 +242,18 @@ describe('module style switch with other imports', () => {
 })
 
 describe('converting a Mongoose diagram to SQL and back', () => {
-  it('keeps the collection structure: ObjectIds, enums, required, unique, embedded documents', () => {
+  it('keeps the collection structure: ObjectIds, enums, required, unique; sub-documents become json columns', () => {
     const toSql = convertSource(usersModel, 'mongodb', 'sql')
+    expect(parse(toSql).errors).toEqual([])
+    expect(toSql).not.toMatch(/embedded|Table Certificate/)
     const back = parseSource(convertSource(toSql, 'sql', 'mongodb'), 'mongodb')
     expect(back.errors).toEqual([])
-    const want = shape(parseMongoose(usersModel))
-    const got = shape(back)
-    const pick = (s) => s.map((t) => ({ name: t.name, fields: t.fields.map((f) => ({ name: f.name, type: f.type, notNull: f.notNull, unique: f.unique, enum: f.enum })) }))
-    expect(pick(got)).toEqual(pick(want))
+    const original = parseMongoose(usersModel)
+    const embeddedNames = new Set(original.tables.filter((t) => t.embedded).map((t) => t.name.toLowerCase()))
+    const pick = (s, jsonOf = (f) => f.type) =>
+      s.tables.filter((t) => !t.embedded).map((t) => ({ name: t.name, fields: t.fields.map((f) => ({ name: f.name, type: jsonOf(f), notNull: f.notNull, unique: f.unique, enum: f.enum })) }))
+    // the only difference: a field holding sub-documents is a plain json field after the round trip
+    expect(pick(back)).toEqual(pick(original, (f) => (embeddedNames.has(f.type.replace(/\[\]$/, '').toLowerCase()) ? 'json' : f.type)))
   })
 
   it('a plain SQL "id int pk increment" becomes an ObjectId _id in MongoDB', () => {

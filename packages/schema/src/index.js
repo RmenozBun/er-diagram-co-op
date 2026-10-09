@@ -37,7 +37,7 @@ Ref: posts.user_id > users.id
 Ref: posts.id <> tags.id
 `
 
-export { sqlTypeToMongo, tablesToMongo, mongoTypeToSql, tablesToSql, normalizeImportedType } from './types.js'
+export { sqlTypeToMongo, tablesToMongo, mongoTypeToSql, tablesToSql, mongoSchemaToSql, normalizeImportedType } from './types.js'
 export { validatorToSchema, findValidators, collectionNameFromFile } from './importers/validator.js'
 export { parseSource, convertSource, convertDocument } from './source.js'
 export { parseView, viewToCode, codeToView, toMongooseView, mergeViews, splitView, hasViewBlocks, looksLikeFullMongoose, fixCommas } from './mongoView.js'
